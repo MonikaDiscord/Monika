@@ -35,6 +35,6 @@ Create a table with this command:
 Make sure it went through successfully before moving on.
 Now, create another table with this command:
 
-```CREATE TABLE guilds (id bigint primary key, name text, prefix text);```
+```CREATE TABLE guilds (id bigint primary key, name text, prefix text, filteredwords text[]);```
 
 You should be done!

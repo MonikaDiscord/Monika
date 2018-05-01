@@ -28,5 +28,11 @@ class Administration:
         db.commit()
         await ctx.send("``{}``'s prefix has been reset to ``$!``.".format(ctx.message.guild.name))
 
+    @commands.group(invoke_without_command=True) 
+    async def filter(self, ctx):
+        if ctx.invoked_subcommand is None:
+            await ctx.send("You need to use a subcommand.")
+            await ctx.send("Available subcommands for filter: ``filter list``, ``filter add``, ``filter remove``.")
+    
 def setup(bot):
     bot.add_cog(Administration(bot))

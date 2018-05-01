@@ -107,9 +107,15 @@ class Monika(commands.AutoShardedBot):
                 cursor.execute(sql, [guild.id])
                 guilds = cursor.fetchall()
                 if guilds == []:
-                    sql1 = "INSERT INTO guilds (id, prefix, name) VALUES (%s, '$!', %s)"
+                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords) VALUES (%s, '$!', %s, {})"
                     cursor.execute(sql1, [guild.id, guild.name])
                     db.commit()
+            sql = "SELECT filteredwords FROM guilds WHERE id = %s"
+            cursor.execute(sql, [guild.id])
+            fw = cursor.fetchall()[0]
+            for word in fw:
+                if fw in message.content:
+                    await message.channel.send(f"<@{message.author.id}>, that word is against this server's filter!")
             await self.process_commands(message)
 
 

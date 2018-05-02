@@ -152,7 +152,10 @@ class Fun:
         e.add_field(name=":thumbsup:", value=thumbsup)
         e.add_field(name=":thumbsdown:", value=thumbsdown)
         e.set_footer(text="Definiton by {} | Powered by Urban Dictionary".format(apiauthor))
-        await ctx.send(embed=e)
+        try:
+            await ctx.send(embed=e)
+        except HTTPException:
+            await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink}).")
 
     @commands.command()
     @checks.is_patron()

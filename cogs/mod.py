@@ -49,7 +49,7 @@ class Moderation:
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
-    async def kick(self, ctx, user: discord.User, reason=None):
+    async def kick(self, ctx, user: discord.User, *, reason=None):
         """Kicks a user."""
         try:
             await ctx.message.guild.kick(user, reason=reason)
@@ -61,7 +61,7 @@ class Moderation:
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def ban(self, ctx, user: discord.User, reason=None):
+    async def ban(self, ctx, user: discord.User, *, reason=None):
         """Bans a user."""
         try:
             await ctx.message.guild.ban(user, reason=reason)

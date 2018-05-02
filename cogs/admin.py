@@ -29,10 +29,31 @@ class Administration:
         await ctx.send("``{}``'s prefix has been reset to ``$!``.".format(ctx.message.guild.name))
 
     @commands.group(invoke_without_command=True) 
+    @commands.has_permissions(manage_messages=True)
     async def filter(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send("You need to use a subcommand.")
-            await ctx.send("Available subcommands for filter: ``filter list``, ``filter add``, ``filter remove``.")
+            await ctx.send("Available subcommands for filter: ``filter add``, ``filter remove``.")
+            
+    @filter.command()
+    @commands.has_permissions(manage_messages=True)
+    async def add(self, ctx, word):
+        db = psycopg2.connect(self.bot.settings.dsn)
+        cursor = db.cursor()
+        sql = "UPDATE guilds SET filteredwords = array_append(filteredwords, %s) WHERE id = %s"
+        cursor.execute(sql, [word, ctx.guild.id])
+        db.commit()
+        await ctx.send("That word has been added to the filter!")
+        
+    @filter.command()
+    @commands.has_permissions(manage_messages=True)
+    async def remove(self, ctx, word):
+        db = psycopg2.connect(self.bot.settings.dsn)
+        cursor = db.cursor()
+        sql = "UPDATE guilds SET filteredwords = array_remove(filteredwords, %s) WHERE id = %s"
+        cursor.execute(sql, [word, ctx.guild.id])
+        db.commit()
+        await ctx.send("That word has been removed from the filter!")
     
 def setup(bot):
     bot.add_cog(Administration(bot))

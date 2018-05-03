@@ -155,7 +155,7 @@ class Fun:
         try:
             await ctx.send(embed=e)
         except HTTPException:
-            await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink}).")
+            await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink})."))
 
     @commands.command()
     @checks.is_patron()

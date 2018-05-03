@@ -90,7 +90,7 @@ class Monika(commands.AutoShardedBot):
 
     async def on_message(self, message):
         if not message.author.bot:
-            if message.content == f"<@{self.bot.user.id}> prefix" or message.content == f"<@!{self.bot.user.id}> prefix":
+            if message.content == f"<@{self.user.id}> prefix" or message.content == f"<@!{self.user.id}> prefix":
                 await message.channel.send("My prefix for this server is ``{}``.".format(self.prefix(message)))
             db = psycopg2.connect(self.settings.dsn)
             cursor = db.cursor()

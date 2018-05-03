@@ -115,7 +115,9 @@ class Monika(commands.AutoShardedBot):
             cursor.execute(sql, [guild.id])
             fw = cursor.fetchall()[0][0]
             for word in fw:
-                if word in message.content:
+                prefix = self.prefix(message)
+                thingy = f"{prefix}filter remove {word}"
+                if word in message.content and thingy != message.content:
                     await message.channel.send(f"<@{message.author.id}>, that word is against this server's filter!")
                     try:
                         return await message.delete()

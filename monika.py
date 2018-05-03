@@ -75,7 +75,7 @@ class Monika(commands.AutoShardedBot):
             'Authorization': self.settings.dbltoken,
             'Content-type' : 'application/json'
         }
-        url = f'https://discordbots.org/api/bots/{self.id}/stats'
+        url = f'https://discordbots.org/api/bots/{self.user.id}/stats'
         async with self.session.post(url, data=payload, headers=headers) as req:
             if req.status == 200:
                 logging.info("Successfully posted server count to DBL. [{} servers | {} shards]".format(len(self.guilds), len(self.shards)))

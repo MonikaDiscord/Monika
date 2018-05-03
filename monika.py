@@ -8,7 +8,6 @@ from cogs.scripts.settings import settings
 import logging
 from raven import Client
 import asyncio
-import aiopg
 import psycopg2
 
 

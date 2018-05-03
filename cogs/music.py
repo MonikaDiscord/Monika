@@ -28,6 +28,7 @@ class Music:
                     await c.send(embed=embed)
         elif isinstance(event, lavalink.Events.QueueEndEvent):
             await event.player.disconnect()
+            event.player.repeat = False
             c = event.player.fetch('channel')
             if c:
                 c = self.bot.get_channel(c)

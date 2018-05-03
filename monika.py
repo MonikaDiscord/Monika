@@ -113,7 +113,7 @@ class Monika(commands.AutoShardedBot):
                     db.commit()
             sql = "SELECT filteredwords FROM guilds WHERE id = %s"
             cursor.execute(sql, [guild.id])
-            fw = cursor.fetchall()[0]
+            fw = cursor.fetchall()[0][0]
             for word in fw:
                 if fw in message.content:
                     await message.channel.send(f"<@{message.author.id}>, that word is against this server's filter!")

@@ -108,7 +108,7 @@ class Monika(commands.AutoShardedBot):
                 cursor.execute(sql, [guild.id])
                 guilds = cursor.fetchall()
                 if guilds == []:
-                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords) VALUES (%s, '$!', %s, {})"
+                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords) VALUES (%s, '$!', %s, '{}')"
                     cursor.execute(sql1, [guild.id, guild.name])
                     db.commit()
             sql = "SELECT filteredwords FROM guilds WHERE id = %s"

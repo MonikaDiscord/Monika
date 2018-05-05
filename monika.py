@@ -9,6 +9,7 @@ import logging
 from raven import Client
 import asyncio
 import psycopg2
+from cogs.scripts import checks
 
 
 def prefixcall(bot, msg):

@@ -136,6 +136,16 @@ class Monika(commands.AutoShardedBot):
                 f = "upvoter"
             elif checks.patron_check in ctx.command.checks:
                 f = "patron"
+            elif checks.gold_check in ctx.command.checks:
+                f = "gold patron"
+            elif checks.admin_check in ctx.command.checks:
+                f = "admin"
+            elif checks.dev_check in ctx.command.checks:
+                f = "developer"
+            elif checks.mod_check in ctx.commands.checks:
+                f = "moderator"
+            elif checks.staff_check in ctx.commands.checks:
+                f = "staff"
             else:
                 await ctx.send("You need to have a server permission to do this.")
                 return await ctx.send("Please look at the command page to find the permission.")

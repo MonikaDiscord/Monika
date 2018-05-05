@@ -136,8 +136,14 @@ class Monika(commands.AutoShardedBot):
         elif isinstance(error, discord.ext.commands.errors.NoPrivateMessage):
             return await ctx.send("This command can't be used in DMs.")
         else:
+            c = self.get_channel(442150991434088468)
+            e = discord.Embed(title="An exception has occured.")
+            e.add_field(title="Command", value=ctx.command.name)
+            e.add_field(title="Context", value=ctx.message.content)
+            e.add_field(title="Error", value=error, inline=False)
+            await c.send(embed=e)
             if ctx:
-                e = discord.Embed(title="An exception has occured.", description=f"```{error}```Please join the [official Monika server](https://discord.gg/DspkaRD) for help.")
+                e = discord.Embed(title="An exception has occured.", description=f"```{error}```\nThe Monika developer team has been alerted to this issue and will fix it soon.\nIf you know how to fix this, then you can also check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).")
                 await ctx.send(embed=e)
 
 

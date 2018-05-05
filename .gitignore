@@ -1,3 +1,5 @@
 .vscode/*
-cogs/scripts/__pycache__/*
 .iml/*
+*.pyc
+*.log
+*.jar

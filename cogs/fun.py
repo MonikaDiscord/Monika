@@ -83,7 +83,7 @@ class Fun:
                 return
             await ctx.send("``characters/{}.chr`` deleted successfully.".format(username.name.lower()))
         except Exception:
-            await ctx.send("I couldn't find {}, {}".format(username.name.lower(), ctx.message.author.name))
+            await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
 
     @commands.command()
     async def message(self, ctx, username: discord.User, *, message):

@@ -1,0 +1,3 @@
+.vscode/*
+cogs/scripts/__pycache__/*
+.iml/*

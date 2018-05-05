@@ -130,18 +130,19 @@ class Monika(commands.AutoShardedBot):
         if isinstance(error, discord.ext.commands.errors.CommandNotFound):
             pass
         elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
-            return await ctx.send("You're missing a required argument.")
+            await ctx.send("You're missing a required argument.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
-            return await ctx.send("Your power level isn't high enough (over 9000) for this command to work!")
+            if checks.upvoter_check in ctx.command.checks:
+                f = "upvoter"
+            elif checks.patron_check in ctx.command.checks:
+                f = "patron"
+            else:
+                await ctx.send("You need to have a server permission to do this.")
+                return await ctx.send("Please look at the command page to find the permission.")
+            await ctx.send(f"You need to have the ``{f}`` permission to do this.")
         elif isinstance(error, discord.ext.commands.errors.NoPrivateMessage):
-            return await ctx.send("This command can't be used in DMs.")
+            await ctx.send("This command can't be used in DMs.")
         else:
-            c = self.get_channel(442150991434088468)
-            e = discord.Embed(title="An exception has occured.")
-            e.add_field(title="Command", value=ctx.command.name)
-            e.add_field(title="Context", value=ctx.message.content)
-            e.add_field(title="Error", value=error, inline=False)
-            await c.send(embed=e)
             if ctx:
                 e = discord.Embed(title="An exception has occured.", description=f"```{error}```\nThe Monika developer team has been alerted to this issue and will fix it soon.\nIf you know how to fix this, then you can also check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).")
                 await ctx.send(embed=e)

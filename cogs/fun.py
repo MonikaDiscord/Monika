@@ -3,11 +3,11 @@ from discord.ext import commands
 import random
 import urllib
 import urllib.request
-from .scripts import checks
+from cogs.scripts import checks
 import asyncio
 import requests
 import aiohttp
-from .scripts import poems
+from cogs.scripts import poems
 
 class Fun:
     def __init__(self, bot):
@@ -69,21 +69,22 @@ class Fun:
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def delete(self, ctx, *, username: discord.Member):
+    async def delete(self, ctx, *, username):
         """Deletes the specified user."""
-        if username.id == 319503910895222784:
-            await ctx.send("You will not touch my boyfriend!")
-            return
-        elif username.id == 201745963394531328 or username.id == 206197394667208704:
-            await ctx.send("That's a funny joke, {}.".format(ctx.message.author.name))
-            return
-        elif username.id == 399315651338043392:
-            await ctx.send("You're so funny, {}.".format(ctx.message.author.name))
-            return
         try:
+            username: discord.Member
+            if username.id == 319503910895222784:
+                await ctx.send("You will not touch my boyfriend!")
+                return
+            elif username.id == 201745963394531328 or username.id == 206197394667208704:
+                await ctx.send("That's a funny joke, {}.".format(ctx.message.author.name))
+                return
+            elif username.id == 399315651338043392:
+                await ctx.send("You're so funny, {}.".format(ctx.message.author.name))
+                return
             await ctx.send("``characters/{}.chr`` deleted successfully.".format(username.name.lower()))
         except Exception:
-            await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
+            await ctx.send("``characters/{}.chr`` not found.".format(username))
 
     @commands.command()
     async def message(self, ctx, username: discord.User, *, message):

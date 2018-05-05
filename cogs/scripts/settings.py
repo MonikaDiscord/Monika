@@ -1,5 +1,5 @@
 class settings:
-    def __init__():
+    def __init__(self):
         self.token = 'discord token'
         self.cogs = ['cogs.general', 'cogs.mod', 'cogs.admin', 'cogs.fun', 'cogs.weeb', 'cogs.music', 'cogs.economy', 'cogs.staff']
         self.dbltoken = "discordbots.org token"

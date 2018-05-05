@@ -1,5 +1,5 @@
-+.vscode/*
-+.iml/*
-+*.pyc
-+*.log
-+*.jar
+.vscode/*
+.iml/*
+*.pyc
+*.log
+*.jar

@@ -143,9 +143,9 @@ class Monika(commands.AutoShardedBot):
                 f = "admin"
             elif checks.dev_check in ctx.command.checks:
                 f = "developer"
-            elif checks.mod_check in ctx.commands.checks:
+            elif checks.mod_check in ctx.command.checks:
                 f = "moderator"
-            elif checks.staff_check in ctx.commands.checks:
+            elif checks.staff_check in ctx.command.checks:
                 f = "staff"
             else:
                 await ctx.send("You need to have a server permission to do this.")

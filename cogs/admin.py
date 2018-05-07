@@ -54,6 +54,23 @@ class Administration:
         cursor.execute(sql, [word, ctx.guild.id])
         db.commit()
         await ctx.send("That word has been removed from the filter!")
+        
+    @filter.command()
+    @commands.has_permissions(manage_messages=True)
+    async def list(self, ctx):
+        db = psycopg2.connect(self.bot.settings.dsn)
+        cursor = db.cursor()
+        sql = "SELECT filteredwords FROM guilds WHERE id = %s"
+        cursor.execute(sql, [ctx.guild.id])
+        list = ""
+        for word in cursor.fetchall()[0][0]:
+            list += (word + "\n")
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        e = discord.Embed(color=color, title=f"List of filtered words in {ctx.guild.name}", description=list)
+        await ctx.author.send(embed=e)
     
 def setup(bot):
     bot.add_cog(Administration(bot))

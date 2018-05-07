@@ -33,7 +33,7 @@ class Administration:
     async def filter(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send("You need to use a subcommand.")
-            await ctx.send("Available subcommands for filter: ``filter add``, ``filter remove``.")
+            await ctx.send("Available subcommands for filter: ``filter add``, ``filter remove``, and ``filter list``.")
             
     @filter.command()
     @commands.has_permissions(manage_messages=True)

@@ -70,26 +70,6 @@ class Weeb:
         embed.set_image(url=url)
         embed.set_footer(text="Powered by weeb.sh")
         await ctx.send(embed=embed)
-    
-    @commands.command()
-    async def lewd(self, ctx):
-        """What a lewd!"""
-        if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=lewd&nsfw=true', headers={'Authorization': self.bot.settings.weebtoken, 'User-Agent': 'Monika/1.0.0'}) as url:
-                url = await url.json()
-                url = url.get("url")
-        else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=lewd', headers={'Authorization': self.bot.settings.weebtoken, 'User-Agent': 'Monika/1.0.0'}) as url:
-                url = await url.json()
-                url = url.get("url")
-        if ctx.message.guild is not None:
-            color = ctx.message.guild.me.color
-        else:
-            color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Lewd!", description="You are such a lewd, {}".format(ctx.message.author.name))
-        embed.set_image(url=url)
-        embed.set_footer(text="Powered by weeb.sh")
-        await ctx.send(embed=embed)
 
     @commands.command()
     @checks.is_upvoter()

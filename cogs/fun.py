@@ -158,7 +158,7 @@ class Fun:
         e.set_footer(text="Definiton by {} | Powered by Urban Dictionary".format(apiauthor))
         try:
             await ctx.send(embed=e)
-        except HTTPException:
+        except aiohttp.web.HTTPError:
             await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink})."))
 
     @commands.command()

@@ -75,11 +75,11 @@ class Weeb:
     async def lewd(self, ctx):
         """What a lewd!"""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=lewd&nsfw=true', headers={'Authorization': self.bot.settings.weebtoken, 'User-Angent': 'Monika/1.0.0'}) as url:
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=lewd&nsfw=true', headers={'Authorization': self.bot.settings.weebtoken, 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=lewd', headers={'Authorization': self.bot.settings.weebtoken, 'User-Angent': 'Monika/1.0.0'}) as url:
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=lewd', headers={'Authorization': self.bot.settings.weebtoken, 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:

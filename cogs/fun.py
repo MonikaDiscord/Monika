@@ -69,21 +69,23 @@ class Fun:
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def delete(self, ctx, *, username: discord.Member):
+    async def delete(self, ctx, *, username):
         """Deletes the specified user."""
-        if username.id == 319503910895222784:
-            await ctx.send("You will not touch my boyfriend!")
-            return
-        elif username.id == 201745963394531328 or username.id == 206197394667208704:
-            await ctx.send("That's a funny joke, {}.".format(ctx.message.author.name))
-            return
-        elif username.id == 399315651338043392:
-            await ctx.send("You're so funny, {}.".format(ctx.message.author.name))
-            return
         try:
-            await ctx.send("``characters/{}.chr`` deleted successfully.".format(username.name.lower()))
+            username: discord.Member
+            if username.id == 319503910895222784:
+                await ctx.send("You will not touch my boyfriend!")
+                return
+            elif username.id == 201745963394531328 or username.id == 206197394667208704:
+                await ctx.send("That's a funny joke, {}.".format(ctx.message.author.name))
+                return
+            elif username.id == 399315651338043392:
+                await ctx.send("You're so funny, {}.".format(ctx.message.author.name))
+                return
+            else:
+                await ctx.send("``characters/{}.chr`` deleted successfully.".format(username.name.lower()))
         except Exception:
-            await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
+            await ctx.send("``characters/{}.chr`` not found.".format(username.lower()))
 
     @commands.command()
     async def message(self, ctx, username: discord.User, *, message):
@@ -157,7 +159,7 @@ class Fun:
         e.set_footer(text="Definiton by {} | Powered by Urban Dictionary".format(apiauthor))
         try:
             await ctx.send(embed=e)
-        except HTTPException:
+        except Exception:
             await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink})."))
 
     @commands.command()

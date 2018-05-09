@@ -72,7 +72,6 @@ class Fun:
     async def delete(self, ctx, *, username):
         """Deletes the specified user."""
         try:
-            username: discord.Member
             if username.id == 319503910895222784:
                 await ctx.send("You will not touch my boyfriend!")
                 return

@@ -14,7 +14,7 @@ class Music:
         self.bot = bot
 
         if not hasattr(bot, 'lavalink'):
-            lavalink.Client(bot=self.bot, password=self.bot.lavapass, loop=self.bot.loop, ws_port=1337, shard_count=len(bot.shards))
+            lavalink.Client(bot=self.bot, password=bot.settings.lavapass, loop=self.bot.loop, ws_port=1337, shard_count=len(bot.shards))
             self.bot.lavalink.register_hook(self.track_hook)
 
     async def track_hook(self, event):

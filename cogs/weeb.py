@@ -226,6 +226,17 @@ class Images:
         self.bot = bot
 
     @commands.command()
+    async def danbooru(self, ctx):
+        """Posts an image directly from Project Danbooru."""
+        try:
+            if ctx.message.channel.is_nsfw():
+                print("I hope you're not turned on easily by this kind of stuff.")
+            else:
+                print("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. There are lots of lewd things in the project.")
+        except Exception:
+            print("You shouldn't see this.")
+
+    @commands.command()
     async def tag(self, ctx, tag):
         """Posts an image with the specified weeb.sh tag."""
         if "&nsfw=true" in tag:

@@ -5,6 +5,7 @@ from .scripts import checks
 from PIL import Image
 from io import StringIO
 import os
+from pybooru import Danbooru
 
 class Weeb:
     def __init__(self, bot):
@@ -45,7 +46,7 @@ class Weeb:
             color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Kiss!", description="{} kissed {}... Aww...".format(ctx.message.author.name, user.name))
+            embed = discord.Embed(color=color, title="Kiss!", description="{} kissed {}... Aww...".format(ctx.message.author.name, user.name))
         embed.set_image(url=url)
         embed.set_footer(text="Powered by weeb.sh")
         await ctx.send(embed=embed)

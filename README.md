@@ -11,6 +11,7 @@ To invite Monika, use this [link](https://discordapp.com/oauth2/authorize?client
 * Lavalink's latest build (put it in `cogs/scripts/lavalink`).
 * lavalink.py
 * A sentry.io account and the module `raven`.
+* pybooru.py
 * A PostgreSQL server (scroll down to the last section!).
 * All the API keys below.
 ## API keys needed
@@ -18,6 +19,7 @@ We won't be helping you with obtaining these.
 * obviously Discord token
 * weeb.sh (also needs waifu insult scope and generate love ship scope)
 * discordbots.org
+* danbooru.donmai.us (WIP)
 * NOT NEEDED YET: Google Perspective API (coming soon!)
 ## Setup
 1. Install all the prerequisites.

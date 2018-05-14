@@ -6,6 +6,7 @@ from PIL import Image
 from io import StringIO
 import os
 from pybooru import Danbooru
+import json
 
 class Weeb:
     def __init__(self, bot):
@@ -229,16 +230,25 @@ class Images:
     @commands.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru. WARNING: NSFW!!!"""
-        client = Danbooru('danbooru', username='username', api_key=self.bot.settings.danboorutoken)
-        try:
-            if ctx.message.channel.is_nsfw():
-                print("I hope you're not turned on easily by this kind of stuff.")
-                client.post_list(random=True)
-            else:
-                print("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. "
+        client = Danbooru('danbooru', username='TheHolyDingus', api_key=self.bot.settings.danboorutoken)
+        if ctx.message.channel.is_nsfw():
+            await ctx.send("I hope you're not turned on by this stuff, {}".format(ctx.message.author.name))
+            print("Testing JSON, please wait...")
+            print(client.post_list(random=True, limit=1))
+            data = json.load(client.post_list(random=True, limit=1))
+            url = data[u'file_url']
+        else:
+            await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. "
                       "There are lots of lewd things in the project.")
-        except Exception:
-            print("You shouldn't see this.")
+            return
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Image from Project Danbooru:", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by Project Danbooru.")
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def tag(self, ctx, tag):

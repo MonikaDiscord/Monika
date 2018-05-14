@@ -228,12 +228,15 @@ class Images:
 
     @commands.command()
     async def danbooru(self, ctx):
-        """Posts an image directly from Project Danbooru."""
+        """Posts an image directly from Project Danbooru. WARNING: NSFW!!!"""
+        client = Danbooru('danbooru', username='username', api_key=self.bot.settings.danboorutoken)
         try:
             if ctx.message.channel.is_nsfw():
                 print("I hope you're not turned on easily by this kind of stuff.")
+                client.post_list(random=True)
             else:
-                print("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. There are lots of lewd things in the project.")
+                print("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. "
+                      "There are lots of lewd things in the project.")
         except Exception:
             print("You shouldn't see this.")
 
@@ -255,7 +258,7 @@ class Images:
                     url = await url.json()
                     url = url.get("url")
         except Exception:
-            async with session.get('https://api-v2.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
                                    headers={'Authorization': self.bot.settings.weebtoken, 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")

@@ -5,6 +5,7 @@ class settings:
         self.dbltoken = "discordbots.org token"
         self.weebtoken = "weeb.sh token"
         #self.perspectivekey = "perspective api token"
+        self.danboorutoken = 'danbooru.donmai.us token'
         self.lavapass = "lavalink password"
         self.sentry = "sentry url"
         self.dsn = "dbname='monika' user='user' host='127.0.0.1' password='password'"

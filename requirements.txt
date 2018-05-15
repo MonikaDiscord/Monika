@@ -1,6 +1,6 @@
 git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
 lavalink
 raven
-psycopg2
+psycopg2-binary
 requests
 yarl<1.2

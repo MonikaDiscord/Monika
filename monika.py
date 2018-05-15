@@ -38,7 +38,7 @@ def prefixcall(bot, msg):
 class Monika(commands.AutoShardedBot):
     def __init__(self):
         super().__init__(command_prefix=prefixcall,
-                         description="Hi, I'm Monika! Welcome to the Literature Club! Will you promise to spend the most time with me? Here are my commands:",
+                         description="Hi, I'm Monika! Welcome to the Literature Club! Here are my commands:",
                          pm_help=None)
 
         self.session = aiohttp.ClientSession(loop=self.loop)

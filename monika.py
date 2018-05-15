@@ -10,6 +10,7 @@ from raven import Client
 import asyncio
 import psycopg2
 from cogs.scripts import checks
+from argparse import ArgumentParser
 
 
 def prefixcall(bot, msg):
@@ -195,7 +196,7 @@ class Monika(commands.AutoShardedBot):
         cursor.execute("SELECT money FROM users WHERE id = ?", [userid])
         return cursor.fetchall()[0][0]
 
-arser = ArgumentParser(description='Monika - the Discord bot!')
+parser = ArgumentParser(description='Monika - the Discord bot!')
 parser.add_argument('--testing', help='doesn\'t load any cogs (and other small things)', action='store_true')
 args = parser.parse_args()
 if args.testing:

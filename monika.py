@@ -43,14 +43,15 @@ class Monika(commands.AutoShardedBot):
 
         self.session = aiohttp.ClientSession(loop=self.loop)
         self.settings = settings()
-        if not testing:
+        self.testing = testing
+        if not self.testing:
             self.rclient = Client(self.settings.sentry)
 
         self.remove_command('help')
-        if not testing:
+        if not self.testing:
             self.loop.create_task(self.updatedbl())
 
-        if not testing:
+        if not self.testing:
             if __name__ == '__main__':
                 for cog in self.settings.cogs:
                     try:
@@ -163,7 +164,8 @@ class Monika(commands.AutoShardedBot):
 
 
     def run(self):
-        super().run(self.settings.token, bot=True, reconnect=True)
+        if not self.testing:
+            super().run(self.settings.token, bot=True, reconnect=True)
 
 
     def load_cog(self, cname):
@@ -193,3 +195,11 @@ class Monika(commands.AutoShardedBot):
         cursor.execute("SELECT money FROM users WHERE id = ?", [userid])
         return cursor.fetchall()[0][0]
 
+arser = ArgumentParser(description='Monika - the Discord bot!')
+parser.add_argument('--testing', help='doesn\'t load any cogs (and other small things)', action='store_true')
+args = parser.parse_args()
+if args.testing:
+    bot = Monika(testing=True)
+else:
+    bot = Monika()
+bot.run()

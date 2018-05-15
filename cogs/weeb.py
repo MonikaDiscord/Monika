@@ -227,10 +227,9 @@ class Images:
 
     @commands.command()
     async def danbooru(self, ctx):
-        """Posts an image directly from Project Danbooru. WARNING: NSFW!!!"""
-        client = Danbooru('danbooru', username='TheHolyDingus', api_key=self.bot.settings.danboorutoken)
+        """Posts an image directly from Project Danbooru."""
+        client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
         if ctx.message.channel.is_nsfw():
-            await ctx.send("I hope you're not turned on by this stuff, {}".format(ctx.message.author.name))
             temp = str(client.post_list(random=True, limit=1))
             temp = temp.replace("\'", "\"")
             temp = temp.replace("True", "\"True\"")
@@ -241,14 +240,13 @@ class Images:
             data = json.loads(temp)
             url = data['file_url']
         else:
-            await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. "
-                      "There are lots of lewd things in the project.")
+            await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel.")
             return
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Image from Project Danbooru:", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
         await ctx.send(embed=embed)

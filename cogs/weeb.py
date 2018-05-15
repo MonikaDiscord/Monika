@@ -252,6 +252,12 @@ class Images:
         await ctx.send(embed=embed)
 
     @commands.command()
+    async def safebooru(self, ctx):
+        """Posts an image directly from Danbooru's safe image board."""
+        client = Danbooru('safebooru', site_url='http://safebooru.donmai.us', username='placeholder', api_key='whothehellknows')
+        
+
+    @commands.command()
     async def tag(self, ctx, tag):
         """Posts an image with the specified weeb.sh tag."""
         if "&nsfw=true" in tag:

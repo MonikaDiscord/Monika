@@ -3,6 +3,8 @@ from discord.ext import commands
 import aiohttp
 from .scripts import checks
 import os
+from pybooru import Danbooru
+import json
 
 class Weeb:
     def __init__(self, bot):
@@ -224,6 +226,34 @@ class Images:
         self.bot = bot
 
     @commands.command()
+    async def danbooru(self, ctx):
+        """Posts an image directly from Project Danbooru. WARNING: NSFW!!!"""
+        client = Danbooru('danbooru', username='TheHolyDingus', api_key=self.bot.settings.danboorutoken)
+        if ctx.message.channel.is_nsfw():
+            await ctx.send("I hope you're not turned on by this stuff, {}".format(ctx.message.author.name))
+            temp = str(client.post_list(random=True, limit=1))
+            temp = temp.replace("\'", "\"")
+            temp = temp.replace("True", "\"True\"")
+            temp = temp.replace("False", "\"False\"")
+            temp = temp.replace("None", "\"None\"")
+            temp = temp.replace("[", "")
+            temp = temp.replace("]", "")
+            data = json.loads(temp)
+            url = data['file_url']
+        else:
+            await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. "
+                      "There are lots of lewd things in the project.")
+            return
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Image from Project Danbooru:", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by Project Danbooru.")
+        await ctx.send(embed=embed)
+
+    @commands.command()
     async def tag(self, ctx, tag):
         """Posts an image with the specified weeb.sh tag."""
         if "&nsfw=true" in tag:
@@ -241,7 +271,7 @@ class Images:
                     url = await url.json()
                     url = url.get("url")
         except Exception:
-            async with session.get('https://api-v2.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
                                    headers={'Authorization': self.bot.settings.weebtoken, 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")

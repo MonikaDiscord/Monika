@@ -67,7 +67,7 @@ class Fun:
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def delete(self, ctx, *, username):
+    async def delete(self, ctx, *, username: discord.User):
         """Deletes the specified user."""
         try:
             if username.id == 319503910895222784:
@@ -82,7 +82,7 @@ class Fun:
             else:
                 await ctx.send("``characters/{}.chr`` deleted successfully.".format(username.name.lower()))
         except Exception:
-            await ctx.send("``characters/{}.chr`` not found.".format(username.lower()))
+            await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
 
     @commands.command(name="8ball")
     @checks.is_patron()

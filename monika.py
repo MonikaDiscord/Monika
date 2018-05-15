@@ -193,6 +193,3 @@ class Monika(commands.AutoShardedBot):
         cursor.execute("SELECT money FROM users WHERE id = ?", [userid])
         return cursor.fetchall()[0][0]
 
-
-bot = Monika()
-bot.run()

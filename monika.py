@@ -55,7 +55,6 @@ class Monika(commands.AutoShardedBot):
                 except Exception as e:
                     print(f'Oops! I think I broke {cog}...', file=sys.stderr)
                     self.rclient.captureException()
-                    print(e)
 
 
     async def updatedbl(self):

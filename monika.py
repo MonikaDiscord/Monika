@@ -36,7 +36,7 @@ def prefixcall(bot, msg):
 
 
 class Monika(commands.AutoShardedBot):
-    def __init__(self, cogs=True, testing=False):
+    def __init__(self, testing=False):
         super().__init__(command_prefix=prefixcall,
                          description="Hi, I'm Monika! Welcome to the Literature Club! but will you promise to spend the most time with me? Here are my commands:",
                          pm_help=None)

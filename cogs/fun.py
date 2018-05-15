@@ -86,17 +86,6 @@ class Fun:
         except Exception:
             await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
 
-    @commands.command()
-    async def message(self, ctx, username: discord.User, *, message):
-        """Messages the specified user."""
-        try:
-            await username.send("{} has sent you this message: ``{}``".format(ctx.message.author.name, message))
-        except Exception:
-            self.bot.rclient.captureException()
-            await ctx.send("I couldn't do that for you... I'm so sorry!")
-            return
-        await ctx.send("<@{}>, I sent {} this message: ``{}``".format(ctx.message.author.id, username.name, message))
-
     @commands.command(name="8ball")
     @checks.is_patron()
     async def _8ball(self, ctx, *, question):

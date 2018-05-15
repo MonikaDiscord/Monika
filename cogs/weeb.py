@@ -253,9 +253,30 @@ class Images:
 
     @commands.command()
     async def safebooru(self, ctx):
-        """Posts an image directly from Danbooru's safe image board."""
+        """Same as danbooru, but much more suited for safe images."""
         client = Danbooru('safebooru', site_url='http://safebooru.donmai.us', username='placeholder', api_key='whothehellknows')
-        
+        safe = False
+        while not safe:
+            temp = str(client.post_list(random=True, limit=1))
+            temp = temp.replace("\'", "\"")
+            temp = temp.replace("True", "\"True\"")
+            temp = temp.replace("False", "\"False\"")
+            temp = temp.replace("None", "\"None\"")
+            temp = temp.replace("[", "")
+            temp = temp.replace("]", "")
+            data = json.loads(temp)
+            rating = data['rating']
+            if rating == 's':
+                safe = True
+        url = data['file_url']
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by Project Danbooru.")
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def tag(self, ctx, tag):

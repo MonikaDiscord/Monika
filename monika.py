@@ -36,25 +36,28 @@ def prefixcall(bot, msg):
 
 
 class Monika(commands.AutoShardedBot):
-    def __init__(self):
+    def __init__(self, cogs=True, testing=False):
         super().__init__(command_prefix=prefixcall,
                          description="Hi, I'm Monika! Welcome to the Literature Club! but will you promise to spend the most time with me? Here are my commands:",
                          pm_help=None)
 
         self.session = aiohttp.ClientSession(loop=self.loop)
         self.settings = settings()
-        self.rclient = Client(self.settings.sentry)
+        if not testing:
+            self.rclient = Client(self.settings.sentry)
 
         self.remove_command('help')
-        self.loop.create_task(self.updatedbl())
+        if not testing:
+            self.loop.create_task(self.updatedbl())
 
-        if __name__ == '__main__':
-            for cog in self.settings.cogs:
-                try:
-                    self.load_extension(cog)
-                except Exception as e:
-                    print(f'Oops! I think I broke {cog}...', file=sys.stderr)
-                    self.rclient.captureException()
+        if not testing:
+            if __name__ == '__main__':
+                for cog in self.settings.cogs:
+                    try:
+                        self.load_extension(cog)
+                    except Exception as e:
+                        print(f'Oops! I think I broke {cog}...', file=sys.stderr)
+                        self.rclient.captureException()
 
 
     async def updatedbl(self):

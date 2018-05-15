@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 import asyncio
 from .scripts import checks
-import sqlite3
 import math
 
 class Moderation:

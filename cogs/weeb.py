@@ -2,8 +2,6 @@ import discord
 from discord.ext import commands
 import aiohttp
 from .scripts import checks
-from PIL import Image
-from io import StringIO
 import os
 
 class Weeb:

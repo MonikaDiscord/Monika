@@ -231,21 +231,14 @@ class Images:
         client = Danbooru('danbooru', username='TheHolyDingus', api_key=self.bot.settings.danboorutoken)
         if ctx.message.channel.is_nsfw():
             await ctx.send("I hope you're not turned on by this stuff, {}".format(ctx.message.author.name))
-            """Anything that's 'print' is for debugging purposes."""
-            #print("Testing JSON, please wait...")
-            #print(client.post_list(random=True, limit=1))
             temp = str(client.post_list(random=True, limit=1))
-            #temp = str(client.post_show(1))
             temp = temp.replace("\'", "\"")
             temp = temp.replace("True", "\"True\"")
             temp = temp.replace("False", "\"False\"")
             temp = temp.replace("None", "\"None\"")
             temp = temp.replace("[", "")
             temp = temp.replace("]", "")
-            #print("Testing fixes, please wait...")
-            #print(temp)
             data = json.loads(temp)
-            #print(data['file_url'])
             url = data['file_url']
         else:
             await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel. "

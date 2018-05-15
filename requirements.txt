@@ -3,3 +3,4 @@ lavalink
 raven
 psycopg2
 requests
+yarl<1.2

@@ -4,3 +4,4 @@ raven
 psycopg2-binary
 requests
 yarl<1.2
+pybooru

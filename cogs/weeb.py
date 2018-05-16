@@ -230,13 +230,7 @@ class Images:
         """Posts an image directly from Project Danbooru."""
         client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
         if ctx.message.channel.is_nsfw():
-            temp = str(client.post_list(random=True, limit=1))
-            temp = temp.replace("\'", "\"")
-            temp = temp.replace("True", "\"True\"")
-            temp = temp.replace("False", "\"False\"")
-            temp = temp.replace("None", "\"None\"")
-            temp = temp.replace("[", "")
-            temp = temp.replace("]", "")
+            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e")))
             data = json.loads(temp)
             url = data['file_url']
         else:
@@ -253,21 +247,10 @@ class Images:
 
     @commands.command()
     async def safebooru(self, ctx):
-        """Same as danbooru, but much more suited for safe images."""
-        client = Danbooru('safebooru', site_url='http://safebooru.donmai.us', username='placeholder', api_key='whothehellknows')
-        safe = False
-        while not safe:
-            temp = str(client.post_list(random=True, limit=1))
-            temp = temp.replace("\'", "\"")
-            temp = temp.replace("True", "\"True\"")
-            temp = temp.replace("False", "\"False\"")
-            temp = temp.replace("None", "\"None\"")
-            temp = temp.replace("[", "")
-            temp = temp.replace("]", "")
+        """Same as danbooru, but looks for safe images."""
+        client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
+        temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s")))
             data = json.loads(temp)
-            rating = data['rating']
-            if rating == 's':
-                safe = True
         url = data['file_url']
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
@@ -277,6 +260,15 @@ class Images:
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
         await ctx.send(embed=embed)
+
+    def fixDanbooruJSON(self, temp):
+        temp = temp.replace("\'", "\"")
+        temp = temp.replace("True", "\"True\"")
+        temp = temp.replace("False", "\"False\"")
+        temp = temp.replace("None", "\"None\"")
+        temp = temp.replace("[", "")
+        temp = temp.replace("]", "")
+        return temp
 
     @commands.command()
     async def tag(self, ctx, tag):

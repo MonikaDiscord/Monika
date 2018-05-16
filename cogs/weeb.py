@@ -266,7 +266,7 @@ class Images:
         await ctx.send(embed=embed)
 
     def fixDanbooruJSON(self, temp):
-        temp = temp.replace("\'", "\"", 1)
+        temp = temp.replace("{\'", "{\"")
         temp = temp.replace("\': ", "\": ")
         temp = temp.replace("\": \'", "\": \"")
         temp = temp.replace("\', \'", "\", \"")

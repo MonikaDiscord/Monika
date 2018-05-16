@@ -234,7 +234,12 @@ class Images:
         """Posts an image directly from Project Danbooru."""
         client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
         if ctx.message.channel.is_nsfw():
-            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e")))
+            try:
+                temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
+                data = json.loads(temp)
+                url = data['file_url']
+            except Exception:
+                temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
             data = json.loads(temp)
             url = data['file_url']
         else:
@@ -253,7 +258,12 @@ class Images:
     async def safebooru(self, ctx):
         """Same as danbooru, but looks for safe images."""
         client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
-        temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s")))
+        try:
+            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
+            data = json.loads(temp)
+            url = data['file_url']
+        except Exception:
+            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
             data = json.loads(temp)
         url = data['file_url']
         if ctx.message.guild is not None:

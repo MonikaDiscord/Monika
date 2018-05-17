@@ -47,10 +47,10 @@ class Weeb:
             color = discord.Colour.blue()
         embed = discord.Embed(color=color, title="Kiss!")
         if ctx.message.author.id == user.id:
-            embed.description = "You're lonely, aren't you? I'll kiss you, if you want~".format(ctx.message.author.name)
+            embed.description = "You're lonely, aren't you? I'll kiss you, if you want~"
         else:
             embed.description = "{} kissed {}... Aww...".format(ctx.message.author.name, user.name)
-        embed = discord.Embed(color=color, title="Kiss!", description=desc)
+        embed = discord.Embed(color=color, title="Kiss!")
         embed.set_image(url=url)
         embed.set_footer(text="Powered by weeb.sh")
         await ctx.send(embed=embed)

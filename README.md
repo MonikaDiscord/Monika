@@ -21,7 +21,7 @@ We won't be helping you with obtaining these.
 * obviously Discord token
 * weeb.sh (also needs waifu insult scope and generate love ship scope)
 * discordbots.org
-* danbooru.donmai.us (WIP)
+* danbooru.donmai.us
 * NOT NEEDED YET: Google Perspective API (coming soon!)
 ## Setup
 1. Install all the prerequisites.

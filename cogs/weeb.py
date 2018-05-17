@@ -45,7 +45,12 @@ class Weeb:
             color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Kiss!", description="{} kissed {}... Aww...".format(ctx.message.author.name, user.name))
+        embed = discord.Embed(color=color, title="Kiss!")
+        if ctx.message.author.id == user.id:
+            embed.description = "You're lonely, aren't you? I'll kiss you, if you want~".format(ctx.message.author.name)
+        else:
+            embed.description = "{} kissed {}... Aww...".format(ctx.message.author.name, user.name)
+        embed = discord.Embed(color=color, title="Kiss!", description=desc)
         embed.set_image(url=url)
         embed.set_footer(text="Powered by weeb.sh")
         await ctx.send(embed=embed)
@@ -225,23 +230,55 @@ class Images:
     def __init__(self, bot):
         self.bot = bot
 
+    def fixDanbooruJSON(self, temp):
+        temp = temp.replace("{\'", "{\"")
+        temp = temp.replace("\': ", "\": ")
+        temp = temp.replace("\": \'", "\": \"")
+        temp = temp.replace("\', \'", "\", \"")
+        temp = temp.replace(", \'", ", \"")
+        temp = temp.replace("\'}", "\"}")
+        temp = temp.replace("True", "\"True\"")
+        temp = temp.replace("False", "\"False\"")
+        temp = temp.replace("None", "\"None\"")
+        temp = temp.replace("[", "")
+        temp = temp.replace("]", "")
+        return temp        
+        
     @commands.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
         client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
         if ctx.message.channel.is_nsfw():
-            temp = str(client.post_list(random=True, limit=1))
-            temp = temp.replace("\'", "\"")
-            temp = temp.replace("True", "\"True\"")
-            temp = temp.replace("False", "\"False\"")
-            temp = temp.replace("None", "\"None\"")
-            temp = temp.replace("[", "")
-            temp = temp.replace("]", "")
-            data = json.loads(temp)
+            image_found = False
+            while not image_found:
+                temp = fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
+                data = json.loads(temp)
+                if 'file_url' in data:
+                    image_found = True
             url = data['file_url']
         else:
             await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel.")
             return
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by Project Danbooru.")
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    async def safebooru(self, ctx):
+        """Same as danbooru, but looks for safe images."""
+        client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
+        image_found = False
+        while not image_found:
+            temp = fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
+            data = json.loads(temp)
+            if 'file_url' in data:
+                image_found = True
+        url = data['file_url']
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
         else:

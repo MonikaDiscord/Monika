@@ -52,14 +52,13 @@ class Monika(commands.AutoShardedBot):
         if not self.testing:
             self.loop.create_task(self.updatedbl())
 
-        if not self.testing:
-            if __name__ == '__main__':
-                for cog in self.settings.cogs:
-                    try:
-                        self.load_extension(cog)
-                    except Exception as e:
-                        print(f'Oops! I think I broke {cog}...', file=sys.stderr)
-                        self.rclient.captureException()
+        if __name__ == '__main__':
+            for cog in self.settings.cogs:
+                try:
+                    self.load_extension(cog)
+                except Exception as e:
+                    print(f'Oops! I think I broke {cog}...', file=sys.stderr)
+                    self.rclient.captureException()
 
 
     async def updatedbl(self):

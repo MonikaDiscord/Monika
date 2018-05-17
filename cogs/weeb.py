@@ -250,7 +250,7 @@ class Images:
         if ctx.message.channel.is_nsfw():
             image_found = False
             while not image_found:
-                temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
+                temp = fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
                 data = json.loads(temp)
                 if 'file_url' in data:
                     image_found = True
@@ -273,7 +273,7 @@ class Images:
         client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
         image_found = False
         while not image_found:
-            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
+            temp = fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
             data = json.loads(temp)
             if 'file_url' in data:
                 image_found = True

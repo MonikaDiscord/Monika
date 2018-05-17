@@ -229,6 +229,20 @@ class Images:
     def __init__(self, bot):
         self.bot = bot
 
+    def fixDanbooruJSON(self, temp):
+        temp = temp.replace("{\'", "{\"")
+        temp = temp.replace("\': ", "\": ")
+        temp = temp.replace("\": \'", "\": \"")
+        temp = temp.replace("\', \'", "\", \"")
+        temp = temp.replace(", \'", ", \"")
+        temp = temp.replace("\'}", "\"}")
+        temp = temp.replace("True", "\"True\"")
+        temp = temp.replace("False", "\"False\"")
+        temp = temp.replace("None", "\"None\"")
+        temp = temp.replace("[", "")
+        temp = temp.replace("]", "")
+        return temp        
+        
     @commands.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
@@ -272,20 +286,6 @@ class Images:
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
         await ctx.send(embed=embed)
-
-    def fixDanbooruJSON(self, temp):
-        temp = temp.replace("{\'", "{\"")
-        temp = temp.replace("\': ", "\": ")
-        temp = temp.replace("\": \'", "\": \"")
-        temp = temp.replace("\', \'", "\", \"")
-        temp = temp.replace(", \'", ", \"")
-        temp = temp.replace("\'}", "\"}")
-        temp = temp.replace("True", "\"True\"")
-        temp = temp.replace("False", "\"False\"")
-        temp = temp.replace("None", "\"None\"")
-        temp = temp.replace("[", "")
-        temp = temp.replace("]", "")
-        return temp
 
     @commands.command()
     async def tag(self, ctx, tag):

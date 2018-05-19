@@ -9,10 +9,8 @@ If you are able to contribute, we encourage doing so!
 To invite Monika, use this [link](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot "Invite Link")!
 ## Prerequisites
 * Python 3.6
-* discord.py rewrite
 * Lavalink's latest build (put it in `cogs/scripts/lavalink`).
-* lavalink.py
-* A sentry.io account and the module `raven`.
+* A sentry.io account.
 * pybooru.py
 * A PostgreSQL server (scroll down to the last section!).
 * All the API keys below.
@@ -25,10 +23,11 @@ We won't be helping you with obtaining these.
 * NOT NEEDED YET: Google Perspective API (coming soon!)
 ## Setup
 1. Install all the prerequisites.
-2. Edit cogs/scripts/settings.py appropriately.
-3. Edit cogs/scripts/lavalink/application.yml to set the password and the Sentry DSN.
-4. Run cogs/scripts/lavalink/Lavalink.jar with `java -jar`.
-5. Run monika.py with `python3`.
+2. Run `pip install -r requirements.txt`.
+3. Edit cogs/scripts/settings.py appropriately.
+4. Edit cogs/scripts/lavalink/application.yml to set the password and the Sentry DSN.
+5. Run cogs/scripts/lavalink/Lavalink.jar with `java -jar`.
+6. Run monika.py with `python3`.
 ## Customizing a PostgreSQL server to Monika's needs
 First, create a database named `monika`.
 Go into the database.

@@ -28,13 +28,13 @@ class Administration:
         db.commit()
         await ctx.send("``{}``'s prefix has been reset to ``$!``.".format(ctx.message.guild.name))
 
-    @commands.group(invoke_without_command=True) 
+    @commands.group(invoke_without_command=True)
     @commands.has_permissions(manage_messages=True)
     async def filter(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send("You need to use a subcommand.")
             await ctx.send("Available subcommands for filter: ``filter add``, ``filter remove``, and ``filter list``.")
-            
+
     @filter.command()
     @commands.has_permissions(manage_messages=True)
     async def add(self, ctx, word):
@@ -44,7 +44,7 @@ class Administration:
         cursor.execute(sql, [word, ctx.guild.id])
         db.commit()
         await ctx.send("That word has been added to the filter!")
-        
+
     @filter.command()
     @commands.has_permissions(manage_messages=True)
     async def remove(self, ctx, word):
@@ -54,7 +54,7 @@ class Administration:
         cursor.execute(sql, [word, ctx.guild.id])
         db.commit()
         await ctx.send("That word has been removed from the filter!")
-        
+
     @filter.command()
     @commands.has_permissions(manage_messages=True)
     async def list(self, ctx):
@@ -62,15 +62,15 @@ class Administration:
         cursor = db.cursor()
         sql = "SELECT filteredwords FROM guilds WHERE id = %s"
         cursor.execute(sql, [ctx.guild.id])
-        list = ""
+        wordlist = ""
         for word in cursor.fetchall()[0][0]:
-            list += (word + "\n")
+            wordlist += (word + "\n")
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blue()
-        e = discord.Embed(color=color, title=f"List of filtered words in {ctx.guild.name}", description=list)
+        e = discord.Embed(color=color, title=f"List of filtered words in {ctx.guild.name}", description=wordlist)
         await ctx.author.send(embed=e)
-    
+
 def setup(bot):
     bot.add_cog(Administration(bot))

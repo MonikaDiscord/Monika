@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 import asyncio
-from .scripts import checks
 import math
 
 class Moderation:
@@ -27,7 +26,6 @@ class Moderation:
             channel = ctx.message.channel
             author = ctx.message.author
             server = author.guild
-            is_bot = self.bot.user.bot
             has_permissions = channel.permissions_for(server.me).manage_messages
 
             to_delete = []

@@ -1,8 +1,5 @@
-import discord
 from discord.ext import commands
 from .settings import settings
-import aiohttp
-import sqlite3
 import psycopg2
 
 s = settings()

@@ -99,7 +99,9 @@ class Fun:
             me = ctx.me
             perms = me.permissions_in(ctx.channel)
             if not perms.manage_messages or not perms.manage_nicknames:
-                raise discord.Forbidden(None,"nope")
+                raise 
+                
+                (None,"nope")
             reasone = "{} told me to".format(ctx.message.author.name)
             author = ctx.message.author
             nc = user.nick
@@ -109,7 +111,7 @@ class Fun:
             await asyncio.sleep(int(time))
             await user.edit(nick=nc, reason=reasone)
             author.send("{} has been de-monified.".format(user.name))
-        except discord.Forbidden as f:
+        except discord.Forbidden:
             await ctx.send("I wasn't allowed to do that, sorry!")
         except Exception as e:
             sa = "```"+e+"```"

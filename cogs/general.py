@@ -88,8 +88,8 @@ class General:
         embed.add_field(name="Roles", value=usr_roles, inline=False)
         try:
             embed.add_field(name="Playing", value=user.game.name, inline=False)
-        except:
-            pass
+        except Exception:
+            embed.add_field(name="Playing", value="Nothing", inline=False)
         embed.add_field(name="Date of Account Creation", value=user.created_at, inline=False)
         await ctx.send(embed=embed)
 

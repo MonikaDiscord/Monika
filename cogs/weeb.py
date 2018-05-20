@@ -47,10 +47,10 @@ class Weeb:
             color = discord.Colour.blue()
         embed = discord.Embed(color=color, title="Kiss!")
         if ctx.message.author.id == user.id:
-            embed.description = "You're lonely, aren't you? I'll kiss you, if you want~".format(ctx.message.author.name)
+            embed.description = "You're lonely, aren't you? I'll kiss you, if you want~"
         else:
             embed.description = "{} kissed {}... Aww...".format(ctx.message.author.name, user.name)
-        embed = discord.Embed(color=color, title="Kiss!", description=desc)
+        embed = discord.Embed(color=color, title="Kiss!")
         embed.set_image(url=url)
         embed.set_footer(text="Powered by weeb.sh")
         await ctx.send(embed=embed)
@@ -251,7 +251,7 @@ class Images:
         if ctx.message.channel.is_nsfw():
             image_found = False
             while not image_found:
-                temp = fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
+                temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
                 data = json.loads(temp)
                 if 'file_url' in data:
                     image_found = True
@@ -274,7 +274,7 @@ class Images:
         client = Danbooru('danbooru', username='placeholder', api_key=self.bot.settings.danboorutoken)
         image_found = False
         while not image_found:
-            temp = fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
+            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
             data = json.loads(temp)
             if 'file_url' in data:
                 image_found = True

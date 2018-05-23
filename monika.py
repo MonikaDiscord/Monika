@@ -47,9 +47,16 @@ class Monika(commands.AutoShardedBot):
                     print(f"Oops! I broke the {file} module...")
                     self.rclient.captureException()
 
+    def run():
+        super().run(self.config.token)
+
     def get_prefix(msg):
         return _runprefixcall(self, msg)
 
     async def get_coins(id):
         sql = "SELECT coins FROM users WHERE id = $1"
         return await self.db.fetchval(sql, id)
+
+
+bot = Monika()
+bot.run()

@@ -5,7 +5,7 @@ import json
 from raven import Client
 from .utilities import checks
 
-class Monika(commands.AutoShardedBot)
+class Monika(commands.AutoShardedBot):
 
     def __init__(self):
 

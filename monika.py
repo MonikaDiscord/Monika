@@ -24,17 +24,17 @@ class Monika(commands.AutoShardedBot):
             await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[]);")
 
-        self.loop.run_until_complete(_init_db())
+        asyncio.ensure_future(_init_db())
 
         self.rclient = Client(self.config['sentry_dsn'])
 
         async def _prefixcall(bot, msg):
-            if msg.guild is None: return commands.when_mentioned_or('$!')
+            if msg.guild is None: return commands.when_mentioned_or('$!!')
             sql = "SELECT prefix FROM guilds WHERE id = $1"
             return await self.db.fetchval(sql, msg.guild.id)
 
         def _runprefixcall(bot, msg):
-            self.loop.run_until_complete(_prefixcall(bot, msg))
+            return asyncio.ensure_future(_prefixcall(bot, msg))
 
         super().__init__(command_prefix=_runprefixcall,
                          description="Hi, I'm Monika! Welcome to the Literature Club! Here are my commands:",
@@ -49,7 +49,10 @@ class Monika(commands.AutoShardedBot):
                     print(f"Oops! I broke the {file} module...")
                     self.rclient.captureException()
 
-    def get_prefix(msg):
+    def run(self):
+        super().run(config.get('token'))
+
+    def prefix(msg):
         return _runprefixcall(self, msg)
 
     async def get_coins(id):
@@ -59,4 +62,4 @@ class Monika(commands.AutoShardedBot):
 
 config = json.loads(open('config.json', 'r').read())
 bot = Monika()
-bot.run(config['token'], bot=True, reconnect=True)
+bot.run()

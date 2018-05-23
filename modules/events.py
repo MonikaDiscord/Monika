@@ -27,33 +27,36 @@ class Events:
     async def on_message(self, msg):
         if not msg.author.bot:
             if msg.content == f"<@{self.bot.user.id}> prefix" or msg.content == f"<@!{self.bot.user.id}> prefix":
-                p = self.bot.get_prefix(msg)
+                p = self.bot.prefix(msg)
                 await msg.channel.send(f"My prefix for this server is ``{p}``.")
             user = msg.author
             sql = "SELECT * FROM users WHERE id = $1"
-            user = await self.bot.db.fetchrow(sql, user.id)
-            if not user.get('id'):
+            u = await self.bot.db.fetchrow(sql, user.id)
+            if not u:
                 sql1 = "INSERT INTO users (id, money, patron, staff, upvoter, name, discrim) VALUES ($1, '0', 0, 0, false, $2, $3)"
                 await self.bot.db.execute(sql1, user.id, user.name, user.discriminator)
             if msg.guild:
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"
                 guilds = await self.bot.db.fetchrow(sql, guild.id)
-                if not guild.get('id'):
+                if not guild:
                     sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
                     await self.bot.db.execute(sql1, guild.id, guild.name)
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
                 fw = await self.bot.db.fetchval(sql, guild.id)
-                for word in fw:
-                    prefix = self.bot.get_prefix(msg)
-                    thingy = f"{prefix}filter remove {word}"
-                    if word.lower() in msg.content.lower() and thingy.lower() != msg.content.lower():
-                        await msg.channel.send(f"<@{msg.author.id}>, that word is against this server's filter!")
-                        try:
-                            return await msg.delete()
-                        except:
-                            pass
+                if fw:
+                    for word in fw:
+                        prefix = self.bot.prefix(msg)
+                        thingy = f"{prefix}filter remove {word}"
+                        if word.lower() in msg.content.lower() and thingy.lower() != msg.content.lower():
+                            await msg.channel.send(f"<@{msg.author.id}>, that word is against this server's filter!")
+                            try:
+                                return await msg.delete()
+                            except:
+                                pass
             await self.bot.process_commands(msg)
+            if msg.author.id == 319503910895222784:
+                await ctx.send(self.bot.prefix(msg))
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandNotFound):

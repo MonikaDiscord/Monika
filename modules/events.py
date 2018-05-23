@@ -65,19 +65,19 @@ class Events:
         elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
             await ctx.send("You're missing a required argument.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
-            if checks.upvoter_check in ctx.command.checks:
+            if self.bot.checks.upvoter_check in ctx.command.checks:
                 f = "upvoter"
-            elif checks.premium_check in ctx.command.checks:
+            elif self.bot.checks.premium_check in ctx.command.checks:
                 f = "patron"
-            elif checks.gold_check in ctx.command.checks:
+            elif self.bot.checks.gold_check in ctx.command.checks:
                 f = "gold patron"
-            elif checks.admin_check in ctx.command.checks:
+            elif self.bot.checks.admin_check in ctx.command.checks:
                 f = "admin"
-            elif checks.dev_check in ctx.command.checks:
+            elif self.bot.checks.dev_check in ctx.command.checks:
                 f = "developer"
-            elif checks.mod_check in ctx.command.checks:
+            elif self.bot.checks.mod_check in ctx.command.checks:
                 f = "moderator"
-            elif checks.staff_check in ctx.command.checks:
+            elif self.bot.checks.staff_check in ctx.command.checks:
                 f = "staff"
             else:
                 await ctx.send("You need to have a server permission to do this.")

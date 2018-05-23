@@ -3,7 +3,7 @@ from discord.ext import commands
 import asyncpg, aiohttp
 import json
 from raven import Client
-from .utilities import checks
+from utilities import checks
 import asyncio
 
 class Monika(commands.AutoShardedBot):
@@ -11,6 +11,7 @@ class Monika(commands.AutoShardedBot):
     def __init__(self):
 
         self.config = json.loads(open('config.json', 'r').read())
+        self.checks = checks
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -21,7 +22,7 @@ class Monika(commands.AutoShardedBot):
             await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[]);")
 
-        self.loop.create_task(_init_db())
+        self.loop.run_until_complete(_init_db())
 
         self.rclient = Client(self.config['sentry_dsn'])
 

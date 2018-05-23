@@ -56,7 +56,7 @@ class Events:
                                 pass
             await self.bot.process_commands(msg)
             if msg.author.id == 319503910895222784:
-                p = await self.bot.prefix(msg)
+                p = self.bot.prefix(msg)
                 await msg.channel.send(p)
 
     async def on_command_error(self, ctx, error):

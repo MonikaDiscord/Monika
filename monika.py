@@ -6,34 +6,27 @@ from raven import Client
 from utilities import checks
 import asyncio
 import os
+import psycopg2
 
-config = json.loads(open('config.json', 'r').read())
-dbpass = config['dbpass']
-dbuser = config['dbuser']
-govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
-db = await asyncpg.create_pool(**govinfo)
-
-async def _prefixcall(bot, msg):
-    prefixes = [f'<@{bot.user.id}> ', f'<@!{bot.user.id}> ']
-    if msg.guild is None:
-        prefixes.append("$!")
-        return prefixes
-    sql = "SELECT prefix FROM guilds WHERE id = $1"
-    r = await db.fetchval(sql, msg.guild.id)
-    if not r:
-        prefixes.append("$!")
-        return prefixes
+def _prefixcall(bot, msg):
+    config = json.loads(open('config.json', 'r').read())
+    if msg.guild is None: return "$!"
+    dsn = f"dbname='monika' user='{config.get('dbuser')}' host='localhost' password='{config.get('dbpass')}'"
+    db = psycopg2.connect(dsn)
+    cursor = db.cursor()
+    sql = "SELECT prefix FROM guilds WHERE id = %s"
+    cursor.execute(sql, [msg.guild.id])
+    r = cursor.fetchone()
+    if r:
+        return r[0]
     else:
-        prefixes.append(r)
-        return prefixes
+        return '$!'
 
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
 
-        super().__init__(command_prefix=_prefixcall,
-                         description="Hi, I'm Monika! Welcome to the Literature Club! Here are my commands:",
-                         pm_help=None)
+        super().__init__(command_prefix=_prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks
@@ -49,6 +42,8 @@ class Monika(commands.AutoShardedBot):
 
         self.loop.create_task(_init_db())
 
+
+
         self.rclient = Client(self.config.get('sentry_dsn'))
 
         for file in os.listdir("modules"):
@@ -61,16 +56,15 @@ class Monika(commands.AutoShardedBot):
                     self.rclient.captureException()
 
     def run(self):
-        super().run(config.get('token'))
+        super().run(self.config.get('token'))
 
-    async def prefix(self, msg):
-        return await _prefixcall(self, msg)
+    def prefix(self, msg):
+        return _prefixcall(self, msg)
 
     async def get_coins(id):
         sql = "SELECT coins FROM users WHERE id = $1"
         return await self.db.fetchval(sql, id)
 
-
-config = json.loads(open('config.json', 'r').read())
 bot = Monika()
+
 bot.run()

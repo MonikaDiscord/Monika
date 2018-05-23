@@ -49,9 +49,6 @@ class Monika(commands.AutoShardedBot):
                     print(f"Oops! I broke the {file} module...")
                     self.rclient.captureException()
 
-    def run():
-        super().run(self.config.token, bot=True, reconnect=True)
-
     def get_prefix(msg):
         return _runprefixcall(self, msg)
 
@@ -60,5 +57,6 @@ class Monika(commands.AutoShardedBot):
         return await self.db.fetchval(sql, id)
 
 
+config = json.loads(open('config.json', 'r').read())
 bot = Monika()
-bot.run()
+bot.run(config['token'], bot=True, reconnect=True)

@@ -86,7 +86,7 @@ class Events:
 
     async def on_guild_join(self, guild):
         c = self.bot.get_channel(447553435999666196)
-        e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(bot.guilds)} guilds!")
+        e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(self.bot.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)
         e.add_field(name="Owner", value=guild.owner)
@@ -98,7 +98,7 @@ class Events:
 
     async def on_guild_remove(self, guild):
         c = self.bot.get_channel(447553435999666196)
-        e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(bot.guilds)} other guilds!")
+        e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(self.bot.guilds)} other guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)
         e.add_field(name="Owner", value=guild.owner)

@@ -43,7 +43,7 @@ class Events:
                 sql = "SELECT * FROM guilds WHERE id = $1"
                 guilds = await self.db.fetchrow(sql, guild.id)
                 if not guild.get('id'):
-                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords) VALUES ($1, '$!', $2, '{}')"
+                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
                     await self.db.execute(sql1, guild.id, guild.name)
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
                 fw = await self.db.fetchval(sql, guild.id)

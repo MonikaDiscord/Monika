@@ -19,10 +19,9 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks
 
-        config = json.loads(open('config.json', 'r').read())
-        dbpass = config['dbpass']
-        dbuser = config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+        dbpass = self.config['dbpass']
+        dbuser = self.config['dbuser']
+        govinfo = {"user": self.dbuser, "password": self.dbpass, "database": "monika", "host": "localhost"}
 
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)

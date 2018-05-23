@@ -27,7 +27,7 @@ class Events:
     async def on_message(self, msg):
         if not msg.author.bot:
             if msg.content == f"<@{self.bot.user.id}> prefix" or msg.content == f"<@!{self.bot.user.id}> prefix":
-                p = self.bot.prefix(msg)
+                p = await self.bot.get_prefix(msg)
                 await msg.channel.send(f"My prefix for this server is ``{p}``.")
             user = msg.author
             sql = "SELECT * FROM users WHERE id = $1"
@@ -55,9 +55,6 @@ class Events:
                             except:
                                 pass
             await self.bot.process_commands(msg)
-            if msg.author.id == 319503910895222784:
-                p = self.bot.prefix(msg)
-                await msg.channel.send(p)
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandNotFound):

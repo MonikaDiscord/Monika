@@ -7,32 +7,21 @@ from utilities import checks
 import asyncio
 import os
 import psycopg2
-
-def _prefixcall(bot, msg):
-    config = json.loads(open('config.json', 'r').read())
-    if msg.guild is None: return "$!"
-    dsn = f"dbname='monika' user='{config.get('dbuser')}' host='localhost' password='{config.get('dbpass')}'"
-    db = psycopg2.connect(dsn)
-    cursor = db.cursor()
-    sql = "SELECT prefix FROM guilds WHERE id = %s"
-    cursor.execute(sql, [msg.guild.id])
-    r = cursor.fetchone()
-    if r:
-        return r[0]
-    else:
-        return '$!'
+from prefix import Prefix
 
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
 
-        super().__init__(command_prefix=_prefixcall)
+        self.prefix = Prefix()
+        super().__init__(command_prefix=self.prefix.prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks
 
-        dbpass = self.config['dbpass']
-        dbuser = self.config['dbuser']
+        config = json.loads(open('config.json', 'r').read())
+        dbpass = config['dbpass']
+        dbuser = config['dbuser']
         govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
 
         async def _init_db():
@@ -41,8 +30,6 @@ class Monika(commands.AutoShardedBot):
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[]);")
 
         self.loop.create_task(_init_db())
-
-
 
         self.rclient = Client(self.config.get('sentry_dsn'))
 
@@ -58,8 +45,8 @@ class Monika(commands.AutoShardedBot):
     def run(self):
         super().run(self.config.get('token'))
 
-    def prefix(self, msg):
-        return _prefixcall(self, msg)
+    async def get_prefix(self, msg):
+        return await self.prefix.prefixcall(self, msg)
 
     async def get_coins(id):
         sql = "SELECT coins FROM users WHERE id = $1"

@@ -13,8 +13,8 @@ class Monika(commands.AutoShardedBot):
 
     def __init__(self):
 
-        self.prefix = Prefix()
-        super().__init__(command_prefix=self.prefix.prefixcall)
+        self._prefix = Prefix()
+        super().__init__(command_prefix=self._prefix.prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks
@@ -41,16 +41,13 @@ class Monika(commands.AutoShardedBot):
                     print(f"Oops! I broke the {file} module...")
                     self.rclient.captureException()
 
-    def run(self):
-        super().run(self.config.get('token'))
-
     async def get_prefix(self, msg):
-        return await self.prefix.prefixcall(self, msg)
+        return await self._prefix.prefixcall(self, msg)
 
     async def get_coins(id):
         sql = "SELECT coins FROM users WHERE id = $1"
         return await self.db.fetchval(sql, id)
 
 bot = Monika()
-
-bot.run()
+config = json.loads(open('config.json', 'r').read())
+bot.run(config.get('token'))

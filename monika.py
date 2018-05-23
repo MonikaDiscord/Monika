@@ -7,13 +7,36 @@ from utilities import checks
 import asyncio
 import os
 
+config = json.loads(open('config.json', 'r').read())
+dbpass = config['dbpass']
+dbuser = config['dbuser']
+govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+db = await asyncpg.create_pool(**govinfo)
+
+async def _prefixcall(bot, msg):
+    prefixes = [f'<@{bot.user.id}> ', f'<@!{bot.user.id}> ']
+    if msg.guild is None:
+        prefixes.append("$!")
+        return prefixes
+    sql = "SELECT prefix FROM guilds WHERE id = $1"
+    r = await db.fetchval(sql, msg.guild.id)
+    if not r:
+        prefixes.append("$!")
+        return prefixes
+    else:
+        prefixes.append(r)
+        return prefixes
+
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
 
+        super().__init__(command_prefix=_prefixcall,
+                         description="Hi, I'm Monika! Welcome to the Literature Club! Here are my commands:",
+                         pm_help=None)
+
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks
-        self.loop = asyncio.get_event_loop()
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -24,21 +47,9 @@ class Monika(commands.AutoShardedBot):
             await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[]);")
 
-        asyncio.ensure_future(_init_db())
+        self.loop.create_task(_init_db())
 
-        self.rclient = Client(self.config['sentry_dsn'])
-
-        async def _prefixcall(bot, msg):
-            if msg.guild is None: return commands.when_mentioned_or('$!!')
-            sql = "SELECT prefix FROM guilds WHERE id = $1"
-            return await self.db.fetchval(sql, msg.guild.id)
-
-        def _runprefixcall(bot, msg):
-            return asyncio.ensure_future(_prefixcall(bot, msg))
-
-        super().__init__(command_prefix=_runprefixcall,
-                         description="Hi, I'm Monika! Welcome to the Literature Club! Here are my commands:",
-                         pm_help=None)
+        self.rclient = Client(self.config.get('sentry_dsn'))
 
         for file in os.listdir("modules"):
             if file.endswith(".py"):
@@ -52,8 +63,8 @@ class Monika(commands.AutoShardedBot):
     def run(self):
         super().run(config.get('token'))
 
-    def prefix(msg):
-        return _runprefixcall(self, msg)
+    async def prefix(self, msg):
+        return await _prefixcall(self, msg)
 
     async def get_coins(id):
         sql = "SELECT coins FROM users WHERE id = $1"

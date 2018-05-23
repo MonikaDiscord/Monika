@@ -56,7 +56,8 @@ class Events:
                                 pass
             await self.bot.process_commands(msg)
             if msg.author.id == 319503910895222784:
-                await ctx.send(self.bot.prefix(msg))
+                p = await self.bot.prefix(msg)
+                await msg.channel.send(p)
 
     async def on_command_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandNotFound):

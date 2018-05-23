@@ -26,7 +26,7 @@ def updatesource():
   except:
     return print('git was not found, so Monika will not be updated.')
   if c != 0: print('Monika could not update.')
-  
+
 def runmonika():
   if sys.version_info >= (3, 6):
     while True:

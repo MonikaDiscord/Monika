@@ -46,7 +46,7 @@ class Events:
                 fw = await self.bot.db.fetchval(sql, guild.id)
                 if fw:
                     for word in fw:
-                        prefix = self.bot.prefix(msg)
+                        prefix = await self.bot.get_prefix(msg)
                         thingy = f"{prefix}filter remove {word}"
                         if word.lower() in msg.content.lower() and thingy.lower() != msg.content.lower():
                             await msg.channel.send(f"<@{msg.author.id}>, that word is against this server's filter!")

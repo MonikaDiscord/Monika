@@ -6,7 +6,6 @@ class Events:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.event
     async def on_ready(self):
         await self.bot.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
@@ -17,7 +16,6 @@ class Events:
         except:
             pass
 
-    @commands.event
     async def on_shard_ready(self, id):
         c = self.bot.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title=f"Shard {id} ready!")
@@ -26,7 +24,6 @@ class Events:
         except:
             pass
 
-    @commands.event
     async def on_message(self, msg):
         if not msg.author.bot:
             if msg.content == f"<@{self.bot.user.id}> prefix" or msg.content == f"<@!{self.bot.user.id}> prefix":
@@ -37,7 +34,7 @@ class Events:
             user = await self.bot.db.fetchrow(sql, user.id)
             if not user.get('id'):
                 sql1 = "INSERT INTO users (id, money, patron, staff, upvoter, name, discrim) VALUES ($1, '0', 0, 0, false, $2, $3)"
-                await await self.bot.db.execute(sql1, user.id, user.name, user.discriminator)
+                await self.bot.db.execute(sql1, user.id, user.name, user.discriminator)
             if msg.guild:
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"
@@ -58,7 +55,6 @@ class Events:
                             pass
             await self.bot.process_commands(msg)
 
-    @commands.event
     async def on_command_error(self, ctx, error):
         if isinstance(error, discord.ext.commands.errors.CommandNotFound):
             pass
@@ -88,7 +84,6 @@ class Events:
                 e = discord.Embed(title="An exception has occured.", description=f"```{error}```\nIf you know how to fix this, then you can check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).\nOtherwise, please report it at the [Monika Discord server](https://discord.gg/DspkaRD).")
                 await ctx.send(embed=e)
 
-    @commands.event
     async def on_guild_join(self, guild):
         c = self.bot.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(bot.guilds)} guilds!")
@@ -101,7 +96,6 @@ class Events:
         except:
             pass
 
-    @commands.event
     async def on_guild_remove(self, guild):
         c = self.bot.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(bot.guilds)} other guilds!")

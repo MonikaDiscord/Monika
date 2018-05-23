@@ -5,6 +5,7 @@ import json
 from raven import Client
 from utilities import checks
 import asyncio
+import os
 
 class Monika(commands.AutoShardedBot):
 
@@ -12,6 +13,7 @@ class Monika(commands.AutoShardedBot):
 
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks
+        self.loop = asyncio.get_event_loop()
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -48,7 +50,7 @@ class Monika(commands.AutoShardedBot):
                     self.rclient.captureException()
 
     def run():
-        super().run(self.config.token)
+        super().run(self.config.token, bot=True, reconnect=True)
 
     def get_prefix(msg):
         return _runprefixcall(self, msg)

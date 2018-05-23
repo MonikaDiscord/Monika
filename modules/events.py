@@ -8,9 +8,9 @@ class Events:
 
     @commands.event
     async def on_ready(self):
-        await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
+        await self.bot.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
-        c = self.get_channel(447553320752513053)
+        c = self.bot.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title="All shards ready!")
         try:
             await c.send(embed=e)
@@ -19,7 +19,7 @@ class Events:
 
     @commands.event
     async def on_shard_ready(self, id):
-        c = self.get_channel(447553320752513053)
+        c = self.bot.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title=f"Shard {id} ready!")
         try:
             await c.send(embed=e)
@@ -29,26 +29,26 @@ class Events:
     @commands.event
     async def on_message(self, msg):
         if not msg.author.bot:
-            if msg.content == f"<@{self.user.id}> prefix" or msg.content == f"<@!{self.user.id}> prefix":
-                p = self.get_prefix(msg)
+            if msg.content == f"<@{self.bot.user.id}> prefix" or msg.content == f"<@!{self.bot.user.id}> prefix":
+                p = self.bot.get_prefix(msg)
                 await msg.channel.send(f"My prefix for this server is ``{p}``.")
             user = msg.author
             sql = "SELECT * FROM users WHERE id = $1"
-            user = await self.db.fetchrow(sql, user.id)
+            user = await self.bot.db.fetchrow(sql, user.id)
             if not user.get('id'):
                 sql1 = "INSERT INTO users (id, money, patron, staff, upvoter, name, discrim) VALUES ($1, '0', 0, 0, false, $2, $3)"
-                await await self.db.execute(sql1, user.id, user.name, user.discriminator)
+                await await self.bot.db.execute(sql1, user.id, user.name, user.discriminator)
             if msg.guild:
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"
-                guilds = await self.db.fetchrow(sql, guild.id)
+                guilds = await self.bot.db.fetchrow(sql, guild.id)
                 if not guild.get('id'):
                     sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
-                    await self.db.execute(sql1, guild.id, guild.name)
+                    await self.bot.db.execute(sql1, guild.id, guild.name)
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
-                fw = await self.db.fetchval(sql, guild.id)
+                fw = await self.bot.db.fetchval(sql, guild.id)
                 for word in fw:
-                    prefix = self.get_prefix(msg)
+                    prefix = self.bot.get_prefix(msg)
                     thingy = f"{prefix}filter remove {word}"
                     if word.lower() in msg.content.lower() and thingy.lower() != msg.content.lower():
                         await msg.channel.send(f"<@{msg.author.id}>, that word is against this server's filter!")
@@ -56,7 +56,7 @@ class Events:
                             return await msg.delete()
                         except:
                             pass
-            await self.process_commands(msg)
+            await self.bot.process_commands(msg)
 
     @commands.event
     async def on_command_error(self, ctx, error):
@@ -90,7 +90,7 @@ class Events:
 
     @commands.event
     async def on_guild_join(self, guild):
-        c = self.get_channel(447553435999666196)
+        c = self.bot.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(bot.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)
@@ -103,7 +103,7 @@ class Events:
 
     @commands.event
     async def on_guild_remove(self, guild):
-        c = self.get_channel(447553435999666196)
+        c = self.bot.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(bot.guilds)} other guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)

@@ -3,10 +3,6 @@ import sys
 from argparse import ArgumentParser
 
 i = sys.executable()
-p = ArgumentParser()
-p.add_argument('--testing', help='for testing mode (you probably don\'t want to use this)', action='store_true')
-a = p.parse_args()
-t = a.testing
 
 def getreqs():
   a = [i, '-m', 'pip', 'install', '--upgrade', '-r', 'requirements.txt']
@@ -18,7 +14,6 @@ def updatepip():
   a = [i, '-m', 'pip', 'install', '--upgrade', 'pip']
   c = subprocess.call(a)
   if c != 0: print('pip could not be updated.')
-  sys.exit(1)
 
 def updatesource():
   try:
@@ -41,4 +36,10 @@ def runmonika():
   else:
     print("Monika needs Python 3.6 or higher.")
 
-runmonika()
+def main():
+    updatepip()
+    getreqs()
+    updatesource()
+    runmonika()
+
+main()

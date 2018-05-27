@@ -33,7 +33,7 @@ def prefixcall(bot, msg):
         newprefixes = cursor.fetchall()
         newprefix = newprefixes[0][0]
         prefixes.append(newprefix)
-        return prefixes
+        return commands.when_mentioned_or(prefixes)
 
 
 class Monika(commands.AutoShardedBot):

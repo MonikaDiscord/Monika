@@ -20,49 +20,12 @@ class Developer:
     @commands.command(name='eval')
     async def _eval(self, ctx, *, body: str):
         """Evaluates code."""
-
-        env = {
-            'bot': self.bot,
-            'ctx': ctx,
-            'channel': ctx.channel,
-            'author': ctx.author,
-            'guild': ctx.guild,
-            'message': ctx.message,
-            '_': self._last_result
-        }
-
-        env.update(globals())
-
-        body = self.cleanup_code(body)
-        stdout = io.StringIO()
-
-        to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
-
         try:
-            exec(to_compile, env)
+            r = eval(cleanup_code(body))
         except Exception as e:
-            return await ctx.send(f'```py\n{e.__class__.__name__}: {e}\n```')
-
-        func = env['func']
-        try:
-            with redirect_stdout(stdout):
-                ret = await func()
-        except Exception as e:
-            value = stdout.getvalue()
-            await ctx.send(f'```py\n{value}{traceback.format_exc()}\n```')
+            await ctx.send(f'```py\n{type(e).__name__}: {e}\n```')
         else:
-            value = stdout.getvalue()
-            try:
-                await ctx.message.add_reaction('👌')
-            except:
-                pass
-
-            if ret is None:
-                if value:
-                    await ctx.send(f'```py\n{value}\n```')
-            else:
-                self._last_result = ret
-                await ctx.send(f'```py\n{value}{ret}\n```')
+            await ctx.send(f'```py\n{e}\n```')
 
 def setup(bot):
     bot.add_cog(Developer(bot))

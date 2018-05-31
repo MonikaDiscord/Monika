@@ -3,7 +3,11 @@ from discord.ext import commands
 import io
 import textwrap
 import traceback
+from utilities import checks
 from contextlib import redirect_stdout
+
+global checks
+checks = checks.Checks()
 
 class Developer:
 
@@ -18,10 +22,11 @@ class Developer:
         return content.strip('` \n')
 
     @commands.command(name='eval')
+    @checks.is_dev()
     async def _eval(self, ctx, *, body: str):
         """Evaluates code."""
         try:
-            r = eval(cleanup_code(body))
+            r = eval(self.cleanup_code(body))
         except Exception as e:
             await ctx.send(f'```py\n{type(e).__name__}: {e}\n```')
         else:

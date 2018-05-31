@@ -1,6 +1,9 @@
 import discord
 from discord.ext import commands
-from .scripts import checks
+from utilities import checks
+
+global checks
+checks = checks.Checks()
 
 class Economy:
 

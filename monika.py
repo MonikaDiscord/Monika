@@ -6,7 +6,6 @@ from raven import Client
 from utilities import checks
 import asyncio
 import os
-import psycopg2
 from prefix import Prefix
 
 class Monika(commands.AutoShardedBot):
@@ -18,6 +17,7 @@ class Monika(commands.AutoShardedBot):
 
         self.config = json.loads(open('config.json', 'r').read())
         self.checks = checks.Checks()
+        self.session = aiohttp.ClientSession()
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -77,6 +77,9 @@ class Monika(commands.AutoShardedBot):
                 if not guilds:
                     sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
                     await self.db.execute(sql1, guild.id, guild.name)
+                r = discord.utils.get(msg.author.roles, name="Muted")
+                if r:
+                    return await msg.delete()
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
                 fw = await self.db.fetchval(sql, guild.id)
                 if fw:

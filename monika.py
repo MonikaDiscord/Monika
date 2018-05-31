@@ -17,7 +17,7 @@ class Monika(commands.AutoShardedBot):
         super().__init__(command_prefix=self._prefix.prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
-        self.checks = checks
+        self.checks = checks.Checks()
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -74,7 +74,7 @@ class Monika(commands.AutoShardedBot):
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"
                 guilds = await self.db.fetchrow(sql, guild.id)
-                if not guild:
+                if not guilds:
                     sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
                     await self.db.execute(sql1, guild.id, guild.name)
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
@@ -147,7 +147,7 @@ class Monika(commands.AutoShardedBot):
     async def get_prefix(self, msg):
         return await self._prefix.prefixcall(self, msg)
 
-    async def get_coins(id):
+    async def get_coins(self, id):
         sql = "SELECT coins FROM users WHERE id = $1"
         return await self.db.fetchval(sql, id)
 

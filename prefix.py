@@ -20,7 +20,6 @@ class Prefix:
         """
         config = json.loads(open('config.json', 'r').read())
         if msg.guild is None: return "$!"
-        dsn = f"dbname='monika' user='{config.get('dbuser')}' host='localhost' password='{config.get('dbpass')}'"
         sql = "SELECT prefix FROM guilds WHERE id = $1"
         r = await self.db.fetchval(sql, msg.guild.id)
         if r:

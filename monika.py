@@ -7,6 +7,7 @@ from utilities import checks
 import asyncio
 import os
 from prefix import Prefix
+import traceback
 
 class Monika(commands.AutoShardedBot):
 
@@ -39,7 +40,7 @@ class Monika(commands.AutoShardedBot):
                     self.load_extension(f"modules.{name}")
                 except:
                     print(f"Oops! I broke the {file} module...")
-                    self.rclient.captureException()
+                    traceback.print_exc()
 
     async def on_ready(self):
         await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))

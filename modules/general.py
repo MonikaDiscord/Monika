@@ -32,7 +32,7 @@ class General:
         else:
             color = discord.Colour.blue()
         if ctx.message.guild is not None:
-            cmdpf = self.bot.prefix(ctx.message)
+            cmdpf = self.bot.get_prefix(ctx.message)
             embed = discord.Embed(color=color, title="Hi! I'm Monika!", description="In {}, my prefix is ``{}``.".format(ctx.message.guild.name, cmdpf))
         else:
             embed = discord.Embed(color=color, title="Hi! I'm Monika!", description="My prefix is ``$!``.")

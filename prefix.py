@@ -17,7 +17,6 @@ class Prefix:
         await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[]);")
 
     async def prefixcall(self, bot, msg):
-        """
         config = json.loads(open('config.json', 'r').read())
         if msg.guild is None: return "$!"
         sql = "SELECT prefix FROM guilds WHERE id = $1"
@@ -26,5 +25,3 @@ class Prefix:
             return r[0]
         else:
             return '$!'
-        """
-        return '$!!'

@@ -1,5 +1,9 @@
 import discord
 from discord.ext import commands
+from utilities import checks
+
+global checks
+checks = checks.Checks()
 
 class Administration:
 
@@ -7,6 +11,7 @@ class Administration:
         self.bot = bot
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_guild=True)
     async def prefix(self, ctx, *, prefix):
         """Sets a new prefix for your server."""
@@ -15,6 +20,7 @@ class Administration:
         await ctx.send("``{}``'s prefix is now ``{}``!".format(ctx.message.guild.name, prefix))
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_guild=True)
     async def resetprefix(self, ctx):
         """Resets your server's prefix."""
@@ -23,6 +29,7 @@ class Administration:
         await ctx.send("``{}``'s prefix has been reset to ``$!``.".format(ctx.message.guild.name))
 
     @commands.group(invoke_without_command=True)
+    @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def filter(self, ctx):
         if ctx.invoked_subcommand is None:
@@ -30,6 +37,7 @@ class Administration:
             await ctx.send("Available subcommands for filter: ``filter add``, ``filter remove``, ``filter list``.")
 
     @filter.command()
+    @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def add(self, ctx, word):
         sql = "UPDATE guilds SET filteredwords = array_append(filteredwords, $1) WHERE id = $2"
@@ -37,6 +45,7 @@ class Administration:
         await ctx.send("That word has been added to the filter!")
 
     @filter.command()
+    @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def remove(self, ctx, word):
         sql = "UPDATE guilds SET filteredwords = array_remove(filteredwords, $1) WHERE id = $1"
@@ -44,6 +53,7 @@ class Administration:
         await ctx.send("That word has been removed from the filter!")
 
     @filter.command()
+    @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def list(self, ctx):
         sql = "SELECT filteredwords FROM guilds WHERE id = $1"

@@ -12,10 +12,12 @@ global checks
 checks = checks.Checks()
 
 class Fun:
+
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
+    @checks.command()
     async def dog(self, ctx):
         """Provides a random dog."""
         if ctx.message.channel.is_nsfw():
@@ -36,6 +38,7 @@ class Fun:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def cat(self, ctx):
         """Provides a random cat."""
         if ctx.message.channel.is_nsfw():
@@ -56,6 +59,7 @@ class Fun:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def duck(self, ctx):
         """Provides a random duck."""
         async with self.bot.session.get('https://api.random-d.uk/random') as r:
@@ -71,6 +75,7 @@ class Fun:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def delete(self, ctx, *, username: discord.Member):
         """Deletes the specified user."""
         if username.id == 319503910895222784:
@@ -88,6 +93,7 @@ class Fun:
             await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
 
     @commands.command(name="8ball")
+    @checks.command()
     @checks.is_patron()
     async def _8ball(self, ctx, *, question):
         responses = [["Signs point to yes.", "Yes.", "Without a doubt.", "As I see it, yes.", "You may rely on it.", "It is decidedly so.", "Yes - definitely.", "It is certain.", "Most likely.", "Outlook good."],
@@ -96,6 +102,7 @@ class Fun:
         await ctx.send("My magic eight ball said... ``{}``".format(random.choice(random.choice(responses))))
 
     @commands.command(name="monify", hidden=True)
+    @checks.command()
     @checks.is_dev()
     async def monify(self,ctx,user: discord.Member, time):
         try:
@@ -120,6 +127,7 @@ class Fun:
             await ctx.message.author.send("I guess it didn't work, sorry <@{}>".format(ctx.message.author.id))
 
     @commands.command()
+    @checks.command()
     async def urban(self, ctx, *, term):
         """Searches for a term on Urban Dictionary."""
         try:
@@ -152,6 +160,7 @@ class Fun:
             await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink})."))
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def poem(self, ctx):
         """Gives you a random poem."""
@@ -163,6 +172,7 @@ class Fun:
         await ctx.send(embed=e)
 
     #@commands.command()
+    #@checks.command()
     #@checks.is_admin()
     #async def analyze(self, ctx, *, message):
         #"""Analyzes the specified statement."""

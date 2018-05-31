@@ -16,6 +16,7 @@ class Weeb:
         self.bot = bot
 
     @commands.command()
+    @checks.command()
     async def hug(self, ctx, user: discord.Member):
         """Aww! Hugs the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -36,6 +37,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def kiss(self, ctx, user: discord.Member):
         """Aww! Kisses the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -56,6 +58,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     @checks.is_upvoter()
     async def pat(self, ctx, user: discord.Member):
         """Aww! Pats the specified user."""
@@ -77,6 +80,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     @checks.is_upvoter()
     async def tickle(self, ctx, user: discord.Member):
         """Aww! Tickles the specified user."""
@@ -98,6 +102,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     @checks.is_upvoter()
     async def insult(self, ctx, user: discord.Member):
         """Oh! Insults the specified user."""
@@ -122,6 +127,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def bite(self, ctx, user: discord.Member):
         """Oww! Bites the specified user."""
@@ -143,6 +149,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def slap(self, ctx, user: discord.Member):
         """Oww! Slaps the specified user."""
@@ -164,6 +171,7 @@ class Weeb:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def waifuinsult(self, ctx, user: discord.Member):
         """Hehe... Insults the specified waifu."""
@@ -187,6 +195,7 @@ class Weeb:
         os.remove(f.name)
 
     @commands.command()
+    @checks.command()
     @checks.is_upvoter()
     async def ship(self, ctx, user1: discord.Member, user2: discord.Member):
         """Ships the 2 users together."""
@@ -229,6 +238,7 @@ class Images:
         return temp
 
     @commands.command()
+    @checks.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
         client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
@@ -255,6 +265,7 @@ class Images:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def safebooru(self, ctx):
         """Same as danbooru, but looks for safe images."""
         client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
@@ -275,6 +286,7 @@ class Images:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def tag(self, ctx, tag):
         """Posts an image with the specified weeb.sh tag."""
         if "&nsfw=true" in tag:
@@ -309,6 +321,7 @@ class Images:
             await ctx.send("The ``{}`` tag doesn't seem to exist...".format(str(tag)))
 
     @commands.command()
+    @checks.command()
     async def taglist(self, ctx):
         """Gives you a list with all available weeb.sh tags."""
         async with self.bot.session.get('https://api-v2.weeb.sh/images/types', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as typelist:

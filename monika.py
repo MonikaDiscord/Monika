@@ -70,6 +70,9 @@ class Monika(commands.AutoShardedBot):
             if not u:
                 sql1 = "INSERT INTO users (id, money, patron, staff, upvoter, name, discrim) VALUES ($1, '0', 0, 0, false, $2, $3)"
                 await self.db.execute(sql1, user.id, user.name, user.discriminator)
+            else:
+                sql1 = "UPDATE users SET name = $1, discrim = $2 WHERE id = $3"
+                await self.db.execute(sql1, user.name, user.discrim, user.id)
             if msg.guild:
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"
@@ -77,6 +80,9 @@ class Monika(commands.AutoShardedBot):
                 if not guilds:
                     sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
                     await self.db.execute(sql1, guild.id, guild.name)
+                else:
+                    sql1 = "UPDATE guilds SET name = $1 WHERE id = $2"
+                    await self.db.execute(sql1, guild.name, guild.id)
                 r = discord.utils.get(msg.author.roles, name="Muted")
                 if r:
                     return await msg.delete()
@@ -99,6 +105,9 @@ class Monika(commands.AutoShardedBot):
             pass
         elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
             await ctx.send("You're missing a required argument.")
+        elif isinstance(error, discord.ext.commands.MissingPermissions):
+            await ctx.send("You need to have a server permission to do this.")
+            return await ctx.send("Please look at the command page to find the permission.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
             if self.checks.upvoter_check in ctx.command.checks:
                 f = "upvoter"
@@ -114,9 +123,8 @@ class Monika(commands.AutoShardedBot):
                 f = "moderator"
             elif self.checks.staff_check in ctx.command.checks:
                 f = "staff"
-            else:
-                await ctx.send("You need to have a server permission to do this.")
-                return await ctx.send("Please look at the command page to find the permission.")
+            elif self.checks.cog_disabler in ctx.commands.checks:
+                return await ctx.send("This command is disabled.")
             await ctx.send(f"You need to have the ``{f}`` permission to do this.")
         else:
             if ctx:
@@ -124,6 +132,8 @@ class Monika(commands.AutoShardedBot):
                 await ctx.send(embed=e)
 
     async def on_guild_join(self, guild):
+        sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
+        await self.db.execute(sql, guild.id, guild.name)
         c = self.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(self.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
@@ -136,6 +146,8 @@ class Monika(commands.AutoShardedBot):
             pass
 
     async def on_guild_remove(self, guild):
+        sql = "DELETE FROM guilds WHERE id = $1"
+        await self.db.execute(sql, guild.id)
         c = self.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(self.guilds)} other guilds!")
         e.set_thumbnail(url=guild.icon_url)

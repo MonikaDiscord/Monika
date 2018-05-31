@@ -54,6 +54,11 @@ class Checks:
         status = await self.db.fetchval(sql, ctx.author.id)
         return int(status) == 2
 
+    async def cog_disabler(self, ctx):
+        sql = "SELECT disabledcogs FROM guilds WHERE id = $1"
+        dc = await self.db.fetchval(sql, ctx.guild.id)
+        return ctx.command.cog_name not in dc
+
     def is_admin(self):
         return commands.check(self.admin_check)
 
@@ -74,3 +79,6 @@ class Checks:
 
     def is_upvoter(self):
         return commands.check(self.upvoter_check)
+
+    def command(self):
+        return commands.check(self.cog_disabler)

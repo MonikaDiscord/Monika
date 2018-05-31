@@ -11,6 +11,7 @@ class Economy:
         self.bot = bot
 
     @commands.command()
+    @checks.command()
     async def coins(self, ctx):
         """Checks the specified user's coins."""
         try:
@@ -29,6 +30,7 @@ class Economy:
         await ctx.send(embed=e)
 
     @commands.command()
+    @checks.command()
     async def give(self, ctx, user: discord.User, amount: float):
         """Gives the specified user some coins."""
         if user.id == self.bot.user.id:
@@ -54,6 +56,7 @@ class Economy:
         await ctx.send("I gave {} coins to {}.".format(amount, user.name))
 
     @commands.command()
+    @checks.command()
     @checks.is_staff()
     async def generate(self, ctx, user: discord.User, amount: float):
         """Generates money for someone."""

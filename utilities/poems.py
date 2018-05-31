@@ -1,6 +1,6 @@
 import random
 
-#poems (not creepy)
+#poems (only act 1)
 
 #monika
 poem1 = """Pen in hand, I find my strength.

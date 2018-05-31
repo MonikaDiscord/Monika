@@ -14,6 +14,7 @@ class General:
         self.bot = bot
 
     @commands.command()
+    @checks.command()
     async def ping(self, ctx):
         """Calculates the ping time."""
         t_1 = time.perf_counter()
@@ -23,6 +24,7 @@ class General:
         await ctx.send("I'm not that good at playing Pong, {}... ``Time: {}ms``".format(ctx.author.name, time_delta))
 
     @commands.command(name="help")
+    @checks.command()
     async def _help(self, ctx):
         """Tells you Monika's commands."""
         if ctx.message.guild is not None:
@@ -45,6 +47,7 @@ class General:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def info(self, ctx):
         '''Gives you information about Monika.'''
         if ctx.message.guild is not None:
@@ -64,6 +67,7 @@ class General:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def user(self, ctx):
         """Shows info on the specified user."""
         try:
@@ -96,24 +100,28 @@ class General:
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def server(self, ctx):
         """Gives an invite to Monika's server!"""
         embed = discord.Embed(title="Join my server!", description="You can join my server [here](https://discord.gg/DspkaRD).")
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def invite(self, ctx):
         """Gives you an invite for Monika!"""
         embed = discord.Embed(title="Invite me!", description="You can invite me [here](https://discordapp.com/api/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot).")
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def upvote(self, ctx):
         """Gives you the link to upvote Monika."""
         embed = discord.Embed(title="Upvote me!", description="You can upvote me [here](https://discordbots.org/bot/monika/vote).")
         await ctx.send(embed=embed)
 
     @commands.command()
+    @checks.command()
     async def suggest(self, ctx, *, suggestion: str):
         """Sends a suggestion to the developers of Monika."""
         channel = self.bot.get_channel(404265070000865281)
@@ -130,6 +138,7 @@ class General:
         await ctx.send("I sent your suggestion, <@{}>~".format(ctx.message.author.id))
 
     @commands.command()
+    @checks.command()
     async def report(self, ctx, *, report: str):
         """Sends a bug report to the developers of Monika."""
         channel = self.bot.get_channel(404265224011776001)
@@ -146,6 +155,7 @@ class General:
         await ctx.send("I sent your report, <@{}>~".format(ctx.message.author.id))
 
     @commands.command(aliases=["patreon", "patron", "support"])
+    @checks.command()
     async def donate(self, ctx):
         embed = discord.Embed(title="Donate to me!", description="You can support me [here](https://www.patreon.com/monikabot).")
         await ctx.send(embed=embed)

@@ -44,6 +44,7 @@ class Music:
                     await c.send('Well, I finished playing all those songs. Don\'t be afraid to add another one!')
 
     @commands.command(aliases=['p'])
+    @checks.command()
     async def play(self, ctx, *, query):
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -91,6 +92,7 @@ class Music:
             await player.play()
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def seek(self, ctx, time):
         player = self.bot.lavalink.players.get(ctx.guild.id)
@@ -119,6 +121,7 @@ class Music:
         await ctx.send(f'I moved the track to **{lavalink.Utils.format_time(track_time)}** just for you~')
 
     @commands.command()
+    @checks.command()
     async def skip(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -129,6 +132,7 @@ class Music:
         await player.skip()
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def stop(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
@@ -142,6 +146,7 @@ class Music:
         await ctx.send('I stopped the queue just for you~')
 
     @commands.command()
+    @checks.command()
     async def now(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
         song = 'Nothing'
@@ -158,6 +163,7 @@ class Music:
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['q'])
+    @checks.command()
     async def queue(self, ctx, page: int=1):
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -182,6 +188,7 @@ class Music:
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['resume'])
+    @checks.command()
     @checks.is_patron()
     async def pause(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
@@ -197,6 +204,7 @@ class Music:
             await ctx.send('That track has been paused.')
 
     @commands.command(aliases=['vol'])
+    @checks.command()
     async def volume(self, ctx, volume: int=None):
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -207,6 +215,7 @@ class Music:
         await ctx.send(f'🔈 | Set to {player.volume}%')
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def shuffle(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
@@ -219,6 +228,7 @@ class Music:
         await ctx.send('I have toggled shuffling to ' + ('enabled.' if player.shuffle else 'disabled.'))
 
     @commands.command()
+    @checks.command()
     @checks.is_patron()
     async def repeat(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
@@ -231,6 +241,7 @@ class Music:
         await ctx.send('I have toggled repeating to ' + ('enabled.' if player.repeat else 'disabled.'))
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def remove(self, ctx, index: int):
         player = self.bot.lavalink.players.get(ctx.guild.id)
@@ -247,6 +258,7 @@ class Music:
         await ctx.send('I have removed **' + removed.title + '** from the queue.')
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def disconnect(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)

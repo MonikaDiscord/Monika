@@ -2,6 +2,10 @@ import discord
 from discord.ext import commands
 import asyncio
 import math
+from utilities import checks
+
+global checks
+checks = checks.Checks()
 
 class Moderation:
 
@@ -19,6 +23,7 @@ class Moderation:
             await asyncio.sleep(1.5)
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def prune(self, ctx, number: int):
         """Deletes the specified number of messages."""
@@ -46,6 +51,7 @@ class Moderation:
                 await ctx.send("Yay! I pruned {} messages~".format(number))
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, user: discord.User, *, reason=None):
         """Kicks a user."""
@@ -58,6 +64,7 @@ class Moderation:
         await ctx.send("I kicked " + str(user) + " for you, <@{}>~".format(ctx.message.author.id))
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def mute(self, ctx, user: discord.Member, *, reason=None):
         """Mutes a user."""
@@ -73,6 +80,7 @@ class Moderation:
         await ctx.send(f"I muted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, user: discord.Member, *, reason=None):
         r = discord.utils.get(user.roles, name="Muted")
@@ -83,6 +91,7 @@ class Moderation:
         await ctx.send(f"I unmuted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, user, *, reason=None):
         """Bans a user."""
@@ -95,6 +104,7 @@ class Moderation:
         await ctx.send("I unbanned " + str(user) + " for you, <@{}>~".format(ctx.message.author.id))
 
     @commands.command()
+    @checks.command()
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, user: discord.User, *, reason=None):
         """Bans a user."""

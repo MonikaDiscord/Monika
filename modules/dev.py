@@ -22,6 +22,7 @@ class Developer:
         return content.strip('` \n')
 
     @commands.command(name='eval')
+    @checks.command()
     @checks.is_dev()
     async def _eval(self, ctx, *, body: str):
         """Evaluates code."""
@@ -30,7 +31,7 @@ class Developer:
         except Exception as e:
             await ctx.send(f'```py\n{type(e).__name__}: {e}\n```')
         else:
-            await ctx.send(f'```py\n{e}\n```')
+            await ctx.send(f'```py\n{r}\n```')
 
 def setup(bot):
     bot.add_cog(Developer(bot))

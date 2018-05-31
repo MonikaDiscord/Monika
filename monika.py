@@ -33,6 +33,8 @@ class Monika(commands.AutoShardedBot):
 
         self.rclient = Client(self.config.get('sentry_dsn'))
 
+        self.remove_command('help')
+        
         for file in os.listdir("modules"):
             if file.endswith(".py"):
                 name = file[:-3]
@@ -41,6 +43,7 @@ class Monika(commands.AutoShardedBot):
                 except:
                     print(f"Oops! I broke the {file} module...")
                     traceback.print_exc()
+
 
     async def on_ready(self):
         await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))

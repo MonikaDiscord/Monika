@@ -72,7 +72,7 @@ class Monika(commands.AutoShardedBot):
                 await self.db.execute(sql1, user.id, user.name, user.discriminator)
             else:
                 sql1 = "UPDATE users SET name = $1, discrim = $2 WHERE id = $3"
-                await self.db.execute(sql1, user.name, user.discrim, user.id)
+                await self.db.execute(sql1, user.name, user.discriminator, user.id)
             if msg.guild:
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"

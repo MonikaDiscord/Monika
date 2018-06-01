@@ -22,6 +22,6 @@ class Prefix:
         sql = "SELECT prefix FROM guilds WHERE id = $1"
         r = await self.db.fetchval(sql, msg.guild.id)
         if r:
-            return r[0]
+            return r
         else:
             return '$!'

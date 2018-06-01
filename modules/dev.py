@@ -33,5 +33,42 @@ class Developer:
         else:
             await ctx.send(f'```py\n{r}\n```')
 
+    @commands.command()
+    @checks.command()
+    @checks.is_dev()
+    async def load(self, ctx, *, module):
+        """Loads a module."""
+        try:
+            self.bot.load_extension(module)
+        except Exception as e:
+            await ctx.send(f'```py\n{traceback.format_exc()}\n```')
+        else:
+            await ctx.send(':ok_hand:')
+
+    @commands.command()
+    @checks.command()
+    @checks.is_dev()
+    async def unload(self, ctx, *, module):
+        """Unloads a module."""
+        try:
+            self.bot.unload_extension(module)
+        except Exception as e:
+            await ctx.send(f'```py\n{traceback.format_exc()}\n```')
+        else:
+            await ctx.send(':ok_hand:')
+
+    @commands.command()
+    @checks.command()
+    @checks.is_dev()
+    async def reload(self, ctx, *, module):
+        """Reloads a module."""
+        try:
+            self.bot.unload_extension(module)
+            self.bot.load_extension(module)
+        except Exception as e:
+            await ctx.send(f'```py\n{traceback.format_exc()}\n```')
+        else:
+            await ctx.send(':ok_hand:')
+
 def setup(bot):
     bot.add_cog(Developer(bot))

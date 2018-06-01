@@ -6,14 +6,14 @@ from raven import Client
 from utilities import checks
 import asyncio
 import os
-from prefix import Prefix
+from utilities import prefix
 import traceback
 
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
 
-        self._prefix = Prefix()
+        self._prefix = prefix.Prefix()
         super().__init__(command_prefix=self._prefix.prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
@@ -34,7 +34,7 @@ class Monika(commands.AutoShardedBot):
         self.rclient = Client(self.config.get('sentry_dsn'))
 
         self.remove_command('help')
-        
+
         for file in os.listdir("modules"):
             if file.endswith(".py"):
                 name = file[:-3]

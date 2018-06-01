@@ -1,5 +1,5 @@
 # Monika
-![Travis CI](https://travis-ci.org/MonikaDiscord/Monika.svg?branch=master) ![DBL Servers](https://discordbots.org/api/widget/servers/399315651338043392.svg) ![DBL Upvotes](https://discordbots.org/api/widget/upvotes/399315651338043392.svg)
+![DBL Servers](https://discordbots.org/api/widget/servers/399315651338043392.svg) ![DBL Upvotes](https://discordbots.org/api/widget/upvotes/399315651338043392.svg)
 
 An entertaining Discord bot made to sharpen your server!
 

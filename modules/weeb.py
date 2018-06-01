@@ -241,16 +241,14 @@ class Images:
     @checks.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         if ctx.message.channel.is_nsfw():
-            temp = str(client.post_list(random=True, limit=1))
-            temp = temp.replace("\'", "\"")
-            temp = temp.replace("True", "\"True\"")
-            temp = temp.replace("False", "\"False\"")
-            temp = temp.replace("None", "\"None\"")
-            temp = temp.replace("[", "")
-            temp = temp.replace("]", "")
-            data = json.loads(temp)
+            image_found = False
+            while not image_found:
+                temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
+                data = json.loads(temp)
+                if 'file_url' in data:
+                    image_found = True
             url = data['file_url']
         else:
             await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel.")
@@ -268,7 +266,7 @@ class Images:
     @checks.command()
     async def safebooru(self, ctx):
         """Same as danbooru, but looks for safe images."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         image_found = False
         while not image_found:
             temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))

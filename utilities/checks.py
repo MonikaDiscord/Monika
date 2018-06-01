@@ -9,7 +9,7 @@ class Checks:
         asyncio.get_event_loop().run_until_complete(self._init_db())
 
     async def _init_db(self):
-        config = json.loads(open('../config.json', 'r').read())
+        config = json.loads(open('config.json', 'r').read())
         dbpass = config['dbpass']
         dbuser = config['dbuser']
         govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}

@@ -34,6 +34,7 @@ Here's a template for `config.json`:
   "pwkey": "bots.discord.pw token",
   "weebkey": "weeb.sh token",
   "perspectivekey": "google perspective api token",
+  "danbooruname": "danbooru username",
   "danboorukey": "danbooru api key",
   "lavapass": "lavalink password",
   "sentry_dsn": "sentry dsn"

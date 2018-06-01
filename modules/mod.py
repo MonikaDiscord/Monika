@@ -73,10 +73,10 @@ class Moderation:
         if mr:
             return await ctx.send("This user is already muted.")
         elif r:
-            await user.add_roles([r.id], reason=reason)
+            await user.add_roles(r.id, reason=reason)
         else:
             nr = await ctx.guild.create_role(name="Muted")
-            await user.add_roles([nr.id], reason=reason)
+            await user.add_roles(nr.id, reason=reason)
         await ctx.send(f"I muted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()

@@ -127,7 +127,7 @@ class Monika(commands.AutoShardedBot):
                 f = "moderator"
             elif self.checks.staff_check in ctx.command.checks:
                 f = "staff"
-            elif self.checks.cog_disabler in ctx.commands.checks:
+            elif self.checks.cog_disabler in ctx.command.checks:
                 return await ctx.send("This command is disabled.")
             await ctx.send(f"You need to have the ``{f}`` permission to do this.")
         else:

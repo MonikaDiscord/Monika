@@ -36,7 +36,9 @@ Here's a template for `config.json`:
   "perspectivekey": "google perspective api token",
   "danboorukey": "danbooru api key",
   "lavapass": "lavalink password",
-  "sentry_dsn": "sentry dsn"
+  "sentry_dsn": "sentry dsn",
+  "datadog_api_key": "datadog api key",
+  "datadog_app_key": "datadog app key"
 }
 ```
 Just put the file in Monika's main directory.

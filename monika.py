@@ -59,8 +59,8 @@ class Monika(commands.AutoShardedBot):
         await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
         self.dogstatsd.event("Monika has fully logged in.", "All shards are ready!")
-        self.dogstatsd.gauge("monika:shards", len(self.shards))
-        self.dogstatsd.gauge("monika:guilds", len(self.guilds))
+        self.dogstatsd.gauge("monika.shards", len(self.shards))
+        self.dogstatsd.gauge("monika.guilds", len(self.guilds))
         c = self.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title="All shards ready!")
         try:
@@ -152,7 +152,7 @@ class Monika(commands.AutoShardedBot):
     async def on_guild_join(self, guild):
         sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
         await self.db.execute(sql, guild.id, guild.name)
-        self.dogstatsd.gauge("monika:guilds", len(self.guilds))
+        self.dogstatsd.gauge("monika.guilds", len(self.guilds))
         c = self.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(self.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
@@ -167,7 +167,7 @@ class Monika(commands.AutoShardedBot):
     async def on_guild_remove(self, guild):
         sql = "DELETE FROM guilds WHERE id = $1"
         await self.db.execute(sql, guild.id)
-        self.dogstatsd.gauge("monika:guilds", len(self.guilds))
+        self.dogstatsd.gauge("monika.guilds", len(self.guilds))
         c = self.get_channel(447553435999666196)
         e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(self.guilds)} other guilds!")
         e.set_thumbnail(url=guild.icon_url)
@@ -188,4 +188,7 @@ class Monika(commands.AutoShardedBot):
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())
-bot.run(config.get('token'))
+try:
+    bot.run(config.get('token'))
+except KeyboardInterrupt:
+    bot.dogstatsd.event("Monika is shutting down...", "Goodbye!")

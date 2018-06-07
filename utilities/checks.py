@@ -9,7 +9,7 @@ class Checks:
         asyncio.get_event_loop().run_until_complete(self._init_db())
 
     async def _init_db(self):
-        config = json.loads(open('../config.json', 'r').read())
+        config = json.loads(open('config.json', 'r').read())
         dbpass = config['dbpass']
         dbuser = config['dbuser']
         govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
@@ -56,8 +56,10 @@ class Checks:
 
     async def cog_disabler(self, ctx):
         sql = "SELECT disabledcogs FROM guilds WHERE id = $1"
-        dc = await self.db.fetchval(sql, ctx.guild.id)
-        return ctx.command.cog_name not in dc
+        dcogs = await self.db.fetchval(sql, ctx.guild.id)
+        sql = "SELECT disabledcmds FROM guilds WHERE id = $1"
+        dcmds = await self.db.fetchval(sql, ctx.guild.id)
+        return ctx.command.cog_name not in dcogs or ctx.command.name not in dcmds
 
     def is_admin(self):
         return commands.check(self.admin_check)

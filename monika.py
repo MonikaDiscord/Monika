@@ -37,7 +37,7 @@ class Monika(commands.AutoShardedBot):
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)
             await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
-            await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[]);")
+            await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")
 
         self.loop.create_task(_init_db())
 
@@ -96,7 +96,7 @@ class Monika(commands.AutoShardedBot):
                 sql = "SELECT * FROM guilds WHERE id = $1"
                 guilds = await self.db.fetchrow(sql, guild.id)
                 if not guilds:
-                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
+                    sql1 = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"
                     await self.db.execute(sql1, guild.id, guild.name)
                 else:
                     sql1 = "UPDATE guilds SET name = $1 WHERE id = $2"
@@ -123,9 +123,6 @@ class Monika(commands.AutoShardedBot):
             pass
         elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
             await ctx.send("You're missing a required argument.")
-        elif isinstance(error, discord.ext.commands.MissingPermissions):
-            await ctx.send("You need to have a server permission to do this.")
-            return await ctx.send("Please look at the command page to find the permission.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
             if self.checks.upvoter_check in ctx.command.checks:
                 f = "upvoter"
@@ -143,6 +140,9 @@ class Monika(commands.AutoShardedBot):
                 f = "staff"
             elif self.checks.cog_disabler in ctx.command.checks:
                 return await ctx.send("This command is disabled.")
+            else:
+                await ctx.send("This command requires a server permission.")
+                return await ctx.send("Please check the command page to see which one.")
             await ctx.send(f"You need to have the ``{f}`` permission to do this.")
         else:
             if ctx:
@@ -150,7 +150,7 @@ class Monika(commands.AutoShardedBot):
                 await ctx.send(embed=e)
 
     async def on_guild_join(self, guild):
-        sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs) VALUES ($1, '$!', $2, '{}', '{}')"
+        sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"
         await self.db.execute(sql, guild.id, guild.name)
         self.dogstatsd.gauge("monika.guilds", len(self.guilds))
         c = self.get_channel(447553435999666196)

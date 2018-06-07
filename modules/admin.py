@@ -48,7 +48,7 @@ class Administration:
     @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def remove(self, ctx, word):
-        sql = "UPDATE guilds SET filteredwords = array_remove(filteredwords, $1) WHERE id = $1"
+        sql = "UPDATE guilds SET filteredwords = array_remove(filteredwords, $1) WHERE id = $2"
         await self.bot.db.execute(sql, word, ctx.guild.id)
         await ctx.send("That word has been removed from the filter!")
 

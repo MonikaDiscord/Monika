@@ -128,23 +128,7 @@ class Monika(commands.AutoShardedBot):
         elif isinstance(error, discord.ext.commands.MissingPermissions):
             await ctx.send("You don't have the required server permissions to use this command.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
-            if checks.upvoter_check in ctx.command.checks:
-                f = "upvoter"
-            elif checks.premium_check in ctx.command.checks:
-                f = "patron"
-            elif checks.gold_check in ctx.command.checks:
-                f = "gold patron"
-            elif checks.admin_check in ctx.command.checks:
-                f = "admin"
-            elif checks.dev_check in ctx.command.checks:
-                f = "developer"
-            elif checks.mod_check in ctx.command.checks:
-                f = "moderator"
-            elif checks.staff_check in ctx.command.checks:
-                f = "staff"
-            else:
-                return await ctx.send("This command is disabled.")
-            await ctx.send(f"You need to have the ``{f}`` permission to do this.")
+            await ctx.send("Either you don't have permissions to do this or this command is disabled.")
         else:
             if ctx:
                 e = discord.Embed(title="An exception has occured.", description=f"```{error}```\nIf you know how to fix this, then you can check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).\nOtherwise, please report it at the [Monika Discord server](https://discord.gg/DspkaRD).")

@@ -123,6 +123,8 @@ class Monika(commands.AutoShardedBot):
             pass
         elif isinstance(error, discord.ext.commands.errors.MissingRequiredArgument):
             await ctx.send("You're missing a required argument.")
+        elif isinstance(error, discord.ext.commands.MissingPermissions):
+            await ctx.send("You don't have the required server permissions to use this command.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
             if self.checks.upvoter_check in ctx.command.checks:
                 f = "upvoter"

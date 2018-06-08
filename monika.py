@@ -10,6 +10,9 @@ from utilities import prefix
 import traceback
 from datadog import api, statsd, initialize
 
+global checks
+checks = checks.Checks()
+
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
@@ -26,7 +29,6 @@ class Monika(commands.AutoShardedBot):
 
         initialize(**datadogkeys)
 
-        self.checks = checks.Checks()
         self.session = aiohttp.ClientSession()
         self.dogstatsd = statsd
 
@@ -126,22 +128,22 @@ class Monika(commands.AutoShardedBot):
         elif isinstance(error, discord.ext.commands.MissingPermissions):
             await ctx.send("You don't have the required server permissions to use this command.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
-            if self.checks.upvoter_check in ctx.command.checks:
+            if checks.upvoter_check in ctx.command.checks:
                 f = "upvoter"
-            elif self.checks.premium_check in ctx.command.checks:
+            elif checks.premium_check in ctx.command.checks:
                 f = "patron"
-            elif self.checks.gold_check in ctx.command.checks:
+            elif checks.gold_check in ctx.command.checks:
                 f = "gold patron"
-            elif self.checks.admin_check in ctx.command.checks:
+            elif checks.admin_check in ctx.command.checks:
                 f = "admin"
-            elif self.checks.dev_check in ctx.command.checks:
+            elif checks.dev_check in ctx.command.checks:
                 f = "developer"
-            elif self.checks.mod_check in ctx.command.checks:
+            elif checks.mod_check in ctx.command.checks:
                 f = "moderator"
-            elif self.checks.staff_check in ctx.command.checks:
+            elif checks.staff_check in ctx.command.checks:
                 f = "staff"
             else:
-                return await ctx.send(f"```{ctx.command.checks}```")
+                return await ctx.send("This command is disabled.")
             await ctx.send(f"You need to have the ``{f}`` permission to do this.")
         else:
             if ctx:

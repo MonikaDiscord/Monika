@@ -32,7 +32,7 @@ class Checks:
         nums = [1, 3]
         return int(status) in nums
 
-    async def staff_check(self,ctx):
+    async def staff_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
         status = await self.db.fetchval(sql, ctx.author.id)
         nums = [1, 2, 3]

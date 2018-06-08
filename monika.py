@@ -141,7 +141,7 @@ class Monika(commands.AutoShardedBot):
             elif self.checks.staff_check in ctx.command.checks:
                 f = "staff"
             else:
-                return await ctx.send(f"```{error}```")
+                return await ctx.send(f"```{ctx.command.checks}```")
             await ctx.send(f"You need to have the ``{f}`` permission to do this.")
         else:
             if ctx:

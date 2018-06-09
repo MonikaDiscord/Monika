@@ -32,7 +32,7 @@ class Checks:
         nums = [1, 3]
         return int(status) in nums
 
-    async def staff_check(self,ctx):
+    async def staff_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
         status = await self.db.fetchval(sql, ctx.author.id)
         nums = [1, 2, 3]
@@ -56,8 +56,10 @@ class Checks:
 
     async def cog_disabler(self, ctx):
         sql = "SELECT disabledcogs FROM guilds WHERE id = $1"
-        dc = await self.db.fetchval(sql, ctx.guild.id)
-        return ctx.command.cog_name not in dc
+        dcogs = await self.db.fetchval(sql, ctx.guild.id)
+        sql = "SELECT disabledcmds FROM guilds WHERE id = $1"
+        dcmds = await self.db.fetchval(sql, ctx.guild.id)
+        return ctx.command.cog_name not in dcogs or ctx.command.name not in dcmds
 
     def is_admin(self):
         return commands.check(self.admin_check)

@@ -8,6 +8,7 @@ from pybooru import Danbooru
 from pybooru import Moebooru
 import json
 import asyncio
+import random
 
 global checks
 checks = checks.Checks()
@@ -292,8 +293,12 @@ class Images:
         """Picks a random image from Konachan and displays it."""
         client = Moebooru('konachan', username=self.bot.config['konachanname'], password=self.bot.config['konachanpasswd'])
         image_found = False
+        latest_post = self.fixDanbooruJSON(str(client.post_list(limit=1)))
+        post_loaded = json.loads(latest_post)
+        highest_id = post_loaded['id']
+        id_number = random.randint(1, highest_id)
         while not image_found:
-            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
+            temp = self.fixDanbooruJSON(str(client.post_list(limit=1, tags="-status:deleted id:{}".format(id_number))))
             data = json.loads(temp)
             if 'file_url' in data:
                 image_found = True

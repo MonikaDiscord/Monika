@@ -57,7 +57,7 @@ class Administration:
     @commands.has_permissions(manage_messages=True)
     async def list(self, ctx):
         sql = "SELECT filteredwords FROM guilds WHERE id = $1"
-        words = await self.bot.db.fetchval(sql, [ctx.guild.id])
+        words = await self.bot.db.fetchval(sql, ctx.guild.id)
         list = ""
         for word in words:
             list += (word + "\n")

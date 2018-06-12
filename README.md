@@ -22,6 +22,7 @@ We won't be helping you with obtaining these.
 * weeb.sh (also needs waifu insult scope and generate love ship scope)
 * discordbots.org
 * danbooru.donmai.us
+* konachan.com
 * NOT NEEDED YET: Google Perspective API (coming soon!)
 ## Configuration
 Here's a template for `config.json`:
@@ -34,7 +35,10 @@ Here's a template for `config.json`:
   "pwkey": "bots.discord.pw token",
   "weebkey": "weeb.sh token",
   "perspectivekey": "google perspective api token",
+  "danbooruname": "danbooru username",
   "danboorukey": "danbooru api key",
+  "konachanname": "konachan username",
+  "konachanpasswd": "konachan password",
   "lavapass": "lavalink password",
   "sentry_dsn": "sentry dsn",
   "datadog_api_key": "datadog api key",

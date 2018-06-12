@@ -5,8 +5,10 @@ from utilities import checks
 from io import StringIO
 import os
 from pybooru import Danbooru
+from pybooru import Moebooru
 import json
 import asyncio
+import random
 
 global checks
 checks = checks.Checks()
@@ -233,24 +235,24 @@ class Images:
         temp = temp.replace("True", "\"True\"")
         temp = temp.replace("False", "\"False\"")
         temp = temp.replace("None", "\"None\"")
-        temp = temp.replace("[", "")
-        temp = temp.replace("]", "")
+        temp = temp[1:]
+        temp = temp[:-1]
+        #temp = temp.replace("[", "")
+        #temp = temp.replace("]", "")
         return temp
 
     @commands.command()
     @checks.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         if ctx.message.channel.is_nsfw():
-            temp = str(client.post_list(random=True, limit=1))
-            temp = temp.replace("\'", "\"")
-            temp = temp.replace("True", "\"True\"")
-            temp = temp.replace("False", "\"False\"")
-            temp = temp.replace("None", "\"None\"")
-            temp = temp.replace("[", "")
-            temp = temp.replace("]", "")
-            data = json.loads(temp)
+            image_found = False
+            while not image_found:
+                temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:e -status:deleted")))
+                data = json.loads(temp)
+                if 'file_url' in data:
+                    image_found = True
             url = data['file_url']
         else:
             await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel.")
@@ -268,7 +270,7 @@ class Images:
     @checks.command()
     async def safebooru(self, ctx):
         """Same as danbooru, but looks for safe images."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         image_found = False
         while not image_found:
             temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
@@ -283,6 +285,31 @@ class Images:
         embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @checks.command()
+    async def konachan(self, ctx):
+        """Picks a random image from Konachan and displays it."""
+        client = Moebooru('konachan', username=self.bot.config['konachanname'], password=self.bot.config['konachanpasswd'])
+        image_found = False
+        latest_post = self.fixDanbooruJSON(str(client.post_list(limit=1)))
+        post_loaded = json.loads(latest_post)
+        highest_id = post_loaded['id']
+        id_number = random.randint(1, highest_id)
+        while not image_found:
+            temp = self.fixDanbooruJSON(str(client.post_list(limit=1, tags="-status:deleted id:{}".format(id_number))))
+            data = json.loads(temp)
+            if 'file_url' in data:
+                image_found = True
+        url = data['file_url']
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Image from Konachan!", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by Konachan.")
         await ctx.send(embed=embed)
 
     @commands.command()

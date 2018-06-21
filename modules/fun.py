@@ -148,7 +148,8 @@ class Fun:
         else:
             color = discord.Colour.blue()
         e = discord.Embed(color=color, title="{}".format(apiword), url=apilink, description=apidef)
-        e.add_field(name="Example", value=apiexample, inline=False)
+        if not len(apiexample) == 0:
+            e.add_field(name="Example", value=apiexample, inline=False)
         e.add_field(name=":thumbsup:", value=thumbsup)
         e.add_field(name=":thumbsdown:", value=thumbsdown)
         e.set_footer(text="Definiton by {} | Powered by Urban Dictionary".format(apiauthor))

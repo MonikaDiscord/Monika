@@ -1,8 +1,6 @@
 import discord
 from discord.ext import commands
 import random
-import urllib
-import urllib.request
 from utilities import checks
 import asyncio
 import aiohttp
@@ -154,10 +152,7 @@ class Fun:
         e.add_field(name=":thumbsup:", value=thumbsup)
         e.add_field(name=":thumbsdown:", value=thumbsdown)
         e.set_footer(text="Definiton by {} | Powered by Urban Dictionary".format(apiauthor))
-        try:
-            await ctx.send(embed=e)
-        except aiohttp.web.HTTPException:
-            await ctx.send(embed=discord.Embed(color=color, title="The definition is too long!", description=f"If you still want to see the definition, look at the page [here]({apilink})."))
+        await ctx.send(embed=e)
 
     @commands.command()
     @checks.command()

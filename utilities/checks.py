@@ -6,7 +6,7 @@ import json
 class Checks:
 
     def __init__(self):
-        asyncio.get_event_loop().run_until_complete(self._init_db())
+        asyncio.ensure_future(self._init_db())
 
     async def _init_db(self):
         config = json.loads(open('config.json', 'r').read())

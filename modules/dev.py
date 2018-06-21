@@ -60,7 +60,7 @@ class Developer:
         else:
             value = stdout.getvalue()
             try:
-                await ctx.message.add_reaction('\u1F44C')
+                await ctx.message.add_reaction('👌')
             except:
                 pass
 
@@ -117,7 +117,7 @@ class Developer:
         except:
             await ctx.send(f'```py\n{traceback.format_exc()}\n```')
         else:
-            await ctx.message.add_reaction('\u1F44C')
+            await ctx.send(':ok_hand:')
 
 def setup(bot):
     bot.add_cog(Developer(bot))

@@ -5,6 +5,7 @@ import textwrap
 import traceback
 from utilities import checks
 from contextlib import redirect_stdout
+import subprocess
 
 global checks
 checks = checks.Checks()
@@ -59,7 +60,7 @@ class Developer:
         else:
             value = stdout.getvalue()
             try:
-                await ctx.message.add_reaction('\u2705')
+                await ctx.message.add_reaction('\u1F44C')
             except:
                 pass
 
@@ -106,6 +107,17 @@ class Developer:
             await ctx.send(f'```py\n{traceback.format_exc()}\n```')
         else:
             await ctx.send(':ok_hand:')
+            
+    @commands.command()
+    @checks.command()
+    @checks.is_dev()
+    async def pull(self, ctx):
+        try:
+            subprocess.call(("git", "pull"))
+        except:
+            await ctx.send(f'```py\n{traceback.format_exc()}\n```')
+        else:
+            await ctx.message.add_reaction('\u1F44C')
 
 def setup(bot):
     bot.add_cog(Developer(bot))

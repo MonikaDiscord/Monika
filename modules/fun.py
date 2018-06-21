@@ -151,7 +151,7 @@ class Fun:
         if not len(apiexample) == 0 and len(apiexample) <= 1024:
             e.add_field(name="Example", value=apiexample, inline=False)
         else:
-            e.add_field(name="Example", value="The example either didn't exist or was too long", inline=False)
+            e.add_field(name="Example", value="The example either didn't exist or was too long.", inline=False)
         e.add_field(name=":thumbsup:", value=thumbsup)
         e.add_field(name=":thumbsdown:", value=thumbsdown)
         e.set_footer(text="Definiton by {} | Powered by Urban Dictionary".format(apiauthor))

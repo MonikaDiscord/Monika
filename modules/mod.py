@@ -44,11 +44,6 @@ class Moderation:
                 to_delete.append(message)
 
             await self.process_deletion(to_delete, ctx.message.channel)
-            if number == 1:
-                await ctx.send("Yay! I pruned a message~")
-                return
-            else:
-                await ctx.send("Yay! I pruned {} messages~".format(number))
 
     @commands.command()
     @checks.command()

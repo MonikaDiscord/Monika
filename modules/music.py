@@ -5,6 +5,9 @@ from utilities import checks
 import discord
 import lavalink
 from discord.ext import commands
+import asyncio
+import sys
+import os
 
 global checks
 checks = checks.Checks()
@@ -16,9 +19,7 @@ class Music:
     def __init__(self, bot):
         self.bot = bot
 
-        if not hasattr(bot, 'lavalink'):
-            lavalink.Client(bot=bot, password=bot.config['lavapass'], loop=self.bot.loop, ws_port=1337, shard_count=len(bot.shards))
-            self.bot.lavalink.register_hook(self.track_hook)
+        self.bot.lavalink.register_hook(self.track_hook)
 
     async def track_hook(self, event):
         if isinstance(event, lavalink.Events.TrackStartEvent):
@@ -29,11 +30,12 @@ class Music:
                 if u:
                     u = self.bot.get_user(u)
                 if c:
-                    embed = discord.Embed(colour=c.guild.me.color, title="I'm now playing:", description=event.track.title)
-                    embed.set_thumbnail(url=event.track.thumbnail)
-                    if u:
-                        embed.set_footer(text="Requested by {}")
-                    await c.send(embed=embed)
+                    if event.player.fetch('repair') == False:
+                        embed = discord.Embed(colour=c.guild.me.color, title="I'm now playing:", description=event.track.title)
+                        embed.set_thumbnail(url=event.track.thumbnail)
+                        if u:
+                            embed.set_footer(text="Requested by {}")
+                        await c.send(embed=embed)
         elif isinstance(event, lavalink.Events.QueueEndEvent):
             await event.player.disconnect()
             event.player.repeat = False
@@ -41,7 +43,8 @@ class Music:
             if c:
                 c = self.bot.get_channel(c)
                 if c:
-                    await c.send('Well, I finished playing all those songs. Don\'t be afraid to add another one!')
+                    if event.player.fetch('repair') == False:
+                        await c.send('Well, I finished playing all those songs. Don\'t be afraid to add another one!')
 
     @commands.command(aliases=['p'])
     @checks.command()
@@ -90,6 +93,36 @@ class Music:
 
         if not player.is_playing:
             await player.play()
+            # self-repair
+            p1 = player.current.uri
+            await asyncio.sleep(2)
+            p2 = player.current.uri
+            if player.is_playing and p1 == p2:
+                if lavalink.Utils.format_time(player.position) == "00:00:00":
+                    player.store('repair', True)
+                    await ctx.send("Music doesn't seem to be working, so I'll fix it right now!")
+                    await ctx.send("This will take about 10 minutes, so please try again after that.")
+                    await ctx.send("Note: I may restart during this process.")
+                    c = self.bot.get_channel(404067028790673409)
+                    await c.send("Self-repairing music.")
+                    await self.bot.reload_music()
+                    player.queue.clear()
+                    ts = await self.bot.lavalink.get_tracks("ytsearch:your reality")
+                    for t in ts:
+                        player.add(requester=ctx.author.id, track=track)
+                    await player.play()
+                    await asyncio.sleep(1)
+                    if lavalink.Utils.format_time(player.position) == "00:00:00":
+                        await c.send("Self-repair failed, restarting process.")
+                        os.execl(sys.executable, sys.executable, * sys.argv)
+                    else:
+                        await ctx.send("Music should be fixed! I'll play your requested song now.")
+                        await player.skip()
+                        for track in tracks:
+                            player.add(requester=ctx.author.id, track=track)
+                            await player.play()
+                            player.store('repair', False)
+
 
     @commands.command()
     @checks.command()

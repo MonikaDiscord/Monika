@@ -112,7 +112,7 @@ class Music:
                     for t in ts:
                         player.add(requester=ctx.author.id, track=track)
                     await player.play()
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(10)
                     if lavalink.Utils.format_time(player.position) == "00:00:00":
                         await c.send("Self-repair failed, restarting process.")
                         os.execl(sys.executable, sys.executable, * sys.argv)

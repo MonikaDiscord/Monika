@@ -97,6 +97,7 @@ class Music:
             p1 = player.current.uri
             await asyncio.sleep(2)
             p2 = player.current.uri
+            await asyncio.sleep(10)
             if player.is_playing and p1 == p2:
                 if lavalink.Utils.format_time(player.position) == "00:00:00":
                     player.store('repair', True)

@@ -9,6 +9,7 @@ import os
 from utilities import prefix
 import traceback
 from datadog import api, statsd, initialize
+import lavalink
 
 global checks
 checks = checks.Checks()
@@ -31,6 +32,7 @@ class Monika(commands.AutoShardedBot):
 
         self.session = aiohttp.ClientSession()
         self.dogstatsd = statsd
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']

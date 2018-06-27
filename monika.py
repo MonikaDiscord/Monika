@@ -174,10 +174,10 @@ class Monika(commands.AutoShardedBot):
         return await self.db.fetchval(sql, id)
     
     async def reload_music(self):
-        self.bot.unload_extension('modules.music')
+        self.unload_extension('modules.music')
         del self.lavalink
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
-        self.bot.load_extension('modules.music')
+        self.load_extension('modules.music')
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())

@@ -169,5 +169,4 @@ class Monika(commands.AutoShardedBot):
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())
-try:
-    bot.run(config.get('token'))
+bot.run(config.get('token'))

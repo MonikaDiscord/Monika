@@ -22,7 +22,7 @@ class Music:
         self.bot.lavalink.register_hook(self.track_hook)
 
     async def track_hook(self, event):
-        if self.bot.mrepair:
+        if self.bot.mrepair or not self.bot.fr:
             return
         if isinstance(event, lavalink.Events.TrackStartEvent):
             c = event.player.fetch('channel')
@@ -53,6 +53,9 @@ class Music:
     async def play(self, ctx, *, query):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+        
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -140,6 +143,9 @@ class Music:
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_playing:
@@ -171,6 +177,9 @@ class Music:
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
         
         if player.fetch('repair') == True:
@@ -188,6 +197,9 @@ class Music:
     async def stop(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -208,6 +220,9 @@ class Music:
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
         song = 'Nothing'
 
@@ -227,6 +242,9 @@ class Music:
     async def queue(self, ctx, page: int=1):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -257,6 +275,9 @@ class Music:
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if player.fetch('repair') == True:
@@ -278,6 +299,9 @@ class Music:
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not volume:
@@ -292,6 +316,9 @@ class Music:
     async def shuffle(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -309,6 +336,9 @@ class Music:
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_playing:
@@ -324,6 +354,9 @@ class Music:
     async def remove(self, ctx, index: int):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
@@ -344,6 +377,9 @@ class Music:
     async def disconnect(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
+        if not self.bot.fr:
+            return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
 

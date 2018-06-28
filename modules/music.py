@@ -104,7 +104,7 @@ class Music:
             p2 = player.current.uri
             await asyncio.sleep(10)
             if player.is_playing and p1 == p2:
-                if lavalink.Utils.format_time(player.position) == "00:00:00":
+                if lavalink.Utils.format_time(player.position) == "00:00:00" and self.bot.mrepair == False:
                     self.bot.mrepair = True
                     player.store('repair', True)
                     await ctx.send("Music doesn't seem to be working, so I'll fix it right now!")
@@ -129,6 +129,7 @@ class Music:
                             player.add(requester=ctx.author.id, track=track)
                             await player.play()
                             player.store('repair', False)
+                            await c.send("Self-repair finished.")
 
 
     @commands.command()

@@ -34,6 +34,7 @@ class Monika(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession()
         self.dogstatsd = statsd
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
+        self.mrepair = False
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -175,10 +176,8 @@ class Monika(commands.AutoShardedBot):
         return await self.db.fetchval(sql, id)
     
     async def reload_music(self):
-        self.unload_extension('modules.music')
         del self.lavalink
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
-        self.load_extension('modules.music')
         
     async def restart(self):
         sys.exit(1)

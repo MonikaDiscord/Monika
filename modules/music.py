@@ -49,8 +49,6 @@ class Music:
     @commands.command(aliases=['p'])
     @checks.command()
     async def play(self, ctx, *, query):
-        if self.self-repair:
-            return await ctx.send("Music appears to be broken right now, try again in 10 minutes!")
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_connected:

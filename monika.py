@@ -24,7 +24,6 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.dogstatsd = statsd
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
         self.mrepair = False
 

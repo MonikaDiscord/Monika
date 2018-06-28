@@ -26,6 +26,7 @@ class Monika(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession()
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
         self.mrepair = False
+        self.fr = False
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -53,6 +54,7 @@ class Monika(commands.AutoShardedBot):
 
 
     async def on_ready(self):
+        self.fr = True
         await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
         c = self.get_channel(447553320752513053)

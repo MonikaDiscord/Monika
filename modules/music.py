@@ -22,6 +22,8 @@ class Music:
         self.bot.lavalink.register_hook(self.track_hook)
 
     async def track_hook(self, event):
+        if self.bot.mrepair:
+            return
         if isinstance(event, lavalink.Events.TrackStartEvent):
             c = event.player.fetch('channel')
             if c:
@@ -49,6 +51,9 @@ class Music:
     @commands.command(aliases=['p'])
     @checks.command()
     async def play(self, ctx, *, query):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_connected:
@@ -100,6 +105,7 @@ class Music:
             await asyncio.sleep(10)
             if player.is_playing and p1 == p2:
                 if lavalink.Utils.format_time(player.position) == "00:00:00":
+                    self.bot.mrepair = True
                     player.store('repair', True)
                     await ctx.send("Music doesn't seem to be working, so I'll fix it right now!")
                     await ctx.send("This will take about 10 minutes, so please try again after that.")
@@ -129,6 +135,9 @@ class Music:
     @checks.command()
     @checks.is_patron()
     async def seek(self, ctx, time):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_playing:
@@ -157,6 +166,9 @@ class Music:
     @commands.command()
     @checks.command()
     async def skip(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
         
         if player.fetch('repair') == True:
@@ -172,6 +184,9 @@ class Music:
     @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def stop(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if player.fetch('repair') == True:
@@ -188,6 +203,9 @@ class Music:
     @commands.command()
     @checks.command()
     async def now(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
         song = 'Nothing'
 
@@ -205,6 +223,9 @@ class Music:
     @commands.command(aliases=['q'])
     @checks.command()
     async def queue(self, ctx, page: int=1):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.queue:
@@ -231,6 +252,9 @@ class Music:
     @checks.command()
     @checks.is_patron()
     async def pause(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if player.fetch('repair') == True:
@@ -249,6 +273,9 @@ class Music:
     @commands.command(aliases=['vol'])
     @checks.command()
     async def volume(self, ctx, volume: int=None):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not volume:
@@ -261,6 +288,9 @@ class Music:
     @checks.command()
     @checks.is_patron()
     async def shuffle(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_playing:
@@ -273,7 +303,9 @@ class Music:
     @commands.command()
     @checks.command()
     @checks.is_patron()
-    async def repeat(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_playing:
@@ -287,6 +319,9 @@ class Music:
     @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def remove(self, ctx, index: int):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.queue:
@@ -304,6 +339,9 @@ class Music:
     @checks.command()
     @commands.has_permissions(manage_messages = True)
     async def disconnect(self, ctx):
+        if self.bot.mrepair:
+            return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
+
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if player.fetch('repair') == True:

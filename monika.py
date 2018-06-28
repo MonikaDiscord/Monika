@@ -174,12 +174,12 @@ class Monika(commands.AutoShardedBot):
     async def get_coins(self, id):
         sql = "SELECT coins FROM users WHERE id = $1"
         return await self.db.fetchval(sql, id)
-    
+
     async def reload_music(self):
         del self.lavalink
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
-        
-    async def restart(self):
+
+    async def restart_monika(self):
         sys.exit(1)
 
 bot = Monika()

@@ -10,6 +10,7 @@ from utilities import prefix
 import traceback
 from datadog import api, statsd, initialize
 import lavalink
+import sys
 
 global checks
 checks = checks.Checks()
@@ -178,6 +179,9 @@ class Monika(commands.AutoShardedBot):
         del self.lavalink
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
         self.load_extension('modules.music')
+        
+    async def restart(self):
+        sys.exit(1)
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())

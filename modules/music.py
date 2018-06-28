@@ -112,6 +112,7 @@ class Music:
                     c = self.bot.get_channel(404067028790673409)
                     await c.send("Self-repairing music.")
                     await self.bot.reload_music()
+                    await c.send("Recreated the Lavalink variable.")
                     player.queue.clear()
                     ts = await self.bot.lavalink.get_tracks("ytsearch:your reality")
                     for t in ts:

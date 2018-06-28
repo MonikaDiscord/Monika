@@ -49,6 +49,8 @@ class Music:
     @commands.command(aliases=['p'])
     @checks.command()
     async def play(self, ctx, *, query):
+        if self.self-repair:
+            return await ctx.send("Music appears to be broken right now, try again in 10 minutes!")
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_connected:
@@ -158,6 +160,9 @@ class Music:
     @checks.command()
     async def skip(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
+        
+        if player.fetch('repair') == True:
+            return await ctx.send("You can't do that right now. Try again in about 10 minutes.")
 
         if not player.is_playing:
             return await ctx.send("I'm not playing anything...")
@@ -170,6 +175,9 @@ class Music:
     @commands.has_permissions(manage_messages = True)
     async def stop(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
+
+        if player.fetch('repair') == True:
+            return await ctx.send("You can't do that right now. Try again in about 10 minutes.")
 
         if not player.is_playing:
             return await ctx.send("I'm not playing anything...")
@@ -226,6 +234,9 @@ class Music:
     @checks.is_patron()
     async def pause(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
+
+        if player.fetch('repair') == True:
+            return await ctx.send("You can't do that right now. Try again in about 10 minutes.")
 
         if not player.is_playing:
             return await ctx.send('Not playing.')
@@ -296,6 +307,9 @@ class Music:
     @commands.has_permissions(manage_messages = True)
     async def disconnect(self, ctx):
         player = self.bot.lavalink.players.get(ctx.guild.id)
+
+        if player.fetch('repair') == True:
+            return await ctx.send("You can't do that right now. Try again in about 10 minutes.")
 
         if not player.is_connected:
             return await ctx.send("I'm not connected to a voice channel...")

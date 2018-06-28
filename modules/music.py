@@ -303,6 +303,7 @@ class Music:
     @commands.command()
     @checks.command()
     @checks.is_patron()
+    async def repeat(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 

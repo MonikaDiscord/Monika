@@ -115,7 +115,7 @@ class Music:
                     await asyncio.sleep(10)
                     if lavalink.Utils.format_time(player.position) == "00:00:00":
                         await c.send("Self-repair failed, restarting process.")
-                        os.execl(sys.executable, sys.executable, * sys.argv)
+                        await self.bot.restart()
                     else:
                         await ctx.send("Music should be fixed! I'll play your requested song now.")
                         await player.skip()

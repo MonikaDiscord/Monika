@@ -122,6 +122,7 @@ class Music:
                         await c.send("Self-repair failed, restarting process.")
                         await self.bot.restart()
                     else:
+                        self.bot.mrepair = False
                         await ctx.send("Music should be fixed! I'll play your requested song now.")
                         await player.skip()
                         for track in tracks:

@@ -23,6 +23,10 @@ class Monika(commands.AutoShardedBot):
         super().__init__(command_prefix=self._prefix.prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
+        
+        nl = asyncio.new_event_loop()
+        asyncio.set_event_loop(nl)
+        self.loop = asyncio.get_event_loop()
 
         datadogkeys = {
             'api_key': self.config['datadog_api_key'],

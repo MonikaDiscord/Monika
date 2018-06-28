@@ -115,7 +115,7 @@ class Music:
                     player.queue.clear()
                     ts = await self.bot.lavalink.get_tracks("ytsearch:your reality")
                     for t in ts:
-                        player.add(requester=ctx.author.id, track=track)
+                        player.add(requester=ctx.author.id, track=t)
                     await player.play()
                     await asyncio.sleep(10)
                     if lavalink.Utils.format_time(player.position) == "00:00:00":

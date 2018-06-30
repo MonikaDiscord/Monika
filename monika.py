@@ -20,7 +20,7 @@ class Monika(commands.AutoShardedBot):
 
         self._prefix = prefix.Prefix()
         super().__init__(command_prefix=self._prefix.prefixcall)
-        self.loop.create_task(dblpost())
+        self.loop.create_task(self.dblpost())
 
         self.config = json.loads(open('config.json', 'r').read())
 

@@ -102,6 +102,7 @@ class Music:
         if not player.is_playing:
             await player.play()
             # self-repair
+            if player.current:
             p1 = player.current.uri
             await asyncio.sleep(10)
             p2 = player.current.uri
@@ -110,30 +111,17 @@ class Music:
                     self.bot.mrepair = True
                     player.store('repair', True)
                     await ctx.send("Music doesn't seem to be working, so I'll fix it right now!")
-                    await ctx.send("This will take about 10 minutes, so please try again after that.")
-                    await ctx.send("Note: I may restart during this process.")
+                    player.queue.clear()
                     c = self.bot.get_channel(404067028790673409)
                     await c.send("Self-repairing music.")
                     await self.bot.reload_music()
-                    await c.send("Recreated the Lavalink variable.")
-                    player.queue.clear()
-                    ts = await self.bot.lavalink.get_tracks("ytsearch:your reality")
-                    for t in ts:
-                        player.add(requester=ctx.author.id, track=t)
-                    await player.play()
-                    await asyncio.sleep(10)
-                    if lavalink.Utils.format_time(player.position) == "00:00:00":
-                        await c.send("Self-repair failed, restarting process.")
-                        await self.bot.restart_monika()
-                    else:
-                        self.bot.mrepair = False
-                        await ctx.send("Music should be fixed! I'll play your requested song now.")
-                        await player.skip()
-                        for track in tracks:
-                            player.add(requester=ctx.author.id, track=track)
-                            await player.play()
-                            player.store('repair', False)
-                            await c.send("Self-repair finished.")
+                    self.bot.mrepair = False
+                    await ctx.send("Music should be fixed! I'll play your requested song now.")
+                    for track in tracks:
+                        player.add(requester=ctx.author.id, track=track)
+                        await player.play()
+                        player.store('repair', False)
+                        await c.send("Self-repair finished.")
 
 
     @commands.command()

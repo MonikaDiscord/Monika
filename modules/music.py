@@ -8,7 +8,6 @@ from discord.ext import commands
 import asyncio
 import sys
 import os
-import time
 
 global checks
 checks = checks.Checks()
@@ -19,7 +18,6 @@ class Music:
 
     def __init__(self, bot):
         self.bot = bot
-        self.lrt = time.time()
 
         self.bot.lavalink.register_hook(self.track_hook)
 
@@ -104,29 +102,12 @@ class Music:
         if not player.is_playing:
             await player.play()
 
-            # self-repair
-
-            p1 = player.current.uri
-            await asyncio.sleep(10)
-            p2 = player.current.uri
-            if player.is_playing and time.time() - self.lrt > 10 and p1 == p2:
-                if lavalink.Utils.format_time(player.position) == "00:00:00" and self.bot.mrepair == False:
-                    self.bot.mrepair = True
-                    player.store('repair', True)
-                    await ctx.send("Music doesn't seem to be working, so I'll fix it right now!")
-                    player.queue.clear()
-                    c = self.bot.get_channel(404067028790673409)
-                    await c.send("Self-repairing music.")
-                    await self.bot.reload_music()
-                    self.bot.mrepair = False
-                    await ctx.send("Music should be fixed! I'll play your requested song now.")
-                    for track in tracks:
-                        player.add(requester=ctx.author.id, track=track)
-                        await player.play()
-                        player.store('repair', False)
-                        await c.send("Self-repair finished.")
-                        self.lrt = time.time()
-
+    @commands.command()
+    @checks.command()
+    @checks.is_staff()
+    async def reloadmusic(self, ctx):
+        await self.bot.reload_music()
+        await ctx.send(":ok_hand:")
 
     @commands.command()
     @checks.command()

@@ -181,7 +181,8 @@ class Monika(commands.AutoShardedBot):
                 'Content-type' : 'application/json'
             }
             url = f'https://discordbots.org/api/bots/{self.user.id}/stats'
-        await self.session.post(url, data=payload, headers=headers)
+            await self.session.post(url, data=payload, headers=headers)
+            await asyncio.sleep(900)
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())

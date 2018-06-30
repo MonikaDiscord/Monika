@@ -8,6 +8,7 @@ from discord.ext import commands
 import asyncio
 import sys
 import os
+import time
 
 global checks
 checks = checks.Checks()
@@ -18,6 +19,7 @@ class Music:
 
     def __init__(self, bot):
         self.bot = bot
+        self.lrt = time.time()
 
         self.bot.lavalink.register_hook(self.track_hook)
 
@@ -107,7 +109,7 @@ class Music:
             p1 = player.current.uri
             await asyncio.sleep(10)
             p2 = player.current.uri
-            if player.is_playing and p1 == p2:
+            if player.is_playing and time.time() - self.lrt > 10 and p1 == p2:
                 if lavalink.Utils.format_time(player.position) == "00:00:00" and self.bot.mrepair == False:
                     self.bot.mrepair = True
                     player.store('repair', True)
@@ -123,6 +125,7 @@ class Music:
                         await player.play()
                         player.store('repair', False)
                         await c.send("Self-repair finished.")
+                        self.lrt = time.time()
 
 
     @commands.command()

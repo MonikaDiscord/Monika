@@ -101,8 +101,9 @@ class Music:
 
         if not player.is_playing:
             await player.play()
+
             # self-repair
-            if player.current:
+
             p1 = player.current.uri
             await asyncio.sleep(10)
             p2 = player.current.uri

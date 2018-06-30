@@ -171,16 +171,16 @@ class Monika(commands.AutoShardedBot):
         
     async def dblpost(self):
         while True:
-        payload = json.dumps({
-            'shard_id': self.shard_id,
-            'shard_count': self.shard_count,
-            'server_count': len(self.guilds)
-        })
-        headers = {
-            'Authorization': self.config['dblkey'],
-            'Content-type' : 'application/json'
-        }
-        url = f'https://discordbots.org/api/bots/{self.user.id}/stats'
+            payload = json.dumps({
+                'shard_id': self.shard_id,
+                'shard_count': self.shard_count,
+                'server_count': len(self.guilds)
+            })
+            headers = {
+                'Authorization': self.config['dblkey'],
+                'Content-type' : 'application/json'
+            }
+            url = f'https://discordbots.org/api/bots/{self.user.id}/stats'
         await self.session.post(url, data=payload, headers=headers)
 
 bot = Monika()

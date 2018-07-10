@@ -31,6 +31,12 @@ class Checks:
         status = await self.db.fetchval(sql, ctx.author.id)
         nums = [1, 3]
         return int(status) in nums
+    
+    async def ss_check(self, ctx):
+        sql = "SELECT staff FROM users WHERE id = $1"
+        status = await self.db.fetchval(sql, ctx.author.id)
+        nums = [1, 2, 3, 4]
+        return int(status) in nums
 
     async def staff_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
@@ -69,6 +75,9 @@ class Checks:
 
     def is_mod(self):
         return commands.check(self.mod_check)
+    
+    def is_ss(self):
+        return commands.check(self.ss_check)
 
     def is_staff(self):
         return commands.check(self.staff_check)

@@ -24,7 +24,7 @@ class Developer:
 
     @commands.command(name='eval')
     @checks.command()
-    @checks.is_dev()
+    @checks.is_ss()
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
 

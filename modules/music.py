@@ -104,7 +104,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @checks.is_staff()
+    @checks.is_ss()
     async def reloadmusic(self, ctx):
         await self.bot.reload_music()
         await ctx.send(":ok_hand:")

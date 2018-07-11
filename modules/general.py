@@ -63,7 +63,7 @@ class General:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(), str(ctx.message.guild.shard_id)))
         except Exception:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**".format(discord.__version__, platform.python_version()))
-        embed.add_field(name="Other: ", value = "Website: https://monikabot.pw\nDiscord: https://discord.gg/DspkaRD\nPatreon: https://www.patreon.com/teamluki")
+        embed.add_field(name="Other: ", value = "Website: https://monikabot.pw\nDiscord: https://discord.gg/DspkaRD\nPatreon: https://www.patreon.com/monikabot")
         await ctx.send(embed=embed)
 
     @commands.command()

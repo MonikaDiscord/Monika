@@ -67,7 +67,7 @@ class Economy:
         camount = await self.bot.db.fetchval(sql, user.id)
         newamount = float(camount) + float(amount)
         sql = "UPDATE users SET money = $1 WHERE id = $2"
-        await self.bot.db.execute(sql, newamount, user.id)
+        await self.bot.db.execute(sql, str(newamount), user.id)
         await ctx.send("I gave {} coins to {}.".format(amount, user.name))
 
 def setup(bot):

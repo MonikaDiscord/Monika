@@ -63,26 +63,17 @@ class Moderation:
     @commands.has_permissions(manage_messages=True)
     async def mute(self, ctx, user: discord.Member, *, reason=None):
         """Mutes a user."""
-        r = discord.utils.get(ctx.guild.roles, name="Muted")
-        mr = discord.utils.get(user.roles, name="Muted")
-        if mr:
-            return await ctx.send("This user is already muted.")
-        elif r:
-            await user.add_roles(r, reason=reason)
-        else:
-            nr = await ctx.guild.create_role(name="Muted")
-            await user.add_roles(nr, reason=reason)
+        for channel in ctx.guild.channels:
+            await channel.set_permissions(user, send_messages=False, reason=reason)
         await ctx.send(f"I muted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()
     @checks.command()
     @commands.has_permissions(manage_messages=True)
     async def unmute(self, ctx, user: discord.Member, *, reason=None):
-        r = discord.utils.get(user.roles, name="Muted")
-        if not r:
-            return await ctx.send("This user is not muted.")
-        else:
-            await user.remove_roles(r, reason=reason)
+        """Unmutes a user."""
+        for channel in ctx.guild.channels:
+            await channel.set_permissions(user, send_messages=True, reason=reason)
         await ctx.send(f"I unmuted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()

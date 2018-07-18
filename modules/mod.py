@@ -64,7 +64,7 @@ class Moderation:
     async def mute(self, ctx, user: discord.Member, *, reason=None):
         """Mutes a user."""
         for channel in ctx.guild.channels:
-            await channel.set_permissions(user, send_messages=False, reason=reason)
+            await channel.set_permissions(user, send_messages=False, add_reactions=False, reason=reason)
         await ctx.send(f"I muted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()
@@ -73,7 +73,7 @@ class Moderation:
     async def unmute(self, ctx, user: discord.Member, *, reason=None):
         """Unmutes a user."""
         for channel in ctx.guild.channels:
-            await channel.set_permissions(user, send_messages=True, reason=reason)
+            await channel.set_permissions(user, send_messages=True,  add_reactions=True, reason=reason)
         await ctx.send(f"I unmuted <@{user.id}> for you, <@{ctx.author.id}>~")
 
     @commands.command()

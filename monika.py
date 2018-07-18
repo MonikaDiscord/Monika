@@ -97,9 +97,6 @@ class Monika(commands.AutoShardedBot):
                 else:
                     sql1 = "UPDATE guilds SET name = $1 WHERE id = $2"
                     await self.db.execute(sql1, guild.name, guild.id)
-                r = discord.utils.get(msg.author.roles, name="Muted")
-                if r:
-                    return await msg.delete()
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
                 fw = await self.db.fetchval(sql, guild.id)
                 if fw:

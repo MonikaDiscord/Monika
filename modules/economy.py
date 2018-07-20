@@ -46,7 +46,7 @@ class Economy:
             await ctx.send("You don't have enough money!")
             return
         auamount -= int(amount)
-        sql = "UPDATE users SET money = $1 WHERE id = $1"
+        sql = "UPDATE users SET money = $1 WHERE id = $2"
         await self.bot.db.execute(sql, str(auamount), ctx.author.id)
         sql = "SELECT money FROM users WHERE id = $1"
         camount = await self.bot.db.fetchval(sql, ctx.author.id)

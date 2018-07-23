@@ -50,7 +50,7 @@ class Botlists:
                   'Authorization': self.bot.config['kbkey'],
                   'Content-type' : 'application/json'
               }
-              url = f'https://bots.disgd.pw/api/bot/{self.bot.user.id}/stats'
+              url = f'http://bots.disgd.pw/api/bot/{self.bot.user.id}/stats'
               await self.bot.session.post(url, data=payload, headers=headers)
               await asyncio.sleep(900)
       

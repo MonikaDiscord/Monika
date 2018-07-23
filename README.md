@@ -32,6 +32,7 @@ Here's a template for `config.json`:
   "dbpass": "psql password",
   "dblkey": "discordbots.org token",
   "pwkey": "bots.discord.pw token",
+  "kbkey": "bots.disgd.pw token",
   "weebkey": "weeb.sh token",
   "perspectivekey": "google perspective api token",
   "danboorukey": "danbooru api key",

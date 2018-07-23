@@ -7,9 +7,9 @@ class Botlists:
 
     def __init__(self, bot):
         self.bot = bot
-        bot.loop.create_task(discordbotsorg())
-        bot.loop.create_task(botsdiscordpw())
-        bot.loop.create_task(botsdisgdpw())
+        bot.loop.create_task(self.discordbotsorg())
+        bot.loop.create_task(self.botsdiscordpw())
+        bot.loop.create_task(self.botsdisgdpw())
     
     async def discordbotsorg(self):
         while True:
@@ -53,3 +53,5 @@ class Botlists:
               await self.session.post(url, data=payload, headers=headers)
               await asyncio.sleep(900)
       
+def setup(bot):
+    bot.add_cog(Botlists(bot))

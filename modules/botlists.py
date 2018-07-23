@@ -7,9 +7,10 @@ class Botlists:
 
     def __init__(self, bot):
         self.bot = bot
-        bot.loop.create_task(self.discordbotsorg())
-        bot.loop.create_task(self.botsdiscordpw())
-        bot.loop.create_task(self.botsdisgdpw())
+        l = asyncio.get_event_loop()
+        l.create_task(self.discordbotsorg())
+        l.create_task(self.botsdiscordpw())
+        l.create_task(self.botsdisgdpw())
     
     async def discordbotsorg(self):
         while True:

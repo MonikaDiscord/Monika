@@ -15,7 +15,7 @@ class Botlists:
         while True:
             payload = json.dumps({
                 'shard_count': self.bot.shard_count,
-                'server_count': len(self.guilds)
+                'server_count': len(self.bot.guilds)
             })
             headers = {
                 'Authorization': self.bot.config['dblkey'],
@@ -30,7 +30,7 @@ class Botlists:
         while True:
             payload = json.dumps({
                 'shard_count': self.bot.shard_count,
-                'server_count': len(self.guilds)
+                'server_count': len(self.bot.guilds)
             })
             headers = {
                 'Authorization': self.bot.config['pwkey'],
@@ -43,7 +43,7 @@ class Botlists:
     async def botsdisgdpw(self):
         while True:
               payload = json.dumps({
-                  'server_count': len(self.guilds)
+                  'server_count': len(self.bot.guilds)
               })
               headers = {
                   'Authorization': self.bot.config['kbkey'],

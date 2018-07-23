@@ -23,7 +23,7 @@ class Botlists:
                 'Content-type' : 'application/json'
             }
             url = f'https://discordbots.org/api/bots/{self.bot.user.id}/stats'
-            await self.session.post(url, data=payload, headers=headers)
+            await self.bot.session.post(url, data=payload, headers=headers)
             await asyncio.sleep(900)
       
       
@@ -38,7 +38,7 @@ class Botlists:
                 'Content-type' : 'application/json'
             }
             url = f'https://bots.discord.pw/api/bots/{self.bot.user.id}/stats'
-            await self.session.post(url, data=payload, headers=headers)
+            await self.bot.session.post(url, data=payload, headers=headers)
             await asyncio.sleep(900)
             
     async def botsdisgdpw(self):
@@ -51,7 +51,7 @@ class Botlists:
                   'Content-type' : 'application/json'
               }
               url = f'https://bots.disgd.pw/api/bot/{self.bot.user.id}/stats'
-              await self.session.post(url, data=payload, headers=headers)
+              await self.bot.session.post(url, data=payload, headers=headers)
               await asyncio.sleep(900)
       
 def setup(bot):

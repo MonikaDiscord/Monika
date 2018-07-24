@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from utilities import checks
+import math
 
 global checks
 checks = checks.Checks()
@@ -46,6 +47,8 @@ class Economy:
             await ctx.send("You don't have enough money!")
             return
         auamount -= float(amount)
+        if math.isnan(auamount):
+            auamount = float("0")
         sql = "UPDATE users SET money = $1 WHERE id = $2"
         await self.bot.db.execute(sql, str(auamount), ctx.author.id)
         sql = "SELECT money FROM users WHERE id = $1"

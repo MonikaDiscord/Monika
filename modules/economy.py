@@ -45,7 +45,7 @@ class Economy:
         if float(auamount) < float(amount):
             await ctx.send("You don't have enough money!")
             return
-        auamount -= int(amount)
+        auamount -= float(amount)
         sql = "UPDATE users SET money = $1 WHERE id = $2"
         await self.bot.db.execute(sql, str(auamount), ctx.author.id)
         sql = "SELECT money FROM users WHERE id = $1"

@@ -78,6 +78,7 @@ class Moderation:
             overrite = channel.overwrites_for(user)
             overrite.update(send_messages=None, add_reactions=None)
             empty = overrite.isEmpty()
+            print(empty)
             if empty:
                 await channel.set_permissions(user, overwrite=None, reason=reason)
             else:

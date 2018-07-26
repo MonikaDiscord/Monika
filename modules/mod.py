@@ -77,7 +77,7 @@ class Moderation:
         for channel in ctx.guild.channels:
             overrite = channel.overwrites_for(user)
             overrite.update(send_messages=None, add_reactions=None)
-            empty = overrite.isEmpty()
+            empty = overrite.is_empty()
             print(empty)
             if empty:
                 await channel.set_permissions(user, overwrite=None, reason=reason)

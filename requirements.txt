@@ -4,4 +4,3 @@ asyncpg
 yarl<1.2
 lavalink
 pybooru
-datadog

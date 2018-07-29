@@ -40,8 +40,11 @@ class Economy:
         elif user.id == ctx.author.id:
             await ctx.send("What did you expect to happen?")
             return
-        if amount <= 0:
-            await ctx.send("You can't give people an amount of money that's less than 0, That's just stealing!")
+        if amount < 0:
+            await ctx.send("You can't take people's money, That's just stealing!")
+            return
+        if amount == 0:
+            await ctx.send("kaniel u gotta fricking personalize this message i cant do that shit")
             return
         sql = "SELECT money FROM users WHERE id = $1"
         thing = await self.bot.db.fetchval(sql, ctx.author.id)

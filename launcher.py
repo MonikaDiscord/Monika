@@ -40,9 +40,9 @@ def runmonika():
     print("Monika needs Python 3.6 or higher.")
 
 def main():
+    updatesource()
     updatepip()
     getreqs()
-    updatesource()
     runmonika()
 
 main()

@@ -125,8 +125,7 @@ class Monika(commands.AutoShardedBot):
                 await ctx.send(embed=e)
                 c = self.get_channel(451175777996898305)
                 tb = traceback.format_exception(e)
-                stri = '\n'.join(tb)
-                c.send(stri)
+                c.send(tb)
 
     async def on_guild_join(self, guild):
         sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"

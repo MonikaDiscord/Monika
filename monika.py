@@ -123,6 +123,10 @@ class Monika(commands.AutoShardedBot):
             if ctx:
                 e = discord.Embed(title="An exception has occured.", description=f"```{error}```\nIf you know how to fix this, then you can check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).\nOtherwise, please report it at the [Monika Discord server](https://discord.gg/DspkaRD).")
                 await ctx.send(embed=e)
+                c = self.get_channel(451175777996898305)
+                tb = traceback.format_exception(e)
+                stri = '\n'.join(tb)
+                c.send(stri)
 
     async def on_guild_join(self, guild):
         sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"

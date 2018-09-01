@@ -1,6 +1,4 @@
 # Monika
-![DBL Servers](https://discordbots.org/api/widget/servers/399315651338043392.svg) ![DBL Upvotes](https://discordbots.org/api/widget/upvotes/399315651338043392.svg)
-
 An entertaining Discord bot made to sharpen your server!
 
 We've decided to make Monika open-source so you guys can help us make Monika even greater!

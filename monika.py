@@ -28,9 +28,10 @@ class Monika(commands.AutoShardedBot):
         self.mrepair = False
         self.fr = False
 
+        dbhost = self.config['dbhost']
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": dbhost}
 
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)

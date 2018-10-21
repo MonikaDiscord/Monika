@@ -45,4 +45,4 @@ Here's a template for `config.json`:
   "datadog_app_key": "datadog app key"
 }
 ```
-Just put the file in Monika's main directory **or** rename the already included `config.json.example` file as `config.json`
+Just put the file in Monika's main directory **or** rename the already included `config.json.example` file as `config.json`.

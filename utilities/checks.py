@@ -9,10 +9,12 @@ class Checks:
         asyncio.ensure_future(self._init_db())
 
     async def _init_db(self):
-        config = json.loads(open('config.json', 'r').read())
+        config = json.loads(open('config.json.example', 'r').read())
+        dbhost = config['dbhost']
+        dbname = config['dbname']
         dbpass = config['dbpass']
         dbuser = config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+        govinfo = {"user": dbuser, "password": dbpass, "database": dbname, "host": dbhost}
         self.db = await asyncpg.create_pool(**govinfo)
 
     async def admin_check(self, ctx):

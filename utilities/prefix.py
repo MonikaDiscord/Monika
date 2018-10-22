@@ -8,7 +8,7 @@ class Prefix:
         asyncio.get_event_loop().create_task(self._init_db())
 
     async def _init_db(self):
-        config = json.loads(open('config.json.example', 'r').read())
+        config = json.loads(open('config.json', 'r').read())
         dbhost = config['dbhost']
         dbname = config['dbname']
         dbpass = config['dbpass']

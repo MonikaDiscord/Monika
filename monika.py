@@ -21,7 +21,7 @@ class Monika(commands.AutoShardedBot):
         self._prefix = prefix.Prefix()
         super().__init__(command_prefix=self._prefix.prefixcall)
 
-        self.config = json.loads(open('config.json.example', 'r').read())
+        self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
         self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards), host=self.config['lavahost'])
@@ -172,5 +172,5 @@ class Monika(commands.AutoShardedBot):
         sys.exit(1)
 
 bot = Monika()
-config = json.loads(open('config.json.example', 'r').read())
+config = json.loads(open('config.json', 'r').read())
 bot.run(config.get('token'))

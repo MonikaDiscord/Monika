@@ -9,9 +9,11 @@ class Prefix:
 
     async def _init_db(self):
         config = json.loads(open('config.json', 'r').read())
+        dbhost = config['dbhost']
+        dbname = config['dbname']
         dbpass = config['dbpass']
         dbuser = config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+        govinfo = {"user": dbuser, "password": dbpass, "database": dbname, "host": dbhost}
         self.db = await asyncpg.create_pool(**govinfo)
         await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
         await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")

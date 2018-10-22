@@ -24,13 +24,15 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards), host=self.config['lavahost'])
         self.mrepair = False
         self.fr = False
 
+        dbhost = self.config['dbhost']
+        dbname = self.config['dbname']
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+        govinfo = {"user": dbuser, "password": dbpass, "database": dbname, "host": dbhost}
 
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)
@@ -164,7 +166,7 @@ class Monika(commands.AutoShardedBot):
 
     async def reload_music(self):
         del self.lavalink
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards), host=self.config['lavahost'])
 
     async def restart_monika(self):
         sys.exit(1)

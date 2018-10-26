@@ -14,7 +14,6 @@ You can host your own version of Monika! [Disclaimer](https://github.com/gpago/M
 ## Prerequisites
 * Obviously a way to host the python app and accompanying software
 
-
 * **Python 3.6** (other python versions may work, but only the version here has been tested)
 * **PIP** installed for the above version of Python
 * **A PostgreSQL server** (with a database already created, preferably empty and with its own user)

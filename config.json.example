@@ -4,15 +4,15 @@
   "dbname": "postgres database",
   "dbuser": "postgres user",
   "dbpass": "postgres password",
-  "dblkey": "discordbots.org token",
-  "pwkey": "bots.discord.pw token",
-  "kbkey": "bots.disgd.pw token",
-  "weebkey": "weeb.sh token",
-  "perspectivekey": "google perspective api token",
-  "danboorukey": "danbooru api key",
   "lavahost": "lavalink host",
   "lavapass": "lavalink password",
+  "dblkey": "discordbots.org token",
+  "weebkey": "weeb.sh token",
+  "danboorukey": "danbooru api key",
+  "pwkey": "bots.discord.pw token",
+  "kbkey": "bots.disgd.pw token",
   "sentry_dsn": "sentry.io dsn",
   "datadog_api_key": "datadog api key",
-  "datadog_app_key": "datadog app key"
+  "datadog_app_key": "datadog app key",
+  "perspectivekey": "google perspective api token"
 }

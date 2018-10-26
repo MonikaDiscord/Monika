@@ -1,18 +1,20 @@
-import discord
-from discord.ext import commands
-import asyncpg, aiohttp
 import json
+import os
+import sys
+import traceback
+import asyncio
+import aiohttp
+import asyncpg
+import discord
+import lavalink
+from discord.ext import commands
 from raven import Client
 from utilities import checks
-import asyncio
-import os
 from utilities import prefix
-import traceback
-import lavalink
-import sys
 
 global checks
 checks = checks.Checks()
+
 
 class Monika(commands.AutoShardedBot):
 
@@ -24,7 +26,7 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards), host=self.config['lavahost'])
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaport'], shard_count=len(self.shards), host=self.config['lavahost'])
         self.mrepair = False
         self.fr = False
 
@@ -36,8 +38,10 @@ class Monika(commands.AutoShardedBot):
 
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)
-            await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
-            await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")
+            await self.db.execute(
+                "CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
+            await self.db.execute(
+                "CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")
 
         self.loop.create_task(_init_db())
 
@@ -54,10 +58,10 @@ class Monika(commands.AutoShardedBot):
                     print(f"Oops! I broke the {file} module...")
                     traceback.print_exc()
 
-
     async def on_ready(self):
         self.fr = True
-        await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
+        await self.change_presence(
+            activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
         c = self.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title="All shards ready!")
@@ -133,7 +137,8 @@ class Monika(commands.AutoShardedBot):
         sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"
         await self.db.execute(sql, guild.id, guild.name)
         c = self.get_channel(447553435999666196)
-        e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(self.guilds)} guilds!")
+        e = discord.Embed(color=discord.Color.blue(), title="New guild!",
+                          description=f"We're now in {len(self.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)
         e.add_field(name="Owner", value=guild.owner)
@@ -166,10 +171,11 @@ class Monika(commands.AutoShardedBot):
 
     async def reload_music(self):
         del self.lavalink
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards), host=self.config['lavahost'])
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaport'], shard_count=len(self.shards), host=self.config['lavahost'])
 
     async def restart_monika(self):
         sys.exit(1)
+
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())

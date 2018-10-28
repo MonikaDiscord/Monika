@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 import json
 
+
 class Checks:
 
     def __init__(self):
@@ -33,7 +34,7 @@ class Checks:
         status = await self.db.fetchval(sql, ctx.author.id)
         nums = [1, 3]
         return int(status) in nums
-    
+
     async def ss_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
         status = await self.db.fetchval(sql, ctx.author.id)
@@ -77,7 +78,7 @@ class Checks:
 
     def is_mod(self):
         return commands.check(self.mod_check)
-    
+
     def is_ss(self):
         return commands.check(self.ss_check)
 

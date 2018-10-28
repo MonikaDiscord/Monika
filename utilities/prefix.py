@@ -2,6 +2,7 @@ import asyncpg
 import asyncio
 import json
 
+
 class Prefix:
 
     def __init__(self):

@@ -14,13 +14,12 @@ You can host your own version of Monika! [Disclaimer](https://github.com/gpago/M
 ## Prerequisites
 - Obviously a way to host the python app and accompanying software
 * **Python 3.6** (other python versions may work, but only the version here has been tested)
-* **PIP** installed for the above version of Python
+* **Python PIP** installed for the above version of Python
 * **A PostgreSQL server** (with a database already created, preferably empty and with its own user)
 * **A Lavalink server** ([Lavalink Repository](https://github.com/Frederikam/Lavalink))
-* A customized `config.json` file (see "Configuration" below)
-* Python **pybooru.py** package (pip installable / already in `requirements.txt`)
-* A [Sentry IO](https://sentry.io/) account (technically optional, but recommended)
-* A [DataDog](https://www.datadoghq.com/) account (technically optional, but recommended)
+* **A [Sentry IO](https://sentry.io/) account** (technically optional, but recommended)
+* **A [DataDog](https://www.datadoghq.com/) account** (technically optional, but recommended)
+* A customized `config.json` file (see [Configuration](https://github.com/gpago/Monika#configuration) below)
 * ↓ All the API keys below ↓
 
 ## API keys needed

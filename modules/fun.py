@@ -9,6 +9,7 @@ from utilities import poems
 global checks
 checks = checks.Checks()
 
+
 class Fun:
 
     def __init__(self, bot):
@@ -19,11 +20,13 @@ class Fun:
     async def dog(self, ctx):
         """Provides a random dog."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog&nsfw=true',
+                                            headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog',
+                                            headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -94,25 +97,26 @@ class Fun:
     @checks.command()
     @checks.is_patron()
     async def _8ball(self, ctx, *, question):
-        responses = [["Signs point to yes.", "Yes.", "Without a doubt.", "As I see it, yes.", "You may rely on it.", "It is decidedly so.", "Yes - definitely.", "It is certain.", "Most likely.", "Outlook good."],
-        ["Reply hazy, try again.", "Concentrate and ask again.", "Better not tell you now.", "Cannot predict now.", "Ask again later."],
-        ["My sources say no.", "Outlook not so good.", "Very doubtful.", "My reply is no.", "Don't count on it."]]
+        responses = [["Signs point to yes.", "Yes.", "Without a doubt.", "As I see it, yes.", "You may rely on it.", "It is decidedly so.", "Yes - definitely.", "It is certain.",
+                      "Most likely.", "Outlook good."],
+                     ["Reply hazy, try again.", "Concentrate and ask again.", "Better not tell you now.", "Cannot predict now.", "Ask again later."],
+                     ["My sources say no.", "Outlook not so good.", "Very doubtful.", "My reply is no.", "Don't count on it."]]
         await ctx.send("My magic eight ball said... ``{}``".format(random.choice(random.choice(responses))))
 
     @commands.command(name="monify", hidden=True)
     @checks.command()
     @checks.is_dev()
-    async def monify(self,ctx,user: discord.Member, time):
+    async def monify(self, ctx, user: discord.Member, time):
         try:
             me = ctx.me
             perms = me.permissions_in(ctx.channel)
             if not perms.manage_messages or not perms.manage_nicknames:
-                raise discord.Forbidden(None,"nope")
+                raise discord.Forbidden(None, "nope")
             reasone = "{} told me to".format(ctx.message.author.name)
             author = ctx.message.author
             nc = user.nick
             ctx.message.delete()
-            await user.edit(nick="Monika", reason = reasone)
+            await user.edit(nick="Monika", reason=reasone)
             author.send("I've monified {}, I hope you know what you're doing.".format(user.name))
             await asyncio.sleep(int(time))
             await user.edit(nick=nc, reason=reasone)
@@ -120,7 +124,7 @@ class Fun:
         except discord.Forbidden:
             await ctx.send("I wasn't allowed to do that, sorry!")
         except Exception as e:
-            sa = "```"+e+"```"
+            sa = "```" + e + "```"
             await ctx.message.author.send(sa)
             await ctx.message.author.send("I guess it didn't work, sorry <@{}>".format(ctx.message.author.id))
 
@@ -172,13 +176,14 @@ class Fun:
         e = discord.Embed(color=color, title="Here's your poem!", description=poems.rpoem())
         await ctx.send(embed=e)
 
-    #@commands.command()
-    #@checks.command()
-    #@checks.is_admin()
-    #async def analyze(self, ctx, *, message):
-        #"""Analyzes the specified statement."""
-        #async with self.bot.session.post(f'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key={self.bot.config['perspectivekey']}', data={'comment':{'text':message}}, languages: ["en"], requestedAttributes: {TOXICITY:{}} }) as adata:
-            #await ctx.send(adata.status)
+    # @commands.command()
+    # @checks.command()
+    # @checks.is_admin()
+    # async def analyze(self, ctx, *, message):
+    # """Analyzes the specified statement."""
+    # async with self.bot.session.post(f'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key={self.bot.config['perspectivekey']}', data={'comment':{'text':message}}, languages: ["en"], requestedAttributes: {TOXICITY:{}} }) as adata:
+    # await ctx.send(adata.status)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))

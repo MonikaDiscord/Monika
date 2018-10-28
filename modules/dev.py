@@ -10,6 +10,7 @@ import subprocess
 global checks
 checks = checks.Checks()
 
+
 class Developer:
 
     def __init__(self, bot):
@@ -107,7 +108,7 @@ class Developer:
             await ctx.send(f'```py\n{traceback.format_exc()}\n```')
         else:
             await ctx.send(':ok_hand:')
-            
+
     @commands.command()
     @checks.command()
     @checks.is_dev()
@@ -118,6 +119,7 @@ class Developer:
             await ctx.send(f'```py\n{traceback.format_exc()}\n```')
         else:
             await ctx.send(':ok_hand:')
+
 
 def setup(bot):
     bot.add_cog(Developer(bot))

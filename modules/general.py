@@ -8,6 +8,7 @@ import time
 global checks
 checks = checks.Checks()
 
+
 class General:
 
     def __init__(self, bot):
@@ -20,7 +21,7 @@ class General:
         t_1 = time.perf_counter()
         await ctx.trigger_typing()
         t_2 = time.perf_counter()
-        time_delta = round((t_2-t_1)*1000)
+        time_delta = round((t_2 - t_1) * 1000)
         await ctx.send("I'm not that good at playing Pong, {}... ``Time: {}ms``".format(ctx.author.name, time_delta))
 
     @commands.command(name="help")
@@ -39,7 +40,9 @@ class General:
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_footer(icon_url=ctx.message.author.avatar_url, text="https://monikabot.pw")
         embed.add_field(name="Commands", value="Want to see my commands? Check out my command list [here](https://monikabot.pw/commands)!", inline=False)
-        embed.add_field(name="Invite", value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot) and click Authorize.", inline=False)
+        embed.add_field(name="Invite",
+                        value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot) and click Authorize.",
+                        inline=False)
         embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discordapp.com/invite/DspkaRD).", inline=False)
         embed.add_field(name="Donate", value="Want to become a Patron? You can become one by donating [here](https://patreon.com/monikabot).", inline=False)
         embed.add_field(name="Upvote", value="Want to become an upvoter? You can become one by voting [here](https://discordbots.org/bot/monika/vote).")
@@ -60,10 +63,11 @@ class General:
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.add_field(name="Stats: ", value="Servers: **{}**\nShards: **{}**\nUsers: **{}**".format(len(self.bot.guilds), len(self.bot.shards), users))
         try:
-            embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(), str(ctx.message.guild.shard_id)))
+            embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(),
+                                                                                                                                     str(ctx.message.guild.shard_id)))
         except Exception:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**".format(discord.__version__, platform.python_version()))
-        embed.add_field(name="Other: ", value = "Website: https://monikabot.pw\nDiscord: https://discord.gg/DspkaRD\nPatreon: https://www.patreon.com/monikabot")
+        embed.add_field(name="Other: ", value="Website: https://monikabot.pw\nDiscord: https://discord.gg/DspkaRD\nPatreon: https://www.patreon.com/monikabot")
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -110,7 +114,8 @@ class General:
     @checks.command()
     async def invite(self, ctx):
         """Gives you an invite for Monika!"""
-        embed = discord.Embed(title="Invite me!", description="You can invite me [here](https://discordapp.com/api/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot).")
+        embed = discord.Embed(title="Invite me!",
+                              description="You can invite me [here](https://discordapp.com/api/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot).")
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -159,6 +164,7 @@ class General:
     async def donate(self, ctx):
         embed = discord.Embed(title="Donate to me!", description="You can support me [here](https://www.patreon.com/monikabot).")
         await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(General(bot))

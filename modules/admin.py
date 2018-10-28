@@ -5,6 +5,7 @@ from utilities import checks
 global checks
 checks = checks.Checks()
 
+
 class Administration:
 
     def __init__(self, bot):
@@ -67,6 +68,7 @@ class Administration:
             color = discord.Colour.blue()
         e = discord.Embed(color=color, title=f"List of filtered words in {ctx.guild.name}", description=list)
         await ctx.author.send(embed=e)
+
 
 def setup(bot):
     bot.add_cog(Administration(bot))

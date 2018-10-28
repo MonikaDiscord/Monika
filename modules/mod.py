@@ -7,6 +7,7 @@ from utilities import checks
 global checks
 checks = checks.Checks()
 
+
 class Moderation:
 
     def __init__(self, bot):
@@ -24,7 +25,7 @@ class Moderation:
 
     @commands.command()
     @checks.command()
-    @commands.has_permissions(manage_messages = True)
+    @commands.has_permissions(manage_messages=True)
     async def prune(self, ctx, number: int):
         """Deletes the specified number of messages."""
 
@@ -40,7 +41,7 @@ class Moderation:
                 await ctx.send("I can't delete messages...")
                 return
 
-            async for message in channel.history(limit=number+1):
+            async for message in channel.history(limit=number + 1):
                 to_delete.append(message)
 
             await self.process_deletion(to_delete, ctx.message.channel)
@@ -109,6 +110,7 @@ class Moderation:
             await ctx.send("I couldn't do that for you... I'm so sorry!")
             return
         await ctx.send("I banned " + str(user) + " for you, <@{}>~".format(ctx.message.author.id))
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))

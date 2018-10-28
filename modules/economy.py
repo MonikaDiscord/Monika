@@ -6,6 +6,7 @@ import math
 global checks
 checks = checks.Checks()
 
+
 class Economy:
 
     def __init__(self, bot):
@@ -78,6 +79,7 @@ class Economy:
         sql = "UPDATE users SET money = $1 WHERE id = $2"
         await self.bot.db.execute(sql, str(newamount), user.id)
         await ctx.send("I gave {} coins to {}.".format(amount, user.name))
+
 
 def setup(bot):
     bot.add_cog(Economy(bot))

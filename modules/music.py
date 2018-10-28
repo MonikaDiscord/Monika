@@ -14,6 +14,7 @@ checks = checks.Checks()
 
 time_rx = re.compile('[0-9]+')
 
+
 class Music:
 
     def __init__(self, bot):
@@ -53,7 +54,7 @@ class Music:
     async def play(self, ctx, *, query):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
-        
+
         if not self.bot.fr:
             return await ctx.send("Please wait until Monika is fully ready.")
 
@@ -154,7 +155,7 @@ class Music:
             return await ctx.send("Please wait until Monika is fully ready.")
 
         player = self.bot.lavalink.players.get(ctx.guild.id)
-        
+
         if player.fetch('repair') == True:
             return await ctx.send("You can't do that right now. Try again in about 10 minutes.")
 
@@ -166,7 +167,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @commands.has_permissions(manage_messages = True)
+    @commands.has_permissions(manage_messages=True)
     async def stop(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
@@ -212,7 +213,7 @@ class Music:
 
     @commands.command(aliases=['q'])
     @checks.command()
-    async def queue(self, ctx, page: int=1):
+    async def queue(self, ctx, page: int = 1):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
@@ -268,7 +269,7 @@ class Music:
 
     @commands.command(aliases=['vol'])
     @checks.command()
-    async def volume(self, ctx, volume: int=None):
+    async def volume(self, ctx, volume: int = None):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
 
@@ -323,7 +324,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @commands.has_permissions(manage_messages = True)
+    @commands.has_permissions(manage_messages=True)
     async def remove(self, ctx, index: int):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
@@ -346,7 +347,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @commands.has_permissions(manage_messages = True)
+    @commands.has_permissions(manage_messages=True)
     async def disconnect(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")

@@ -4,6 +4,7 @@ import os
 
 i = sys.executable
 
+
 def getreqs():
     print("Getting requirements...")
     a = [i, '-m', 'pip', 'install', '--upgrade', '-r', 'requirements.txt']

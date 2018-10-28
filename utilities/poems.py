@@ -1,8 +1,8 @@
 import random
 
-#poems (only act 1)
+# poems (only act 1)
 
-#monika
+# monika
 poem1 = """Pen in hand, I find my strength.
 The courage endowed upon me by my one and only love.
 Together, let us dismantle this crumbling world
@@ -76,7 +76,7 @@ And we seek only the impossible.
 I am not your legend.
 Your legend does not exist."
 And with a breath, she blows me back afloat, and I pick up a gust of wind."""
-#natsuki
+# natsuki
 poem5 = """You know what I heard about Amy?
 Amy likes spiders.
 Icky, wriggly, hairy, ugly spiders!
@@ -160,7 +160,7 @@ In a way you thought had left you long ago.
 But if you let me by your side
 Your own beach, your own escape
 You'll learn to love yourself again."""
-#sayori
+# sayori
 poem9 = """The way you glow through my blinds in the morning
 It makes me feel like you missed me.
 Kissing my forehead to help me out of bed.
@@ -206,7 +206,7 @@ They were supposed to be for my friends, my friends who aren't smiling.
 They're all shouting, pleading. Something.
 But all I hear is echo, echo, echo, echo, echo
 Inside my head."""
-#yuri
+# yuri
 poem11 = """A marvel millions of years in the making.
 Where the womb of Earth chaotically meets the surface.
 Under a clear blue sky, an expanse of bliss--
@@ -234,6 +234,8 @@ the last yet to be replaced by the sickening blue-green hue of the future.
 I bathe. Calm; breathing air of the present but living in the past.
 The light flickers.
 I flicker back."""
+
+
 def rpoem():
     num = random.randint(0, 11)
     if num == 0:

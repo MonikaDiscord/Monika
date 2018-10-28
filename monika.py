@@ -54,7 +54,7 @@ class Monika(commands.AutoShardedBot):
                 name = file[:-3]
                 try:
                     self.load_extension(f"modules.{name}")
-                except:
+                except IOError:
                     print(f"Oops! I broke the {file} module...")
                     traceback.print_exc()
 

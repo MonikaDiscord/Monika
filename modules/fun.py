@@ -166,14 +166,15 @@ class Fun:
 
     @commands.command()
     @checks.command()
-    @checks.is_patron()
+    #@checks.is_patron()
     async def poem(self, ctx):
         """Gives you a random poem."""
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blue()
-        e = discord.Embed(color=color, title="Here's your poem!", description=poems.rpoem())
+        p = await poems.rpoem(self, self.bot)
+        e = discord.Embed(color=color, title="Here's your poem!", description=p)
         await ctx.send(embed=e)
 
     # @commands.command()

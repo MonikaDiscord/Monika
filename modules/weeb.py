@@ -5,6 +5,7 @@ from utilities import checks
 from io import StringIO
 import os
 from pybooru import Danbooru
+import rule34
 import json
 import asyncio
 
@@ -258,7 +259,7 @@ class Images:
     @checks.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruuser'], api_key=self.bot.config['danboorukey'])
         if ctx.message.channel.is_nsfw():
             temp = str(client.post_list(random=True, limit=1))
             temp = temp.replace("\'", "\"")
@@ -285,7 +286,7 @@ class Images:
     @checks.command()
     async def safebooru(self, ctx):
         """Same as danbooru, but looks for safe images."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruuser'], api_key=self.bot.config['danboorukey'])
         image_found = False
         while not image_found:
             temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
@@ -300,6 +301,26 @@ class Images:
         embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @checks.command()
+    async def rule34(self, ctx):
+        """Posts an image directly from Rule34."""
+        r34 = rule34.Rule34(asyncio.get_event_loop())
+        if ctx.message.channel.is_nsfw():
+            data = await r34.getImageURLS(tags='*', randomPID=1)
+            url = data[0]
+        else:
+            await ctx.send("Sorry, but I can't load anything from Rule34 unless you're in a NSFW channel.")
+            return
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Image from Rule34!", description="Here's your image, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by Rule34.")
         await ctx.send(embed=embed)
 
     @commands.command()

@@ -5,6 +5,8 @@ I would like to make Monika available again, although we'll see how this goes.
 
 If you are able to contribute, I encourage doing so.
 
+**_Credits go to the original creator [kanielyaniel](https://github.com/kanielyaniel)._**
+
 ## Invite Monika
 To invite Monika, use this *~~link~~*!
 
@@ -46,6 +48,7 @@ Here's a template for `config.json`:
   "lavapass": "lavalink password",
   "dblkey": "discordbots.org token",
   "weebkey": "weeb.sh token",
+  "danbooruuser": "danbooru username",
   "danboorukey": "danbooru api key",
   "pwkey": "bots.discord.pw token",
   "kbkey": "bots.disgd.pw token",

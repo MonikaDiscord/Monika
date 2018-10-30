@@ -9,6 +9,7 @@
   "lavapass": "lavalink password",
   "dblkey": "discordbots.org token",
   "weebkey": "weeb.sh token",
+  "danbooruuser": "danbooru username",
   "danboorukey": "danbooru api key",
   "pwkey": "bots.discord.pw token",
   "kbkey": "bots.disgd.pw token",

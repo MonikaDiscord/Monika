@@ -8,6 +8,7 @@ from pybooru import Danbooru
 import rule34
 import json
 import asyncio
+import nekos
 
 global checks
 checks = checks.Checks()
@@ -235,14 +236,6 @@ class Weeb:
         await ctx.send(embed=embed)
         await asyncio.sleep(10)
         os.remove(f.name)
-
-
-class Nekos:
-    def __init__(self, bot):
-        self.bot = bot
-
-    async def p1(self):
-        print("test")
 
 
 class Images:

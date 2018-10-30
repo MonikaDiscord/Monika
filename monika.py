@@ -72,16 +72,7 @@ class Monika(commands.AutoShardedBot):
         await self.change_presence(activity=discord.Activity(name='$!help | sudo>', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
 
-        sysinfo = platform.uname()
-        privip = str(socket.gethostbyname_ex(socket.gethostname())).split(',', 2)[2]
-        pubip = urllib.request.urlopen('https://ident.me').read().decode('utf8')
-
         c = self.get_channel(506792539160838145)
-        e = discord.Embed(color=discord.Color.blue(), title=f"Monika running on: {sysinfo.node}. \n Private IP: {privip} \n Public IP: {pubip}")
-        try:
-            await c.send(embed=e)
-        except:
-            pass
         e = discord.Embed(color=discord.Color.blue(), title=f"Loaded modules {loadedModules}")
         try:
             await c.send(embed=e)

@@ -2,9 +2,9 @@ import discord
 from discord.ext import commands
 import random
 from utilities import checks
+import asyncpg
 import asyncio
 import aiohttp
-from utilities import poems
 
 global checks
 checks = checks.Checks()
@@ -95,7 +95,7 @@ class Fun:
 
     @commands.command(name="8ball")
     @checks.command()
-    @checks.is_patron()
+    #@checks.is_patron()
     async def _8ball(self, ctx, *, question):
         responses = [["Signs point to yes.", "Yes.", "Without a doubt.", "As I see it, yes.", "You may rely on it.", "It is decidedly so.", "Yes - definitely.", "It is certain.",
                       "Most likely.", "Outlook good."],
@@ -169,11 +169,25 @@ class Fun:
     #@checks.is_patron()
     async def poem(self, ctx):
         """Gives you a random poem."""
+        dbhost = self.bot.config['dbhost']
+        dbname = self.bot.config['dbname']
+        dbpass = self.bot.config['dbpass']
+        dbuser = self.bot.config['dbuser']
+        govinfo = {"user": dbuser, "password": dbpass, "database": dbname, "host": dbhost}
+
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blue()
-        p = await poems.rpoem(self, self.bot)
+
+        # Add ability to add poems via the dev.py file (Discord management server)
+
+        #self.db = await asyncpg.create_pool(**govinfo)
+        sql = "SELECT COUNT(*) FROM poems"
+        count = await self.db.fetchval(sql)
+        num = random.randint(1, count)
+        sql = "SELECT poem FROM poems WHERE id = $1"
+        p = await self.db.fetchval(sql, num)
         e = discord.Embed(color=color, title="Here's your poem!", description=p)
         await ctx.send(embed=e)
 

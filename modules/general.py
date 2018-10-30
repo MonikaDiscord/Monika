@@ -41,7 +41,7 @@ class General:
         embed.set_footer(icon_url=ctx.message.author.avatar_url, text="https://monikabot.pw")
         embed.add_field(name="Commands", value="Want to see my commands? Check out my command list [here](https://monikabot.pw/commands)!", inline=False)
         embed.add_field(name="Invite",
-                        value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot) and click Authorize.",
+                        value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=502528950946496512&permissions=8&scope=bot) and click Authorize.",
                         inline=False)
         embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discordapp.com/invite/DspkaRD).", inline=False)
         embed.add_field(name="Donate", value="Want to become a Patron? You can become one by donating [here](https://patreon.com/monikabot).", inline=False)
@@ -162,7 +162,7 @@ class General:
     @commands.command(aliases=["patreon", "patron", "support"])
     @checks.command()
     async def donate(self, ctx):
-        embed = discord.Embed(title="Donate to me!", description="You can support me [here](https://www.patreon.com/monikabot).")
+        embed = discord.Embed(title="Donate to me!", description="You can support me [here](https://www.patreon.com/gpago).")
         await ctx.send(embed=embed)
 
 

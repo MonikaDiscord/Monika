@@ -66,7 +66,7 @@ class Weeb:
 
     @commands.command()
     @checks.command()
-    #@checks.is_upvoter()
+    # @checks.is_upvoter()
     async def pat(self, ctx, user: discord.Member):
         """Aww! Pats the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -90,7 +90,7 @@ class Weeb:
 
     @commands.command()
     @checks.command()
-    #@checks.is_upvoter()
+    # @checks.is_upvoter()
     async def tickle(self, ctx, user: discord.Member):
         """Aww! Tickles the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -114,7 +114,7 @@ class Weeb:
 
     @commands.command()
     @checks.command()
-    #@checks.is_upvoter()
+    # @checks.is_upvoter()
     async def insult(self, ctx, user: discord.Member):
         """Oh! Insults the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -141,7 +141,7 @@ class Weeb:
 
     @commands.command()
     @checks.command()
-    #@checks.is_patron()
+    # @checks.is_patron()
     async def bite(self, ctx, user: discord.Member):
         """Oww! Bites the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -165,7 +165,7 @@ class Weeb:
 
     @commands.command()
     @checks.command()
-    #@checks.is_patron()
+    # @checks.is_patron()
     async def slap(self, ctx, user: discord.Member):
         """Oww! Slaps the specified user."""
         if ctx.message.channel.is_nsfw():
@@ -189,7 +189,7 @@ class Weeb:
 
     @commands.command()
     @checks.command()
-    #@checks.is_patron()
+    # @checks.is_patron()
     async def waifuinsult(self, ctx, user: discord.Member):
         """Hehe... Insults the specified waifu."""
         async with self.bot.session.post('https://api-v2.weeb.sh/auto-image/waifu-insult', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'},

@@ -57,7 +57,7 @@ class Monika(commands.AutoShardedBot):
         self.remove_command('help')
 
         for file in os.listdir("modules"):
-            if file.endswith(".py") and file != "botlists.py":
+            if file.endswith(".py") and file != "botlists.py" and file != "weeb.py":
                 name = file[:-3]
                 allModules.append(name)
                 try:

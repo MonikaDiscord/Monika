@@ -17,50 +17,6 @@ class Fun:
 
     @commands.command()
     @checks.command()
-    async def dog(self, ctx):
-        """Provides a random dog."""
-        if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog&nsfw=true',
-                                            headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
-                url = await url.json()
-                url = url.get("url")
-        else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog',
-                                            headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
-                url = await url.json()
-                url = url.get("url")
-        if ctx.message.guild is not None:
-            color = ctx.message.guild.me.color
-        else:
-            color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Here's your requested dog, {}~".format(ctx.message.author.name))
-        embed.set_image(url=url)
-        embed.set_footer(text="Powered by weeb.sh")
-        await ctx.send(embed=embed)
-
-    @commands.command()
-    @checks.command()
-    async def cat(self, ctx):
-        """Provides a random cat."""
-        if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_cat&nsfw=true', headers={'Authorization': self.bot.config['weebkey']}) as url:
-                url = await url.json()
-                url = url.get("url")
-        else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_cat', headers={'Authorization': self.bot.config['weebkey']}) as url:
-                url = await url.json()
-                url = url.get("url")
-        if ctx.message.guild is not None:
-            color = ctx.message.guild.me.color
-        else:
-            color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Here's your requested cat, {}~".format(ctx.message.author.name))
-        embed.set_image(url=url)
-        embed.set_footer(text="Powered by weeb.sh")
-        await ctx.send(embed=embed)
-
-    @commands.command()
-    @checks.command()
     async def duck(self, ctx):
         """Provides a random duck."""
         async with self.bot.session.get('https://api.random-d.uk/random') as r:
@@ -79,29 +35,21 @@ class Fun:
     @checks.command()
     async def delete(self, ctx, *, username: discord.Member):
         """Deletes the specified user."""
-        if username.id == 319503910895222784:
+        if username.id == 118866534952075264:
             await ctx.send("You will not touch my boyfriend!")
             return
-        elif username.id == 201745963394531328 or username.id == 206197394667208704:
-            await ctx.send("That's a funny joke, {}.".format(ctx.message.author.name))
-            return
-        elif username.id == 399315651338043392:
-            await ctx.send("You're so funny, {}.".format(ctx.message.author.name))
-            return
+        # elif username.id == 201745963394531328 or username.id == 206197394667208704:
+        #     await ctx.send("That's a funny joke, {}.".format(ctx.message.author.name))
+        #     return
+        # elif username.id == 399315651338043392:
+        #     await ctx.send("You're so funny, {}.".format(ctx.message.author.name))
+        #     return
+        elif username.id == 502528950946496512:
+            await ctx.send("Haha! Nice try, {}.".format(ctx.message.author.name))
         try:
             await ctx.send("``characters/{}.chr`` deleted successfully.".format(username.name.lower()))
         except:
             await ctx.send("``characters/{}.chr`` not found.".format(username.name.lower()))
-
-    @commands.command(name="8ball")
-    @checks.command()
-    #@checks.is_patron()
-    async def _8ball(self, ctx, *, question):
-        responses = [["Signs point to yes.", "Yes.", "Without a doubt.", "As I see it, yes.", "You may rely on it.", "It is decidedly so.", "Yes - definitely.", "It is certain.",
-                      "Most likely.", "Outlook good."],
-                     ["Reply hazy, try again.", "Concentrate and ask again.", "Better not tell you now.", "Cannot predict now.", "Ask again later."],
-                     ["My sources say no.", "Outlook not so good.", "Very doubtful.", "My reply is no.", "Don't count on it."]]
-        await ctx.send("My magic eight ball said... ``{}``".format(random.choice(random.choice(responses))))
 
     @commands.command(name="monify", hidden=True)
     @checks.command()
@@ -166,7 +114,7 @@ class Fun:
 
     @commands.command()
     @checks.command()
-    #@checks.is_patron()
+    # @checks.is_patron()
     async def poem(self, ctx):
         """Gives you a random poem."""
         dbhost = self.bot.config['dbhost']
@@ -182,14 +130,24 @@ class Fun:
 
         # Add ability to add poems via the dev.py file (Discord management server)
 
-        #self.db = await asyncpg.create_pool(**govinfo)
+        # self.db = await asyncpg.create_pool(**govinfo)
         sql = "SELECT COUNT(*) FROM poems"
-        count = await self.db.fetchval(sql)
+        count = await self.bot.db.fetchval(sql)
         num = random.randint(1, count)
         sql = "SELECT poem FROM poems WHERE id = $1"
-        p = await self.db.fetchval(sql, num)
+        p = await self.bot.db.fetchval(sql, num)
         e = discord.Embed(color=color, title="Here's your poem!", description=p)
         await ctx.send(embed=e)
+
+    # @commands.command(name="8ball")
+    # @checks.command()
+    # # @checks.is_patron()
+    # async def _8ball(self, ctx, *, question):
+    #     responses = [["Signs point to yes.", "Yes.", "Without a doubt.", "As I see it, yes.", "You may rely on it.", "It is decidedly so.", "Yes - definitely.", "It is certain.",
+    #                   "Most likely.", "Outlook good."],
+    #                  ["Reply hazy, try again.", "Concentrate and ask again.", "Better not tell you now.", "Cannot predict now.", "Ask again later."],
+    #                  ["My sources say no.", "Outlook not so good.", "Very doubtful.", "My reply is no.", "Don't count on it."]]
+    #     await ctx.send("My magic eight ball said... ``{}``".format(random.choice(random.choice(responses))))
 
     # @commands.command()
     # @checks.command()

@@ -18,6 +18,9 @@ class Checks:
         govinfo = {"user": dbuser, "password": dbpass, "database": dbname, "host": dbhost}
         self.db = await asyncpg.create_pool(**govinfo)
 
+    async def nsfw_check(self, ctx):
+        return int(ctx.message.channel.is_nsfw()) == 1
+
     async def admin_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
         status = await self.db.fetchval(sql, ctx.author.id)
@@ -69,6 +72,9 @@ class Checks:
         sql = "SELECT disabledcmds FROM guilds WHERE id = $1"
         dcmds = await self.db.fetchval(sql, ctx.guild.id)
         return ctx.command.cog_name not in dcogs or ctx.command.name not in dcmds
+
+    def in_nsfw(self):
+        return commands.check(self.nsfw_check)
 
     def is_admin(self):
         return commands.check(self.admin_check)

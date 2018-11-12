@@ -8,7 +8,6 @@ from pybooru import Danbooru
 import rule34
 import json
 import asyncio
-import nekos
 
 global checks
 checks = checks.Checks()
@@ -17,6 +16,50 @@ checks = checks.Checks()
 class Weeb:
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    @checks.command()
+    async def cat(self, ctx):
+        """Provides a random cat."""
+        if ctx.message.channel.is_nsfw():
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_cat&nsfw=true', headers={'Authorization': self.bot.config['weebkey']}) as url:
+                url = await url.json()
+                url = url.get("url")
+        else:
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_cat', headers={'Authorization': self.bot.config['weebkey']}) as url:
+                url = await url.json()
+                url = url.get("url")
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Here's your requested cat, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by weeb.sh")
+        await ctx.send(embed=embed)
+
+    @commands.command()
+    @checks.command()
+    async def dog(self, ctx):
+        """Provides a random dog."""
+        if ctx.message.channel.is_nsfw():
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog&nsfw=true',
+                                            headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
+                url = await url.json()
+                url = url.get("url")
+        else:
+            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog',
+                                            headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
+                url = await url.json()
+                url = url.get("url")
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
+        else:
+            color = discord.Colour.blue()
+        embed = discord.Embed(color=color, title="Here's your requested dog, {}~".format(ctx.message.author.name))
+        embed.set_image(url=url)
+        embed.set_footer(text="Powered by weeb.sh")
+        await ctx.send(embed=embed)
 
     @commands.command()
     @checks.command()

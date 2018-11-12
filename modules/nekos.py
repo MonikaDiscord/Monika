@@ -22,7 +22,6 @@ class Nekos:
 
     @commands.command()
     @checks.command()
-    @checks.in_nsfw()
     async def why(self, ctx):
         await ctx.send(nekos.why())
 

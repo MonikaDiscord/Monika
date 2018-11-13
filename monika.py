@@ -69,7 +69,7 @@ class Monika(commands.AutoShardedBot):
 
     async def on_ready(self):
         self.fr = True
-        await self.change_presence(activity=discord.Activity(name='$!help | sudo>', type=discord.ActivityType.watching))
+        await self.change_presence(activity=discord.Activity(name='$!help | custom per server', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
 
         c = self.get_channel(506792539160838145)

@@ -45,8 +45,8 @@ class Nekos:
 
     @commands.command()
     @checks.command()
-    async def owoify(self, ctx, text: str):
-        await ctx.send(nekos.owoify(text))
+    async def owoify(self, ctx, *text):
+        await ctx.send(nekos.owoify(' '.join(text)))
 
     @commands.command()
     @checks.command()

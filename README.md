@@ -45,7 +45,6 @@ Here's a template for `config.json`:
   "dbpass": "postgres password",
   "lavahost": "lavalink host",
   "lavaportws": "lavalink port ws",
-  "lavaportrest": "lavalink port rest",
   "lavapass": "lavalink password",
   "dblkey": "discordbots.org token",
   "weebkey": "weeb.sh token",

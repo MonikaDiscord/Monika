@@ -81,6 +81,7 @@ class Music:
             query = f'ytsearch:{query}'
 
         tracks = await self.bot.lavalink.get_tracks(query)
+        tracks = tracks["tracks"]
 
         if not tracks:
             return await ctx.send('Nothing was found...')

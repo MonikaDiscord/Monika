@@ -34,7 +34,7 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaportws'], shard_count=len(self.shards), host=self.config['lavahost'], rest_port=self.config['lavaportrest'])
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaportws'], shard_count=len(self.shards), host=self.config['lavahost'])
         self.mrepair = False
         self.fr = False
 
@@ -187,7 +187,7 @@ class Monika(commands.AutoShardedBot):
 
     async def reload_music(self):
         del self.lavalink
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaportws'], shard_count=len(self.shards), host=self.config['lavahost'], rest_port=self.config['lavaportrest'])
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaportws'], shard_count=len(self.shards), host=self.config['lavahost'])
 
     async def restart_monika(self):
         sys.exit(1)

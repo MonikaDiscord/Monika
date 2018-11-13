@@ -19,6 +19,9 @@ class Checks:
         self.db = await asyncpg.create_pool(**govinfo)
 
     async def nsfw_check(self, ctx):
+        if not ctx.message.channel.is_nsfw():
+            ctx.__setattr__("precheck", True)
+            await ctx.send("You must be in a NSFW channel.")
         return int(ctx.message.channel.is_nsfw()) == 1
 
     async def admin_check(self, ctx):

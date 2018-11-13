@@ -33,7 +33,7 @@ class Music:
                 if u:
                     u = self.bot.get_user(u)
                 if c:
-                    if event.player.fetch('repair') == False:
+                    if not event.player.fetch('repair'):
                         embed = discord.Embed(colour=c.guild.me.color, title="I'm now playing:", description=event.track.title)
                         embed.set_thumbnail(url=event.track.thumbnail)
                         if u:
@@ -46,7 +46,7 @@ class Music:
             if c:
                 c = self.bot.get_channel(c)
                 if c:
-                    if event.player.fetch('repair') == False:
+                    if not event.player.fetch('repair'):
                         await c.send('Well, I finished playing all those songs. Don\'t be afraid to add another one!')
 
     @commands.command(aliases=['p'])
@@ -112,7 +112,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @checks.is_patron()
+    #@checks.is_patron()
     async def seek(self, ctx, time):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
@@ -244,7 +244,7 @@ class Music:
 
     @commands.command(aliases=['resume'])
     @checks.command()
-    @checks.is_patron()
+    #@checks.is_patron()
     async def pause(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
@@ -286,7 +286,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @checks.is_patron()
+    #@checks.is_patron()
     async def shuffle(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")
@@ -305,7 +305,7 @@ class Music:
 
     @commands.command()
     @checks.command()
-    @checks.is_patron()
+    #@checks.is_patron()
     async def repeat(self, ctx):
         if self.bot.mrepair:
             return await ctx.send("I'm sorry, but music appears to be broken. Try again in a few minutes.")

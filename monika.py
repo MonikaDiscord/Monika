@@ -34,7 +34,7 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaport'], shard_count=len(self.shards), host=self.config['lavahost'])
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaportws'], shard_count=len(self.shards), host=self.config['lavahost'], rest_port=self.config['lavaportrest'])
         self.mrepair = False
         self.fr = False
 
@@ -139,20 +139,22 @@ class Monika(commands.AutoShardedBot):
             await ctx.send("You don't have the required server permissions to use this command.")
         elif isinstance(error, discord.ext.commands.errors.CheckFailure):
             await ctx.send("Either you don't have permissions to do this or this command is disabled.")
+            await ctx.send(error.args[1])
+            #if error:
+            #    await ctx.send("..or you need to be in a **NSFW** channel.")
         else:
             if ctx:
-                e = discord.Embed(title="An exception has occured.", description=f"```{error}```\nIf you know how to fix this, then you can check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).\nOtherwise, please report it at the [Monika Discord server](https://discord.gg/DspkaRD).")
+                e = discord.Embed(title="An exception has occurred.", description=f"```{error}```\nIf you know how to fix this, then you can check out our [GitHub repository](https://github.com/MonikaDiscord/Monika).\nOtherwise, please report it at the [Monika Discord server](https://discord.gg/DspkaRD).")
                 await ctx.send(embed=e)
                 c = self.get_channel(506792539160838145)
                 tb = sys.exc_info()
-                c.send(tb)
+                await c.send(tb)
 
     async def on_guild_join(self, guild):
         sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"
         await self.db.execute(sql, guild.id, guild.name)
         c = self.get_channel(506792539160838145)
-        e = discord.Embed(color=discord.Color.blue(), title="New guild!",
-                          description=f"We're now in {len(self.guilds)} guilds!")
+        e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"Yay! We're now in {len(self.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)
         e.add_field(name="Owner", value=guild.owner)
@@ -185,7 +187,7 @@ class Monika(commands.AutoShardedBot):
 
     async def reload_music(self):
         del self.lavalink
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaport'], shard_count=len(self.shards), host=self.config['lavahost'])
+        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=self.config['lavaportws'], shard_count=len(self.shards), host=self.config['lavahost'], rest_port=self.config['lavaportrest'])
 
     async def restart_monika(self):
         sys.exit(1)

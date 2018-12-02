@@ -2,13 +2,11 @@ import discord
 from discord.ext import commands
 import asyncpg, aiohttp
 import json
-from raven import Client
 from utilities import checks
 import asyncio
 import os
 from utilities import prefix
 import traceback
-import lavalink
 import sys
 
 global checks
@@ -24,9 +22,6 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
-        self.mrepair = False
-        self.fr = False
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -161,10 +156,6 @@ class Monika(commands.AutoShardedBot):
     async def get_coins(self, id):
         sql = "SELECT coins FROM users WHERE id = $1"
         return await self.db.fetchval(sql, id)
-
-    async def reload_music(self):
-        del self.lavalink
-        self.lavalink = lavalink.Client(bot=self, password=self.config['lavapass'], loop=self.loop, ws_port=1337, shard_count=len(self.shards))
 
     async def restart_monika(self):
         sys.exit(1)

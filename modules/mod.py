@@ -53,7 +53,6 @@ class Moderation:
         try:
             await ctx.message.guild.kick(user, reason=reason)
         except Exception:
-            self.bot.rclient.captureException()
             await ctx.send("I couldn't do that for you... I'm so sorry!")
             return
         await ctx.send("I kicked " + str(user) + " for you, <@{}>~".format(ctx.message.author.id))

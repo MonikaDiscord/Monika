@@ -125,7 +125,6 @@ class General:
         try:
             await channel.send(embed=embed)
         except Exception:
-            self.bot.rclient.captureException()
             await ctx.send("There was an error... Don't worry! You can contact my developers in my server. To enter my server, just say ``$!server``!")
             traceback.print_exc()
         await ctx.send("I sent your suggestion, <@{}>~".format(ctx.message.author.id))
@@ -141,8 +140,6 @@ class General:
         embed.add_field(name="Report", value="{} sent this report: ``{}``".format(ctx.message.author, report))
         try:
             await channel.send(embed=embed)
-        except Exception:
-            self.bot.rclient.captureException()
             await ctx.send("There was an error... Don't worry! You can contact my developers in my server. To enter my server, just say ``$!server``!")
             traceback.print_exc()
         await ctx.send("I sent your report, <@{}>~".format(ctx.message.author.id))

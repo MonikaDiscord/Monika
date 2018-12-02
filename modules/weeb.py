@@ -169,7 +169,7 @@ class Weeb:
     @commands.command()
     @checks.command()
     async def waifuinsult(self, ctx, user: discord.Member):
-        """Hehe... Insults the specified waifu."""
+        ""Hehe... Insults the specified waifu.""
         async with self.bot.session.post('https://api-v2.weeb.sh/auto-image/waifu-insult', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}, data={'avatar': user.avatar_url}) as resp:
             if resp.status == 200:
                 with open(f'/var/www/luki/monika/waifuinsult/{user.id}-wi.png', 'wb') as f:
@@ -192,7 +192,7 @@ class Weeb:
     @commands.command()
     @checks.command()
     async def ship(self, ctx, user1: discord.Member, user2: discord.Member):
-        """Ships the 2 users together."""
+        ""Ships the 2 users together.""
         async with self.bot.session.post('https://api-v2.weeb.sh/auto-image/love-ship', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}, data={'targetOne': user1.avatar_url, 'targetTwo': user2.avatar_url}) as resp:
             if resp.status == 200:
                 with open(f'/var/www/luki/monika/shipping/{user1.id}-{user2.id}-ship.png', 'wb') as f:

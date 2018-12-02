@@ -34,8 +34,6 @@ class Monika(commands.AutoShardedBot):
 
         self.loop.create_task(_init_db())
 
-        self.rclient = Client(self.config.get('sentry_dsn'))
-
         self.remove_command('help')
 
         for file in os.listdir("modules"):

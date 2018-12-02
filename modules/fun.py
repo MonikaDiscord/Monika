@@ -162,7 +162,6 @@ class Fun:
 
     @commands.command()
     @checks.command()
-    @checks.is_patron()
     async def poem(self, ctx):
         """Gives you a random poem."""
         if ctx.message.guild is not None:

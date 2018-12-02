@@ -23,6 +23,7 @@ Here's a template for `config.json`:
   "dbuser": "psql user",
   "dbpass": "psql password",
   "weebkey": "weeb.sh token",
+  "lavapass": "lavalink password",
   "danboorukey": "danbooru api key",
 }
 ```

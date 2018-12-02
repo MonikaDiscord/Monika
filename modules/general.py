@@ -141,6 +141,7 @@ class General:
         try:
             await channel.send(embed=embed)
             await ctx.send("There was an error... Don't worry! You can contact my developers in my server. To enter my server, just say ``$!server``!")
+        except Exception:
             traceback.print_exc()
         await ctx.send("I sent your report, <@{}>~".format(ctx.message.author.id))
 

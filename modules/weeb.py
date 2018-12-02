@@ -236,7 +236,7 @@ class Images:
     @checks.command()
     async def danbooru(self, ctx):
         """Posts an image directly from Project Danbooru."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         if ctx.message.channel.is_nsfw():
             temp = str(client.post_list(random=True, limit=1))
             temp = temp.replace("\'", "\"")
@@ -263,7 +263,7 @@ class Images:
     @checks.command()
     async def safebooru(self, ctx):
         """Same as danbooru, but looks for safe images."""
-        client = Danbooru('danbooru', username='Kanielyochanan', api_key=self.bot.config['danboorukey'])
+        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         image_found = False
         while not image_found:
             temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))

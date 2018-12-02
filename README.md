@@ -25,6 +25,7 @@ Here's a template for `config.json`:
   "weebkey": "weeb.sh token",
   "lavapass": "lavalink password",
   "danboorukey": "danbooru api key",
+  "danbooruname": "danbooru username"
 }
 ```
 Just put the file in Monika's main directory.

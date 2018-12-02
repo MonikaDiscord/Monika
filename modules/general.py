@@ -38,11 +38,9 @@ class General:
             embed = discord.Embed(color=color, title="Hi! I'm Monika!", description="My prefix is ``$!``.")
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_footer(icon_url=ctx.message.author.avatar_url, text="https://monikabot.pw")
-        embed.add_field(name="Commands", value="Want to see my commands? Check out my command list [here](https://monikabot.pw/commands)!", inline=False)
+        embed.add_field(name="Commands", value="The command list is currently broken, but will be back soon!", inline=False)
         embed.add_field(name="Invite", value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot) and click Authorize.", inline=False)
-        embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discordapp.com/invite/DspkaRD).", inline=False)
-        embed.add_field(name="Donate", value="Want to become a Patron? You can become one by donating [here](https://patreon.com/monikabot).", inline=False)
-        embed.add_field(name="Upvote", value="Want to become an upvoter? You can become one by voting [here](https://discordbots.org/bot/monika/vote).")
+        embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discord.gg/Mn5uvHg).", inline=False)
         embed.add_field(name="More Information", value="Want to see more information? Just use the ``info`` command!", inline=False)
         await ctx.send(embed=embed)
 
@@ -63,7 +61,7 @@ class General:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(), str(ctx.message.guild.shard_id)))
         except Exception:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**".format(discord.__version__, platform.python_version()))
-        embed.add_field(name="Other: ", value = "Website: https://monikabot.pw\nDiscord: https://discord.gg/DspkaRD\nPatreon: https://www.patreon.com/monikabot")
+        embed.add_field(name="Other: ", value = "Website: https://monikabot.pw\nDiscord: https://discord.gg/Mn5uvHg")
         await ctx.send(embed=embed)
 
     @commands.command()

@@ -115,13 +115,6 @@ class General:
 
     @commands.command()
     @checks.command()
-    async def upvote(self, ctx):
-        """Gives you the link to upvote Monika."""
-        embed = discord.Embed(title="Upvote me!", description="You can upvote me [here](https://discordbots.org/bot/monika/vote).")
-        await ctx.send(embed=embed)
-
-    @commands.command()
-    @checks.command()
     async def suggest(self, ctx, *, suggestion: str):
         """Sends a suggestion to the developers of Monika."""
         channel = self.bot.get_channel(404265070000865281)
@@ -153,12 +146,6 @@ class General:
             await ctx.send("There was an error... Don't worry! You can contact my developers in my server. To enter my server, just say ``$!server``!")
             traceback.print_exc()
         await ctx.send("I sent your report, <@{}>~".format(ctx.message.author.id))
-
-    @commands.command(aliases=["patreon", "patron", "support"])
-    @checks.command()
-    async def donate(self, ctx):
-        embed = discord.Embed(title="Donate to me!", description="You can support me [here](https://www.patreon.com/monikabot).")
-        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(General(bot))

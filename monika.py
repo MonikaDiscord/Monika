@@ -8,6 +8,7 @@ import os
 from utilities import prefix
 import traceback
 import sys
+import lavalink
 
 global checks
 checks = checks.Checks()
@@ -47,7 +48,10 @@ class Monika(commands.AutoShardedBot):
 
 
     async def on_ready(self):
-        self.fr = True
+        lavalink.initialize(
+            self, host='127.0.0.1', password=self.config['lavapass'],
+            rest_port=2333, ws_port=2333
+        )
         await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
         c = self.get_channel(447553320752513053)

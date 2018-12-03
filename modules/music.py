@@ -16,7 +16,7 @@ class Music:
     @checks.is_dev()
     @checks.command()
     async def play(self, ctx, *, song):
-        vc = ctx.member.voice.channel
+        vc = ctx.message.author.voice.channel
         if not vc:
             return await ctx.send("I'm sorry, but you need to be in a voice channel.")
         self.players[ctx.guild.id] = await lavalink.connect(vc)

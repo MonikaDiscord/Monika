@@ -37,10 +37,10 @@ class General:
         else:
             embed = discord.Embed(color=color, title="Hi! I'm Monika!", description="My prefix is ``$!``.")
         embed.set_thumbnail(url=self.bot.user.avatar_url)
-        embed.set_footer(icon_url=ctx.message.author.avatar_url, text="https://monikabot.pw")
+        embed.set_footer(icon_url=ctx.message.author.avatar_url, text="Hello!")
         embed.add_field(name="Commands", value="The command list is currently broken, but will be back soon!", inline=False)
         embed.add_field(name="Invite", value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot) and click Authorize.", inline=False)
-        embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discord.gg/Mn5uvHg).", inline=False)
+        embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discord.gg/heZJZ5M).", inline=False)
         embed.add_field(name="More Information", value="Want to see more information? Just use the ``info`` command!", inline=False)
         await ctx.send(embed=embed)
 
@@ -61,7 +61,7 @@ class General:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(), str(ctx.message.guild.shard_id)))
         except Exception:
             embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**".format(discord.__version__, platform.python_version()))
-        embed.add_field(name="Other: ", value = "Website: https://monikabot.pw\nDiscord: https://discord.gg/Mn5uvHg")
+        embed.add_field(name="Other: ", value = "Website: Currently down\nDiscord: https://discord.gg/heZJZ5M")
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -101,7 +101,7 @@ class General:
     @checks.command()
     async def server(self, ctx):
         """Gives an invite to Monika's server!"""
-        embed = discord.Embed(title="Join my server!", description="You can join my server [here](https://discord.gg/DspkaRD).")
+        embed = discord.Embed(title="Join my server!", description="You can join my server [here](https://discord.gg/heZJZ5M).")
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -115,7 +115,7 @@ class General:
     @checks.command()
     async def suggest(self, ctx, *, suggestion: str):
         """Sends a suggestion to the developers of Monika."""
-        channel = self.bot.get_channel(404265070000865281)
+        channel = self.bot.get_channel(518984377674498053)
         color = discord.Colour.blue()
         embed = discord.Embed(color=color, title="New suggestion!", description="I'm so excited to read it!")
         embed.set_thumbnail(url=ctx.message.author.avatar_url)
@@ -131,7 +131,7 @@ class General:
     @checks.command()
     async def report(self, ctx, *, report: str):
         """Sends a bug report to the developers of Monika."""
-        channel = self.bot.get_channel(404265224011776001)
+        channel = self.bot.get_channel(518984454849691678)
         color = discord.Colour.blue()
         embed = discord.Embed(color=color, title="New report!", description="Hopefully, you guys can fix it..")
         embed.set_thumbnail(url=ctx.message.author.avatar_url)

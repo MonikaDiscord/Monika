@@ -234,48 +234,58 @@ class Images:
 
     @commands.command()
     @checks.command()
-    async def danbooru(self, ctx):
+    async def danbooru(self, ctx, tags=None, rating=None):
         """Posts an image directly from Project Danbooru."""
-        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
         if ctx.message.channel.is_nsfw():
-            temp = str(client.post_list(random=True, limit=1))
-            temp = temp.replace("\'", "\"")
-            temp = temp.replace("True", "\"True\"")
-            temp = temp.replace("False", "\"False\"")
-            temp = temp.replace("None", "\"None\"")
-            temp = temp.replace("[", "")
-            temp = temp.replace("]", "")
-            data = json.loads(temp)
-            url = data['file_url']
+            if tags is None:
+                temp = "[-status]=deleted"
+            elif "safe".lower() in tags:
+                temp = "[-status]=deleted&[tags]=rating:s"
+            elif "explicit".lower() in tags:
+                temp = "[-status]=deleted&[tags]=rating:e"
+            elif "questionable".lower() in tags:
+                temp = "[-status]=deleted&[tags]=rating:q"
+            elif "loli".lower() in tags:
+                await ctx.send("We can't show this as it violates Discord ToS.")
+                return
+            elif "shota".lower() in tags:
+                await ctx.send("We can't show this as it violates Discord ToS.")
+                return
+            else:
+                if rating is None:
+                    temp = "[-status]=deleted&[tags]={}".format(tags)
+                elif "safe".lower() in rating:
+                    temp = "[-status]=deleted&[tags]={}+rating:s".format(tags)
+                elif "explicit".lower() in rating:
+                    temp = "[-status]=deleted&[tags]={}+rating:e".format(tags)
+                elif "questionable".lower() in rating:
+                    temp = "[-status]=deleted&[tags]={}+rating:q".format(tags)
+                else:
+                    await ctx.send("Please specify a valid rating. "
+                                       "Valid ratings include questionable, explicit, and safe.")
+                    return
+            async with aiohttp.ClientSession() as session:
+                image_found = False
+                while not image_found:
+                    async with session.get('https://danbooru.donmai.us/posts/random.json?search{}'
+                                                   .format(temp)) as resp:
+                        data = await resp.json()
+                    if not "loli".lower() in data['tag_string'] or not "shota".lower() in data['tag_string']:
+                        image_found = True
+            try:
+                url = data['file_url']
+            except Exception:
+                await ctx.send("We could not find any images with that tag.")
+                return
         else:
-            await ctx.send("Sorry, but I can't load anything from Project Danbooru unless you're in a NSFW channel.")
+            await ctx.send("You need to be in a NSFW channel to run this command.")
             return
         if ctx.message.guild is not None:
             color = ctx.message.guild.me.color
         else:
-            color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
-        embed.set_image(url=url)
-        embed.set_footer(text="Powered by Project Danbooru.")
-        await ctx.send(embed=embed)
-
-    @commands.command()
-    @checks.command()
-    async def safebooru(self, ctx):
-        """Same as danbooru, but looks for safe images."""
-        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
-        image_found = False
-        while not image_found:
-            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
-            data = json.loads(temp)
-            if 'file_url' in data:
-                image_found = True
-        url = data['file_url']
-        if ctx.message.guild is not None:
-            color = ctx.message.guild.me.color
-        else:
-            color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
+            color = discord.Colour.blurple()
+        embed = discord.Embed(color=color, title="Image from Project Danbooru!",
+                              description="If you can't see the image, click the title.", url=url)
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
         await ctx.send(embed=embed)

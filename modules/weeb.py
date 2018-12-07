@@ -292,27 +292,6 @@ class Images:
 
     @commands.command()
     @checks.command()
-    async def safebooru(self, ctx):
-        """Same as danbooru, but looks for safe images."""
-        client = Danbooru('danbooru', username=self.bot.config['danbooruname'], api_key=self.bot.config['danboorukey'])
-        image_found = False
-        while not image_found:
-            temp = self.fixDanbooruJSON(str(client.post_list(random=True, limit=1, tags="rating:s -status:deleted")))
-            data = json.loads(temp)
-            if 'file_url' in data:
-                image_found = True
-        url = data['file_url']
-        if ctx.message.guild is not None:
-            color = ctx.message.guild.me.color
-        else:
-            color = discord.Colour.blue()
-        embed = discord.Embed(color=color, title="Image from Project Danbooru!", description="Here's your image, {}~".format(ctx.message.author.name))
-        embed.set_image(url=url)
-        embed.set_footer(text="Powered by Project Danbooru.")
-        await ctx.send(embed=embed)
-
-    @commands.command()
-    @checks.command()
     async def tag(self, ctx, tag):
         """Posts an image with the specified weeb.sh tag."""
         if "&nsfw=true" in tag:

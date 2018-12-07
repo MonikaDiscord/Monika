@@ -234,9 +234,9 @@ class Images:
 
     @commands.command()
     @checks.command()
-    async def danbooru(self, context, tags=None, rating=None):
+    async def danbooru(self, ctx, tags=None, rating=None):
         """Posts an image directly from Project Danbooru."""
-        if context.message.channel.is_nsfw():
+        if ctx.message.channel.is_nsfw():
             if tags is None:
                 temp = "[-status]=deleted"
             elif "safe".lower() in tags:
@@ -246,10 +246,10 @@ class Images:
             elif "questionable".lower() in tags:
                 temp = "[-status]=deleted&[tags]=rating:q"
             elif "loli".lower() in tags:
-                await context.send("We can't show this as it violates Discord ToS.")
+                await ctx.send("We can't show this as it violates Discord ToS.")
                 return
             elif "shota".lower() in tags:
-                await context.send("We can't show this as it violates Discord ToS.")
+                await ctx.send("We can't show this as it violates Discord ToS.")
                 return
             else:
                 if rating is None:
@@ -261,7 +261,7 @@ class Images:
                 elif "questionable".lower() in rating:
                     temp = "[-status]=deleted&[tags]={}+rating:q".format(tags)
                 else:
-                    await context.send("Please specify a valid rating. "
+                    await ctx.send("Please specify a valid rating. "
                                        "Valid ratings include questionable, explicit, and safe.")
                     return
             async with aiohttp.ClientSession() as session:
@@ -275,20 +275,20 @@ class Images:
             try:
                 url = data['file_url']
             except Exception:
-                await context.send("We could not find any images with that tag.")
+                await ctx.send("We could not find any images with that tag.")
                 return
         else:
-            await context.send("You need to be in a NSFW channel to run this command.")
+            await ctx.send("You need to be in a NSFW channel to run this command.")
             return
-        if context.message.guild is not None:
-            color = context.message.guild.me.color
+        if ctx.message.guild is not None:
+            color = ctx.message.guild.me.color
         else:
             color = discord.Colour.blurple()
         embed = discord.Embed(color=color, title="Image from Project Danbooru!",
                               description="If you can't see the image, click the title.", url=url)
         embed.set_image(url=url)
         embed.set_footer(text="Powered by Project Danbooru.")
-        await context.send(embed=embed)
+        await ctx.send(embed=embed)
 
     @commands.command()
     @checks.command()

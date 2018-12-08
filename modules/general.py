@@ -27,6 +27,7 @@ class General:
     @checks.command()
     async def _help(self, ctx):
         """Tells you Monika's commands."""
+        color = discord.Color.blue()
         if ctx.message.guild is not None:
             cmdpf = await self.bot.get_prefix(ctx.message)
             embed = discord.Embed(color=color, title="Commands", description="In {}, my prefix is ``{}``.".format(ctx.message.guild.name, cmdpf))

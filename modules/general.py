@@ -38,7 +38,7 @@ class General:
             list = ""
             for c in cogcmds:
                 list += f"``{c}`` "
-            embed.add_field(name=cog, value=list)
+            embed.add_field(name=cog, value=list, inline=False)
         embed.set_footer(icon_url=self.bot.user.avatar_url, text="Just Monika.")
         await ctx.send(embed=embed)
 

@@ -28,20 +28,17 @@ class General:
     async def _help(self, ctx):
         """Tells you Monika's commands."""
         if ctx.message.guild is not None:
-            color = ctx.message.guild.me.color
-        else:
-            color = discord.Colour.blue()
-        if ctx.message.guild is not None:
             cmdpf = await self.bot.get_prefix(ctx.message)
-            embed = discord.Embed(color=color, title="Hi! I'm Monika!", description="In {}, my prefix is ``{}``.".format(ctx.message.guild.name, cmdpf))
+            embed = discord.Embed(color=color, title="Commands", description="In {}, my prefix is ``{}``.".format(ctx.message.guild.name, cmdpf))
         else:
-            embed = discord.Embed(color=color, title="Hi! I'm Monika!", description="My prefix is ``$!``.")
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
-        embed.set_footer(icon_url=ctx.message.author.avatar_url, text="Hello!")
-        embed.add_field(name="Commands", value="The command list is currently broken, but will be back soon!", inline=False)
-        embed.add_field(name="Invite", value="Want to invite me to your server? Just click [here](https://discordapp.com/oauth2/authorize?client_id=399315651338043392&permissions=8&scope=bot) and click Authorize.", inline=False)
-        embed.add_field(name="Server", value="Want to join my server? Just click [here](https://discord.gg/heZJZ5M).", inline=False)
-        embed.add_field(name="More Information", value="Want to see more information? Just use the ``info`` command!", inline=False)
+            embed = discord.Embed(color=color, title="Commands", description="My prefix is ``$!``.")
+        for cog in self.bot.cogs:
+            cogcmds = self.bot.get_cog_commands(cog)
+            list = ""
+            for c in cogcmds:
+                list += f"``{c}`` "
+            embed.add_field(name=cog, value=list)
+        embed.set_footer(icon_url=self.bot.user.avatar_url, text="Just Monika.")
         await ctx.send(embed=embed)
 
     @commands.command()

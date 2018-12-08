@@ -3,4 +3,4 @@ raven
 asyncpg
 yarl<1.2
 pybooru
-red-lavalink
+lavalink

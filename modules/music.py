@@ -51,7 +51,7 @@ class Music:
                                                    color=discord.Color.blurple()))
 
         elif isinstance(event, lavalink.Events.QueueEndEvent):
-            await channel.send('Your queue has ended~ It isn't a bad idea to play another song, though!')
+            await channel.send('Your queue has ended~ It isn\'t a bad idea to play another song, though!')
 
     @commands.command(name='play', aliases=['p'])
     @checks.command()
@@ -68,7 +68,7 @@ class Music:
         results = await self.bot.lavalink.get_tracks(query)
 
         if not results or not results['tracks']:
-            return await ctx.send('I couldn't find anything~')
+            return await ctx.send('I couldn\'t find anything~')
 
         embed = discord.Embed(color=discord.Color.blurple())
 
@@ -122,7 +122,7 @@ class Music:
         results = await self.bot.lavalink.get_tracks(query)
 
         if not results or not results['tracks']:
-            return await ctx.send('I couldn't find any songs...')
+            return await ctx.send('I couldn\'t find any songs...')
 
         tracks = results['tracks']
         track = tracks.pop(0)
@@ -156,7 +156,7 @@ class Music:
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
         if not player.is_playing:
-            return await ctx.send('I don't think I'm playing anything.')
+            return await ctx.send('I don\'t think I\'m playing anything.')
 
         player.queue.clear()
         await player.stop()

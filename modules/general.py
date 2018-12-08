@@ -34,6 +34,8 @@ class General:
         else:
             embed = discord.Embed(color=color, title="Commands", description="My prefix is ``$!``.")
         for cog in self.bot.cogs:
+            if cog == "Developer":
+                continue
             cogcmds = self.bot.get_cog_commands(cog)
             list = ""
             for c in cogcmds:

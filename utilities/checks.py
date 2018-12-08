@@ -13,7 +13,7 @@ class Checks:
         dbpass = config['dbpass']
         dbuser = config['dbuser']
         govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
-        self.db = await asyncpg.create_pool(**govinfo)
+        self.db = await asyncpg.connect(**govinfo)
 
     async def admin_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"

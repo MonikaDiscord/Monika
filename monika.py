@@ -48,7 +48,7 @@ class Monika(commands.AutoShardedBot):
 
 
     async def on_ready(self):
-        await self.change_presence(activity=discord.Activity(name='$!help | monikabot.pw', type=discord.ActivityType.watching))
+        await self.change_presence(activity=discord.Activity(name='for $!help', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
         c = self.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title="All shards ready!")

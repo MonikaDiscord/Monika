@@ -76,7 +76,8 @@ class Fun:
     @checks.command()
     async def delete(self, ctx, *, name):
         """Deletes the specified user."""
-        await ctx.send(f"``{name.lower()} deleted successfully.``")
+        n = name.lower().replace(" ", "_")
+        await ctx.send(f"``{n} deleted successfully.``")
 
     @commands.command(name="8ball")
     @checks.command()

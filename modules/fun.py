@@ -117,6 +117,9 @@ class Fun:
     @checks.command()
     async def urban(self, ctx, *, term):
         """Searches for a term on Urban Dictionary."""
+        if not ctx.message.channel.is_nsfw():
+            await ctx.send("You have to be in a NSFW channel for this to work, sorry!")
+            return
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get('http://api.urbandictionary.com/v0/define?term={}'.format(term)) as apientry:

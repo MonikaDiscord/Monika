@@ -4,7 +4,7 @@ class Prefix:
         if msg.guild is None:
             return "$!"
         sql = "SELECT prefix FROM guilds WHERE id = $1"
-        r = await self.bot.db.fetchval(sql, msg.guild.id)
+        r = await bot.db.fetchval(sql, msg.guild.id)
         if r:
             return r
         else:

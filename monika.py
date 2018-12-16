@@ -15,8 +15,8 @@ checks = checks.Checks()
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
-
         self._prefix = prefix.Prefix()
+        super().__init__(command_prefix=self._prefix.prefixcall)
 
         self.config = json.loads(open('config.json', 'r').read())
 
@@ -30,7 +30,6 @@ class Monika(commands.AutoShardedBot):
             self.db = await asyncpg.create_pool(**govinfo)
             await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")
-            super().__init__(command_prefix=self._prefix.prefixcall)
 
         self.loop.create_task(_init_db())
 

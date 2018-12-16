@@ -67,6 +67,19 @@ class Administration:
             color = discord.Colour.blue()
         e = discord.Embed(color=color, title=f"List of filtered words in {ctx.guild.name}", description=list)
         await ctx.author.send(embed=e)
+    
+    @filter.command()
+    @checks.command()
+    @commands.has_permissions(manage_messages=True)
+    async def bypass(self, ctx, should):
+        if should == "on":
+            ctx.bot.bypass_filter_servers[ctx.guild.id] = True
+            await ctx.send("Filter disabled.")
+        elif should == "off":
+            ctx.bot.bypass_filter_servers.pop(ctx.guild.id,False)
+            await ctx.send("Filter reenabled.")
+        else:
+            await ctx.send("Choose `on` or `off`")
 
 def setup(bot):
     bot.add_cog(Administration(bot))

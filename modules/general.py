@@ -77,11 +77,11 @@ class General:
             roles.append(r.name)
             usr_roles = "\n".join(roles)
         embed = discord.Embed(color=user.color, description="Here's some information about {}!".format(user.name))
-        if checks.staff_check(ctx):
+        if await checks.staff_check(ctx):
             embed.title = "{} <:staff:314068430787706880>".format(user)
-        elif checks.gold_check(ctx):
+        elif await checks.gold_check(ctx):
             embed.title = "{} <:gold:423521455246934027>".format(user)
-        elif checks.premium_check(ctx):
+        elif await checks.premium_check(ctx):
             embed.title = "{} <:premium:423521432547622926>".format(user)
         else:
             embed.title = "{}".format(user)

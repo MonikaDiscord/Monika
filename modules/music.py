@@ -27,7 +27,7 @@ class Music:
 
         if not hasattr(bot, 'lavalink'):
             lavalink.Client(bot=bot, password=bot.config["lavapass"],
-                            loop=bot.loop, log_level=logging.DEBUG, ws_port=2333)
+                            loop=bot.loop, log_level=logging.INFO, ws_port=2333)
             self.bot.lavalink.register_hook(self._track_hook)
 
     def __unload(self):

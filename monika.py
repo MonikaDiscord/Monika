@@ -32,6 +32,7 @@ class Monika(commands.AutoShardedBot):
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")
 
         self.loop.create_task(_init_db())
+        self.bypass_filter_servers = {}
 
         self.remove_command('help')
 
@@ -89,7 +90,7 @@ class Monika(commands.AutoShardedBot):
                     await self.db.execute(sql1, guild.name, guild.id)
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
                 fw = await self.db.fetchval(sql, guild.id)
-                if fw:
+                if fw and guild.id in self.bypass_filter_servers.keys():
                     for word in fw:
                         prefix = await self.get_prefix(msg)
                         thingy = f"{prefix}filter remove {word}"
@@ -121,7 +122,7 @@ class Monika(commands.AutoShardedBot):
     async def on_guild_join(self, guild):
         sql = "INSERT INTO guilds (id, prefix, name, filteredwords, disabledcogs, disabledcmds) VALUES ($1, '$!', $2, '{}', '{}', '{}')"
         await self.db.execute(sql, guild.id, guild.name)
-        c = self.get_channel(447553435999666196)
+        c = self.get_channel(523705373933174804)
         e = discord.Embed(color=discord.Color.blue(), title="New guild!", description=f"We're now in {len(self.guilds)} guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)
@@ -135,7 +136,7 @@ class Monika(commands.AutoShardedBot):
     async def on_guild_remove(self, guild):
         sql = "DELETE FROM guilds WHERE id = $1"
         await self.db.execute(sql, guild.id)
-        c = self.get_channel(447553435999666196)
+        c = self.get_channel(523705373933174804)
         e = discord.Embed(color=discord.Color.red(), title="We lost a guild...", description=f"But it's okay, we're still in {len(self.guilds)} other guilds!")
         e.set_thumbnail(url=guild.icon_url)
         e.add_field(name="Name", value=guild.name)

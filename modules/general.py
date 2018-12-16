@@ -34,7 +34,7 @@ class General:
         else:
             embed = discord.Embed(color=color, title="Commands", description="My prefix is ``$!``.")
         for cog in self.bot.cogs:
-            if cog == "Developer":
+            if cog == "Developer" or cog == "Economy":
                 continue
             cogcmds = self.bot.get_cog_commands(cog)
             list = ""
@@ -58,9 +58,9 @@ class General:
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.add_field(name="Stats: ", value="Servers: **{}**\nShards: **{}**\nUsers: **{}**".format(len(self.bot.guilds), len(self.bot.shards), users))
         try:
-            embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(), str(ctx.message.guild.shard_id)))
+            embed.add_field(name="Version: ", value="Monika: **1.0.1**\ndiscord.py: **{}**\nPython: **{}**\nShard ID: **{}**".format(discord.__version__, platform.python_version(), str(ctx.message.guild.shard_id)))
         except Exception:
-            embed.add_field(name="Version: ", value="Monika: **1.0.0**\ndiscord.py: **{}**\nPython: **{}**".format(discord.__version__, platform.python_version()))
+            embed.add_field(name="Version: ", value="Monika: **1.0.1**\ndiscord.py: **{}**\nPython: **{}**".format(discord.__version__, platform.python_version()))
         embed.add_field(name="Other: ", value = "Website: Currently down\nDiscord: https://discord.gg/heZJZ5M")
         await ctx.send(embed=embed)
 

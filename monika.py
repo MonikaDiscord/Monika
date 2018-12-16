@@ -8,7 +8,6 @@ import os
 from utilities import prefix
 import traceback
 import sys
-import lavalink
 
 global checks
 checks = checks.Checks()
@@ -25,7 +24,7 @@ class Monika(commands.AutoShardedBot):
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
+        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost","max_size":10}
 
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)

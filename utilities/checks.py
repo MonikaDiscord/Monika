@@ -5,66 +5,56 @@ import json
 
 class Checks:
 
-    def __init__(self):
-        asyncio.ensure_future(self._init_db())
-
-    async def _init_db(self):
-        config = json.loads(open('config.json', 'r').read())
-        dbpass = config['dbpass']
-        dbuser = config['dbuser']
-        govinfo = {"user": dbuser, "password": dbpass, "database": "monika", "host": "localhost"}
-        self.db = await asyncpg.create_pool(**govinfo)
-
     async def admin_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         return int(status) == 1
 
     async def dev_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 2]
         return int(status) in nums
 
     async def mod_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 3]
         return int(status) in nums
     
     async def ss_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 4]
         return int(status) in nums
 
     async def staff_check(self, ctx):
         sql = "SELECT staff FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 2, 3]
         return int(status) in nums
 
     async def upvoter_check(self, ctx):
         sql = "SELECT upvoter FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         return bool(status) == True
 
     async def premium_check(self, ctx):
         sql = "SELECT patron FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 2]
         return int(status) in nums
 
     async def gold_check(self, ctx):
         sql = "SELECT patron FROM users WHERE id = $1"
-        status = await self.db.fetchval(sql, ctx.author.id)
+        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         return int(status) == 2
 
     async def cog_disabler(self, ctx):
         sql = "SELECT disabledcogs FROM guilds WHERE id = $1"
-        dcogs = await self.db.fetchval(sql, ctx.guild.id)
+        dcogs = await ctx.bot.db.fetchval(sql, ctx.guild.id)
         sql = "SELECT disabledcmds FROM guilds WHERE id = $1"
-        dcmds = await self.db.fetchval(sql, ctx.guild.id)
+        dcmds = await ctx.bot.db.fetchval(sql, ctx.guild.id)
         return ctx.command.cog_name not in dcogs or ctx.command.name not in dcmds
 
     def is_admin(self):

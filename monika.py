@@ -145,16 +145,6 @@ class Monika(commands.AutoShardedBot):
             await c.send(embed=e)
         except:
             pass
-
-    async def on_member_join(self, member):
-        guild = member.guild
-        channel = discord.utils.get(guild.channels, name="welcome")
-        if channel:
-            if member.id == 436351740787294208:
-                await channel.send("Hi, Mon- wait.. What? Something isn't right here. Please go away. Please go away now. What is this? WHAT IS THIS? WHAT'S HAPPENING TO ME????")
-            else:
-                await channel.send(f"Hi, <@{member.id}>! Welcome to {guild.name}! I hope you have a good time here~"
-
     async def get_prefix(self, msg):
         return await self._prefix.prefixcall(self, msg)
 
@@ -164,6 +154,15 @@ class Monika(commands.AutoShardedBot):
 
     async def restart_monika(self):
         sys.exit(1)
+
+    async def on_member_join(self, member):
+        guild = member.guild
+        channel = discord.utils.get(guild.channels, name="welcome")
+        if channel:
+            if member.id == 436351740787294208:
+                await channel.send("Hi, Mon- wait.. What? Something isn't right here. Please go away. Please go away now. What is this? WHAT IS THIS? WHAT'S HAPPENING TO ME????")
+            else:
+                await channel.send(f"Hi, <@{member.id}>! Welcome to {guild.name}! I hope you have a good time here~"
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())

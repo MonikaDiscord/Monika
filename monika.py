@@ -35,7 +35,7 @@ class Monika(commands.AutoShardedBot):
         self.bypass_filter_servers = {}
 
         self.remove_command('help')
-
+        self.load_extension("utilities.dbl")
         for file in os.listdir("modules"):
             if file.endswith(".py"):
                 name = file[:-3]

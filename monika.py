@@ -12,6 +12,7 @@ import sys
 global checks
 checks = checks.Checks()
 
+
 class Monika(commands.AutoShardedBot):
 
     def __init__(self):
@@ -35,6 +36,7 @@ class Monika(commands.AutoShardedBot):
         self.bypass_filter_servers = {}
 
         self.remove_command('help')
+        asyncio.get_event_loop().create_task(self.guild_count_loop())
 
         for file in os.listdir("modules"):
             if file.endswith(".py"):
@@ -45,6 +47,19 @@ class Monika(commands.AutoShardedBot):
                     print(f"Oops! I broke the {file} module...")
                     traceback.print_exc()
 
+    async def guild_count_loop(self):
+        while True:
+            payload = json.dumps({
+                'shard_count': bot.shard_count,
+                'server_count': len(bot.guilds)
+            })
+            headers = {
+                'Authorization': bot.config['dblkey'],
+                'Content-type' : 'application/json'
+            }
+            url = f'https://discordbots.org/api/bots/{bot.user.id}/stats'
+            await bot.session.post(url, data=payload, headers=headers)
+            await asyncio.sleep(900)
 
     async def on_ready(self):
         await self.change_presence(activity=discord.Activity(name='for $!help', type=discord.ActivityType.watching))

@@ -90,7 +90,7 @@ class Monika(commands.AutoShardedBot):
                     await self.db.execute(sql1, guild.name, guild.id)
                 sql = "SELECT filteredwords FROM guilds WHERE id = $1"
                 fw = await self.db.fetchval(sql, guild.id)
-                if fw and guild.id in self.bypass_filter_servers.keys():
+                if fw and guild.id not in self.bypass_filter_servers.keys():
                     for word in fw:
                         prefix = await self.get_prefix(msg)
                         thingy = f"{prefix}filter remove {word}"

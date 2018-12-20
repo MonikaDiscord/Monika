@@ -88,15 +88,15 @@ class Fun:
         ["My sources say no.", "Outlook not so good.", "Very doubtful.", "My reply is no.", "Don't count on it."]]
         await ctx.send("My magic eight ball said... ``{}``".format(random.choice(random.choice(responses))))
 
-    @commands.command(name="monify", hidden=True)
+    @commands.command(name="monify")
     @checks.command()
-    @checks.is_dev()
     async def monify(self,ctx,user: discord.Member, time):
         try:
             me = ctx.me
             perms = me.permissions_in(ctx.channel)
             if not perms.manage_messages or not perms.manage_nicknames:
-                raise discord.Forbidden(None, "nope")
+                await ctx.send("You don't have the permissions to do this.")
+                return
             reasone = "{} told me to".format(ctx.message.author.name)
             author = ctx.message.author
             nc = user.nick

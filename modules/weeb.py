@@ -265,13 +265,9 @@ class Images:
                                        "Valid ratings include questionable, explicit, and safe.")
                     return
             async with aiohttp.ClientSession() as session:
-                image_found = False
-                while not image_found:
-                    async with session.get('https://danbooru.donmai.us/posts/random.json?search{}'
+                async with session.get('https://danbooru.donmai.us/posts/random.json?search{}'
                                                    .format(temp)) as resp:
-                        data = await resp.json()
-                    if not "loli".lower() in data['tag_string'] or not "shota".lower() in data['tag_string']:
-                        image_found = True
+                    data = await resp.json()
             try:
                 url = data['file_url']
             except Exception:

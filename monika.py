@@ -48,16 +48,27 @@ class Monika(commands.AutoShardedBot):
 
     async def guild_count_loop(self):
         while True:
-            payload = json.dumps({
+            dblpayload = json.dumps({
                 'shard_count': self.shard_count,
                 'server_count': len(self.guilds)
             })
-            headers = {
+            dblheaders = {
                 'Authorization': self.config['dblkey'],
                 'Content-type' : 'application/json'
             }
-            url = f'https://discordbots.org/api/bots/{self.user.id}/stats'
-            await self.session.post(url, data=payload, headers=headers)
+            dbgpayload = json.dumps({
+                'guildCount': len(self.guilds),
+                'shardCount': self.shard_count
+            })
+            dbgheaders = {
+                'Authorization': self.config['dbgkey'],
+                'Content-type': 'application/json'
+            }
+            dblurl = f'https://discordbots.org/api/bots/{self.user.id}/stats'
+            await self.session.post(dblurl, data=dblpayload, headers=dblheaders)
+            dbgurl = f'https://discord.bots.gg/api/bots/{self.user.id}/stats'
+            await self.session.post(dbgurl, data=dbgpayload, headers=dbgheaders)
+            
             await asyncio.sleep(900)
 
     async def on_ready(self):

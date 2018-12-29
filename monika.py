@@ -36,7 +36,6 @@ class Monika(commands.AutoShardedBot):
         self.bypass_filter_servers = {}
 
         self.remove_command('help')
-        self.loop.create_task(self.guild_count_loop())
 
         for file in os.listdir("modules"):
             if file.endswith(".py"):
@@ -64,6 +63,7 @@ class Monika(commands.AutoShardedBot):
     async def on_ready(self):
         await self.change_presence(activity=discord.Activity(name='for $!help', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
+        self.loop.create_task(self.guild_count_loop())
         c = self.get_channel(447553320752513053)
         e = discord.Embed(color=discord.Color.blue(), title="All shards ready!")
         try:

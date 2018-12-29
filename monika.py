@@ -1,5 +1,4 @@
 import discord
-import dbl
 from discord.ext import commands
 import asyncpg, aiohttp
 import json
@@ -23,8 +22,6 @@ class Monika(commands.AutoShardedBot):
         self.config = json.loads(open('config.json', 'r').read())
 
         self.session = aiohttp.ClientSession()
-        self.dbl = dbl.Client(self, self.config['dblkey'])
-        self.loop.create_task(self.post_to_dbl())
 
         dbpass = self.config['dbpass']
         dbuser = self.config['dbuser']
@@ -39,6 +36,7 @@ class Monika(commands.AutoShardedBot):
         self.bypass_filter_servers = {}
 
         self.remove_command('help')
+        self.loop.create_task(self.guild_count_loop())
 
         for file in os.listdir("modules"):
             if file.endswith(".py"):
@@ -48,6 +46,20 @@ class Monika(commands.AutoShardedBot):
                 except:
                     print(f"Oops! I broke the {file} module...")
                     traceback.print_exc()
+
+    async def guild_count_loop(self):
+        while True:
+            payload = json.dumps({
+                'shard_count': self.shard_count,
+                'server_count': len(self.guilds)
+            })
+            headers = {
+                'Authorization': self.config['dblkey'],
+                'Content-type' : 'application/json'
+            }
+            url = f'https://discordbots.org/api/bots/{self.user.id}/stats'
+            await self.session.post(url, data=payload, headers=headers)
+            await asyncio.sleep(900)
 
     async def on_ready(self):
         await self.change_presence(activity=discord.Activity(name='for $!help', type=discord.ActivityType.watching))
@@ -149,7 +161,6 @@ class Monika(commands.AutoShardedBot):
             await c.send(embed=e)
         except:
             pass
-
     async def get_prefix(self, msg):
         return await self._prefix.prefixcall(self, msg)
 
@@ -168,20 +179,6 @@ class Monika(commands.AutoShardedBot):
                 await channel.send("Hi, Mon- wait.. What? Something isn't right here. Please go away. Please go away now. What is this? WHAT IS THIS? WHAT'S HAPPENING TO ME????")
             else:
                 await channel.send(f"Hi, <@{member.id}>! Welcome to {guild.name}! I hope you have a good time here~")
-
-    async def post_to_dbl(self):
-        while True:
-            try:
-                await self.dbl.post_server_count()
-                embed = discord.Embed(color=discord.Colour.blue(), title="I posted my server count to discordbots.org!", description=f"My server count is {len(self.guilds)}.")
-                channel = self.get_channel(528612289264484383)
-                await channel.send(embed=embed)
-            except:
-                print("I couldn't post my server count to discordbots.org...")
-                embed = discord.Embed(color=discord.Colour.red(), title="I couldn't post my server count to discordbots.org...", description=f"My server count is {len(self.guilds)}.")
-                channel = self.get_channel(528612289264484383)
-                await channel.send(embed=embed)
-            await asyncio.sleep(1800)
 
 bot = Monika()
 config = json.loads(open('config.json', 'r').read())

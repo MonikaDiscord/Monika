@@ -4,3 +4,4 @@ asyncpg
 yarl<1.2
 pybooru
 lavalink
+dblpy

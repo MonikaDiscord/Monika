@@ -75,7 +75,7 @@ class Monika(commands.AutoShardedBot):
         await self.change_presence(activity=discord.Activity(name='for $!help', type=discord.ActivityType.watching))
         print("Monika has fully logged in.")
         self.loop.create_task(self.guild_count_loop())
-        c = self.get_channel(447553320752513053)
+        c = self.get_channel(528620159414304768)
         e = discord.Embed(color=discord.Color.blue(), title="All shards ready!")
         try:
             await c.send(embed=e)
@@ -83,7 +83,7 @@ class Monika(commands.AutoShardedBot):
             pass
 
     async def on_shard_ready(self, id):
-        c = self.get_channel(447553320752513053)
+        c = self.get_channel(528620159414304768)
         e = discord.Embed(color=discord.Color.blue(), title=f"Shard {id} ready!")
         try:
             await c.send(embed=e)

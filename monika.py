@@ -172,14 +172,13 @@ class Monika(commands.AutoShardedBot):
     async def post_to_dbl(self):
         while True:
             try:
-                await self.dblpy.post_server_count()
+                await self.dbl.post_server_count()
                 embed = discord.Embed(color=discord.Colour.blue(), title="I posted my server count to discordbots.org!", description=f"My server count is {len(self.guilds)}.")
                 channel = self.get_channel(528612289264484383)
                 await channel.send(embed=embed)
             except:
                 print("I couldn't post my server count to discordbots.org...")
                 embed = discord.Embed(color=discord.Colour.red(), title="I couldn't post my server count to discordbots.org...", description=f"My server count is {len(self.guilds)}.")
-                embed.add_field(name="Error", value="```"+sys.exc_info()+"```")
                 channel = self.get_channel(528612289264484383)
                 await channel.send(embed=embed)
             await asyncio.sleep(1800)

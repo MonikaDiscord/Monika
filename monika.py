@@ -1,3 +1,5 @@
+# Mich, the love of Arath is so big, it reached Sanae's house (and also GitHub servers)
+
 import discord
 from discord.ext import commands
 import asyncpg, aiohttp

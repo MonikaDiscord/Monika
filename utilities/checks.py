@@ -40,10 +40,11 @@ class Checks:
         return bool(status) == True
 
     async def premium_check(self, ctx):
-        sql = "SELECT patron FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
-        nums = [1, 2]
-        return int(status) in nums
+        #sql = "SELECT patron FROM users WHERE id = $1"
+        #status = await ctx.bot.db.fetchval(sql, ctx.author.id)
+        #nums = [1, 2]
+        #return int(status) in nums
+        return True
 
     async def gold_check(self, ctx):
         sql = "SELECT patron FROM users WHERE id = $1"

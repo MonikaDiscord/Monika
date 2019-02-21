@@ -94,8 +94,10 @@ class Monika(commands.AutoShardedBot):
 
     async def on_message(self, msg):
         if not msg.author.bot:
+            p = await self.get_prefix(msg)
+            if msg.content.startswith(p) and msg.author.id == 414463696853663747:
+                await msg.channel.send("no monika for jeffrey")
             if msg.content == f"<@{self.user.id}> prefix" or msg.content == f"<@!{self.user.id}> prefix":
-                p = await self.get_prefix(msg)
                 await msg.channel.send(f"My prefix for this server is ``{p}``.")
             user = msg.author
             sql = "SELECT * FROM users WHERE id = $1"

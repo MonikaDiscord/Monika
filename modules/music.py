@@ -21,6 +21,7 @@ url_rx = re.compile('https?:\/\/(?:www\.)?.+')
 global checks
 checks = checks.Checks()
 
+
 class Music:
     def __init__(self, bot):
         self.bot = bot

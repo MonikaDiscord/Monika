@@ -11,6 +11,7 @@ import asyncio
 global checks
 checks = checks.Checks()
 
+
 class Weeb:
     def __init__(self, bot):
         self.bot = bot
@@ -342,6 +343,7 @@ class Images:
         await ctx.message.author.send(embed=embed)
         if ctx.message.guild is not None:
             await ctx.send("I sent the full tag list in our DMs, <@{}>~".format(ctx.message.author.id))
+
 
 def setup(bot):
     bot.add_cog(Weeb(bot))

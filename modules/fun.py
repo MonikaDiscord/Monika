@@ -9,6 +9,7 @@ from utilities import poems
 global checks
 checks = checks.Checks()
 
+
 class Fun:
 
     def __init__(self, bot):
@@ -170,6 +171,7 @@ class Fun:
         #"""Analyzes the specified statement."""
         #async with self.bot.session.post(f'https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze?key={self.bot.config['perspectivekey']}', data={'comment':{'text':message}}, languages: ["en"], requestedAttributes: {TOXICITY:{}} }) as adata:
             #await ctx.send(adata.status)
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))

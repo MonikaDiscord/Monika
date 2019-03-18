@@ -5,6 +5,7 @@ from utilities import checks
 global checks
 checks = checks.Checks()
 
+
 class Administration:
 
     def __init__(self, bot):
@@ -80,6 +81,7 @@ class Administration:
             await ctx.send("Filter reenabled.")
         else:
             await ctx.send("Choose `on` or `off`")
+
 
 def setup(bot):
     bot.add_cog(Administration(bot))

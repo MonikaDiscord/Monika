@@ -7,6 +7,7 @@ from utilities import checks
 global checks
 checks = checks.Checks()
 
+
 class Moderation:
 
     def __init__(self, bot):
@@ -106,6 +107,7 @@ class Moderation:
             await ctx.send("I couldn't do that for you... I'm so sorry!")
             return
         await ctx.send("I banned " + str(user) + " for you, <@{}>~".format(ctx.message.author.id))
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))

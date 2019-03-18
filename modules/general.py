@@ -8,6 +8,7 @@ import time
 global checks
 checks = checks.Checks()
 
+
 class General:
 
     def __init__(self, bot):
@@ -142,6 +143,7 @@ class General:
         except Exception:
             traceback.print_exc()
         await ctx.send("I sent your report, <@{}>~".format(ctx.message.author.id))
+
 
 def setup(bot):
     bot.add_cog(General(bot))

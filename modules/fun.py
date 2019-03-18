@@ -91,7 +91,10 @@ class Fun:
 
     @commands.command(name="monify")
     @checks.command()
-    async def monify(self,ctx,user: discord.Member, time):
+    async def monify(self,ctx,user: discord.Member, time=None):
+        if time is None:
+            await ctx.send("Please specify the duration in seconds.")
+            return
         try:
             me = ctx.me
             perms = me.permissions_in(ctx.channel)

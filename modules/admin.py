@@ -6,7 +6,7 @@ global checks
 checks = checks.Checks()
 
 
-class Administration:
+class Administration(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

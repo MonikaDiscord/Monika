@@ -10,7 +10,7 @@ global checks
 checks = checks.Checks()
 
 
-class Fun:
+class Fun(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

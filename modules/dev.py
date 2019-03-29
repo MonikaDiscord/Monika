@@ -11,7 +11,7 @@ global checks
 checks = checks.Checks()
 
 
-class Developer:
+class Developer(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

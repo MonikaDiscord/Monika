@@ -7,7 +7,7 @@ global checks
 checks = checks.Checks()
 
 
-class Economy:
+class Economy(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

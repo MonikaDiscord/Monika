@@ -9,7 +9,7 @@ global checks
 checks = checks.Checks()
 
 
-class General:
+class General(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -37,7 +37,7 @@ class General:
         for cog in self.bot.cogs:
             if cog == "Developer" or cog == "Economy":
                 continue
-            cogcmds = self.bot.get_cog_commands(cog)
+            cogcmds = self.bot.get_cog(cog).get_commands()
             list = ""
             for c in cogcmds:
                 list += f"``{c}`` "

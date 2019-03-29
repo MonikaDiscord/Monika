@@ -2,6 +2,5 @@ git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
 raven
 asyncpg
 yarl<1.2
-pybooru
 lavalink
 dblpy

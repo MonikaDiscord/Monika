@@ -8,7 +8,7 @@ global checks
 checks = checks.Checks()
 
 
-class Moderation:
+class Moderation(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot

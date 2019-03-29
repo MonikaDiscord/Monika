@@ -4,7 +4,6 @@ import aiohttp
 from utilities import checks
 from io import StringIO
 import os
-from pybooru import Danbooru
 import json
 import asyncio
 
@@ -12,7 +11,7 @@ global checks
 checks = checks.Checks()
 
 
-class Weeb:
+class Weeb(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

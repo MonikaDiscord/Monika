@@ -136,7 +136,6 @@ class Music(commands.Cog):
 
     @commands.command(name='skip', aliases=['forceskip', 'fs'])
     @commands.guild_only()
-    @commands.has_permissions(manage_messages = True)
     @checks.command()
     async def _skip(self, ctx):
         """ Skips the current track. """
@@ -150,7 +149,6 @@ class Music(commands.Cog):
 
     @commands.command(name='stop')
     @commands.guild_only()
-    @commands.has_permissions(manage_messages = True)
     @checks.command()
     async def _stop(self, ctx):
         """ Stops the player and clears its queue. """
@@ -266,7 +264,6 @@ class Music(commands.Cog):
     @commands.command(name='disconnect', aliases=['dc'])
     @commands.guild_only()
     @checks.command()
-    @commands.has_permissions(manage_messages = True)
     async def _disconnect(self, ctx):
         """ Disconnects the player from the voice channel and clears its queue. """
         player = self.bot.lavalink.players.get(ctx.guild.id)

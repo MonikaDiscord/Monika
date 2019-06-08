@@ -303,7 +303,7 @@ class Music(commands.Cog):
             player.store('channel', ctx.channel.id)
             await player.connect(ctx.author.voice.channel.id)
         else:
-            if player.connected_channel.id != ctx.author.voice.channel.id:
+            if player is not None and player.connected_channel.id != ctx.author.voice.channel.id:
                 return await ctx.send('Join my voice channel!')
 
 

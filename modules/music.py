@@ -59,7 +59,7 @@ class Music(commands.Cog):
     @commands.guild_only()
     async def _play(self, ctx, *, query: str):
         """ Searches and plays a song from a given query. """
-        player = self.bot.lavalink.players.get(ctx.guild.id)
+        player = self.bot.lavalink.players.create(ctx.guild.id)
 
         query = query.strip('<>')
 
@@ -110,7 +110,7 @@ class Music(commands.Cog):
     @checks.command()
     async def _playnow(self, ctx, *, query: str):
         """ Plays immediately a song. """
-        player = self.bot.lavalink.players.get(ctx.guild.id)
+        player = self.bot.lavalink.players.create(ctx.guild.id)
 
         if not player.queue and not player.is_playing:
             return await ctx.invoke(self._play, query=query)
@@ -188,6 +188,8 @@ class Music(commands.Cog):
         """ Shows the player's queue. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
+        if player is None:
+            return await ctx.send("I'm not playing anything.")
         if not player.queue:
             return await ctx.send('I can\'t find anything in the queue...')
 
@@ -213,7 +215,7 @@ class Music(commands.Cog):
         """ Pauses/Resumes the current track. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
-        if not player.is_playing:
+        if player is None or not player.is_playing:
             return await ctx.send("I'm not playing anything~")
 
         if player.paused:
@@ -242,7 +244,7 @@ class Music(commands.Cog):
     async def _shuffle(self, ctx):
         """ Shuffles the player's queue. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
-        if not player.is_playing:
+        if player is None or not player.is_playing:
             return await ctx.send("I'm not playing anything..")
 
         player.shuffle = not player.shuffle
@@ -255,7 +257,7 @@ class Music(commands.Cog):
         """ Repeats the current song until the command is invoked again. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
-        if not player.is_playing:
+        if player is None or not player.is_playing:
             return await ctx.send("I'm not playing anything~")
 
         player.repeat = not player.repeat
@@ -268,7 +270,7 @@ class Music(commands.Cog):
         """ Disconnects the player from the voice channel and clears its queue. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
-        if not player.is_connected:
+        if player is None or not player.is_connected:
             return await ctx.send("Um.. I'm not connected to a voice channel~")
 
         if not ctx.author.voice or (player.is_connected and ctx.author.voice.channel.id != int(player.channel_id)):
@@ -285,7 +287,7 @@ class Music(commands.Cog):
         """ A few checks to make sure the bot can join a voice channel. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
-        if not player.is_connected:
+        if player is None or not player.is_connected:
             if not ctx.author.voice or not ctx.author.voice.channel:
                 await ctx.send('You aren\'t connected to any voice channel.')
                 raise commands.CommandInvokeError(

@@ -28,11 +28,8 @@ class Music(commands.Cog):
 
         if not hasattr(bot, 'lavalink'):
             bot.lavalink = lavalink.Client(bot.user.id)
-            bot.lavalink.add_node('127.0.0.1', 2333, 'youshallnotpass', 'eu', 'default-node')  # Host, Port, Password, Region, Name
+            bot.lavalink.add_node('127.0.0.1', 2333, password=bot.config["lavapass"], 'eu', 'default-node')  # Host, Port, Password, Region, Name
             bot.add_listener(bot.lavalink.voice_update_handler, 'on_socket_response')
-            lavalink.Client(bot=bot, password=bot.config["lavapass"],
-                            loop=bot.loop, log_level=logging.INFO, ws_port=2333)
-            self.bot.lavalink.register_hook(self._track_hook)
 
     def __unload(self):
         for guild_id, player in self.bot.lavalink.players:

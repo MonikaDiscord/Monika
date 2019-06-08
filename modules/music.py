@@ -287,7 +287,7 @@ class Music(commands.Cog):
         """ A few checks to make sure the bot can join a voice channel. """
         player = self.bot.lavalink.players.get(ctx.guild.id)
 
-        if player is not None or not player.is_connected:
+        if player is not None and not player.is_connected:
             if not ctx.author.voice or not ctx.author.voice.channel:
                 await ctx.send('You aren\'t connected to any voice channel.')
                 raise commands.CommandInvokeError(

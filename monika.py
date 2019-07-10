@@ -42,7 +42,7 @@ class Monika(commands.AutoShardedBot):
         for file in os.listdir("modules"):
             if file.endswith(".py"):
                 name = file[:-3]
-                if "music".lower() in name:
+                if not "music".lower() in name:
                     try:
                         self.load_extension(f"modules.{name}")
                     except:

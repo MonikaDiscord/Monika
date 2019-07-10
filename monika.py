@@ -42,11 +42,12 @@ class Monika(commands.AutoShardedBot):
         for file in os.listdir("modules"):
             if file.endswith(".py"):
                 name = file[:-3]
-                try:
-                    self.load_extension(f"modules.{name}")
-                except:
-                    print(f"Oops! I broke the {file} module...")
-                    traceback.print_exc()
+                if "music".lower() in name:
+                    try:
+                        self.load_extension(f"modules.{name}")
+                    except:
+                        print(f"Oops! I broke the {file} module...")
+                        traceback.print_exc()
 
     async def guild_count_loop(self):
         while True:
@@ -83,6 +84,7 @@ class Monika(commands.AutoShardedBot):
             await c.send(embed=e)
         except:
             pass
+        self.load_extension("modules.music")
 
     async def on_shard_ready(self, id):
         c = self.get_channel(528620159414304768)

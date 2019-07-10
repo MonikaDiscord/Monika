@@ -1,4 +1,4 @@
-git+https://github.com/Rapptz/discord.py#egg=discord.py[voice]
+discord
 raven
 asyncpg
 yarl<1.2

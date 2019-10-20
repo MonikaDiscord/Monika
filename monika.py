@@ -7,6 +7,7 @@ import json
 from utilities import checks
 import asyncio
 import os
+import re
 from utilities import prefix
 import traceback
 import sys
@@ -125,8 +126,8 @@ class Monika(commands.AutoShardedBot):
                 if fw and guild.id not in self.bypass_filter_servers.keys():
                     for word in fw:
                         prefix = await self.get_prefix(msg)
-                        thingy = f"{prefix}filter remove {word}"
-                        if word.lower() in msg.content.lower() and thingy.lower() != msg.content.lower():
+                        regex = re.compile("^\$\!")
+                        if word.lower() in msg.content.lower() and not regex.match(msg.content.lower()):
                             await msg.channel.send(f"<@{msg.author.id}>, that word is against this server's filter!")
                             try:
                                 return await msg.delete()

@@ -1,4 +1,4 @@
-discord
+discord.py
 raven
 asyncpg
 yarl<1.2

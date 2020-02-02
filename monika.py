@@ -7,7 +7,6 @@ import json
 from utilities import checks
 import asyncio
 import os
-import re
 from utilities import prefix
 import traceback
 import sys

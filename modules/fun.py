@@ -61,7 +61,7 @@ class Fun(commands.Cog):
     @checks.command()
     async def duck(self, ctx):
         """Provides a random duck."""
-        async with self.bot.session.get('https://api.random-d.uk/random') as r:
+        async with self.bot.session.get('https://random-d.uk/api/random') as r:
             r = await r.json()
             url = r.get("url")
         if ctx.message.guild is not None:

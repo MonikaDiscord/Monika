@@ -20,11 +20,11 @@ class Weeb(commands.Cog):
     async def hug(self, ctx, user: discord.Member):
         """Aww! Hugs the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=hug&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=hug&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=hug', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=hug', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -41,11 +41,11 @@ class Weeb(commands.Cog):
     async def kiss(self, ctx, user: discord.Member):
         """Aww! Kisses the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=kiss&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=kiss&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=kiss', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=kiss', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -62,11 +62,11 @@ class Weeb(commands.Cog):
     async def pat(self, ctx, user: discord.Member):
         """Aww! Pats the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=pat&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=pat&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=pat', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=pat', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -83,11 +83,11 @@ class Weeb(commands.Cog):
     async def tickle(self, ctx, user: discord.Member):
         """Aww! Tickles the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=tickle&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=tickle&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=tickle', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=tickle', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -104,11 +104,11 @@ class Weeb(commands.Cog):
     async def insult(self, ctx, user: discord.Member):
         """Oh! Insults the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=insult&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=insult&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=insult', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=insult', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if user.id == 319503910895222784:
@@ -128,11 +128,11 @@ class Weeb(commands.Cog):
     async def bite(self, ctx, user: discord.Member):
         """Oww! Bites the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=bite&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=bite&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=bite', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=bite', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -149,11 +149,11 @@ class Weeb(commands.Cog):
     async def slap(self, ctx, user: discord.Member):
         """Oww! Slaps the specified user."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=slap&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=slap&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=slap', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=slap', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -170,7 +170,7 @@ class Weeb(commands.Cog):
     @checks.command()
     async def waifuinsult(self, ctx, user: discord.Member):
         ""Hehe... Insults the specified waifu.""
-        async with self.bot.session.post('https://api-v2.weeb.sh/auto-image/waifu-insult', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}, data={'avatar': user.avatar_url}) as resp:
+        async with self.bot.session.post('https://api.weeb.sh/auto-image/waifu-insult', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}, data={'avatar': user.avatar_url}) as resp:
             if resp.status == 200:
                 with open(f'/var/www/luki/monika/waifuinsult/{user.id}-wi.png', 'wb') as f:
                     f.write(await resp.read())
@@ -193,7 +193,7 @@ class Weeb(commands.Cog):
     @checks.command()
     async def ship(self, ctx, user1: discord.Member, user2: discord.Member):
         ""Ships the 2 users together.""
-        async with self.bot.session.post('https://api-v2.weeb.sh/auto-image/love-ship', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}, data={'targetOne': user1.avatar_url, 'targetTwo': user2.avatar_url}) as resp:
+        async with self.bot.session.post('https://api.weeb.sh/auto-image/love-ship', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}, data={'targetOne': user1.avatar_url, 'targetTwo': user2.avatar_url}) as resp:
             if resp.status == 200:
                 with open(f'/var/www/luki/monika/shipping/{user1.id}-{user2.id}-ship.png', 'wb') as f:
                     f.write(await resp.read())
@@ -295,17 +295,17 @@ class Images(commands.Cog):
             return
         try:
             if ctx.message.channel.is_nsfw():
-                async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
+                async with self.bot.session.get('https://api.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
                                        headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                     url = await url.json()
                     url = url.get("url")
             else:
-                async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type={}'.format(tag),
+                async with self.bot.session.get('https://api.weeb.sh/images/random?type={}'.format(tag),
                                        headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                     url = await url.json()
                     url = url.get("url")
         except Exception:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type={}&nsfw=true'.format(tag),
                                    headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
@@ -325,7 +325,7 @@ class Images(commands.Cog):
     @checks.command()
     async def taglist(self, ctx):
         """Gives you a list with all available weeb.sh tags."""
-        async with self.bot.session.get('https://api-v2.weeb.sh/images/types', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as typelist:
+        async with self.bot.session.get('https://api.weeb.sh/images/types', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/2.0.0'}) as typelist:
             typelist = await typelist.json()
             typelist = typelist.get("types")
         types = []

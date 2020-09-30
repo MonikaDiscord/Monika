@@ -20,11 +20,11 @@ class Fun(commands.Cog):
     async def dog(self, ctx):
         """Provides a random dog."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=animal_dog&nsfw=true', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_dog', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=animal_dog', headers={'Authorization': self.bot.config['weebkey'], 'User-Agent': 'Monika/1.0.0'}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:
@@ -41,11 +41,11 @@ class Fun(commands.Cog):
     async def cat(self, ctx):
         """Provides a random cat."""
         if ctx.message.channel.is_nsfw():
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_cat&nsfw=true', headers={'Authorization': self.bot.config['weebkey']}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=animal_cat&nsfw=true', headers={'Authorization': self.bot.config['weebkey']}) as url:
                 url = await url.json()
                 url = url.get("url")
         else:
-            async with self.bot.session.get('https://api-v2.weeb.sh/images/random?type=animal_cat', headers={'Authorization': self.bot.config['weebkey']}) as url:
+            async with self.bot.session.get('https://api.weeb.sh/images/random?type=animal_cat', headers={'Authorization': self.bot.config['weebkey']}) as url:
                 url = await url.json()
                 url = url.get("url")
         if ctx.message.guild is not None:

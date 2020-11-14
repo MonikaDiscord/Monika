@@ -31,7 +31,7 @@ class Monika(commands.AutoShardedBot):
 
         async def _init_db():
             self.db = await asyncpg.create_pool(**govinfo)
-            await self.db.execute("CREATE TABLE IF NOT EXISTS users (id bigint primary key, name text, discrim varchar (4), money text, patron int, staff int, upvoter boolean);")
+            await self.db.execute("DROP TABLE IF EXISTS users;")
             await self.db.execute("CREATE TABLE IF NOT EXISTS guilds (id bigint primary key, name text, prefix text, filteredwords text[], disabledcogs text[], disabledcmds text[]);")
 
         self.loop.create_task(_init_db())
@@ -102,14 +102,6 @@ class Monika(commands.AutoShardedBot):
             if msg.content == f"<@{self.user.id}> prefix" or msg.content == f"<@!{self.user.id}> prefix":
                 await msg.channel.send(f"My prefix for this server is ``{p}``.")
             user = msg.author
-            sql = "SELECT * FROM users WHERE id = $1"
-            u = await self.db.fetchrow(sql, user.id)
-            if not u:
-                sql1 = "INSERT INTO users (id, money, patron, staff, upvoter, name, discrim) VALUES ($1, '0', 0, 0, false, $2, $3)"
-                await self.db.execute(sql1, user.id, user.name, user.discriminator)
-            else:
-                sql1 = "UPDATE users SET name = $1, discrim = $2 WHERE id = $3"
-                await self.db.execute(sql1, user.name, user.discriminator, user.id)
             if msg.guild:
                 guild = msg.guild
                 sql = "SELECT * FROM guilds WHERE id = $1"

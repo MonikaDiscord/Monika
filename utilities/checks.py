@@ -43,6 +43,10 @@ class Checks:
         except KeyError:
             return False
 
+    async def upvoter_check(self, ctx):
+        return True
+
+
     async def gold_check(self, ctx):
         nums = [5]
         try:

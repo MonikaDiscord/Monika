@@ -173,10 +173,6 @@ class Monika(commands.AutoShardedBot):
     async def get_prefix(self, msg):
         return await self._prefix.prefixcall(self, msg)
 
-    async def get_coins(self, id):
-        sql = "SELECT coins FROM users WHERE id = $1"
-        return await self.db.fetchval(sql, id)
-
     async def restart_monika(self):
         sys.exit(1)
 

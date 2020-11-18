@@ -5,52 +5,53 @@ import json
 
 
 class Checks:
+    def __init__(self):
+        self.config = json.loads(open('config.json', 'r').read())
+        self.users = self.config['privileged-users']
 
     async def admin_check(self, ctx):
-        sql = "SELECT staff FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
-        return int(status) == 1
+        try:
+            return self.users[str(ctx.author.id)] == 1
+        except KeyError:
+            return False
 
     async def dev_check(self, ctx):
-        sql = "SELECT staff FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 2]
-        return int(status) in nums
+        try:
+            return self.users[str(ctx.author.id)] in nums
+        except KeyError:
+            return False
 
     async def mod_check(self, ctx):
-        sql = "SELECT staff FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 3]
-        return int(status) in nums
+        try:
+            return self.users[str(ctx.author.id)] in nums
+        except KeyError:
+            return False
     
     async def ss_check(self, ctx):
-        sql = "SELECT staff FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 4]
-        return int(status) in nums
+        try:
+            return self.users[str(ctx.author.id)] in nums
+        except KeyError:
+            return False
 
     async def staff_check(self, ctx):
-        sql = "SELECT staff FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
         nums = [1, 2, 3]
-        return int(status) in nums
-
-    async def upvoter_check(self, ctx):
-        sql = "SELECT upvoter FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
-        return bool(status) == True
-
-    async def premium_check(self, ctx):
-        #sql = "SELECT patron FROM users WHERE id = $1"
-        #status = await ctx.bot.db.fetchval(sql, ctx.author.id)
-        #nums = [1, 2]
-        #return int(status) in nums
-        return True
+        try:
+            return self.users[str(ctx.author.id)] in nums
+        except KeyError:
+            return False
 
     async def gold_check(self, ctx):
-        sql = "SELECT patron FROM users WHERE id = $1"
-        status = await ctx.bot.db.fetchval(sql, ctx.author.id)
-        return int(status) == 2
+        nums = [5]
+        try:
+            return self.users[str(ctx.author.id)] in nums
+        except KeyError:
+            return False
+
+    async def premium_check(self, ctx):
+        return True
 
     async def cog_disabler(self, ctx):
         sql = "SELECT disabledcogs FROM guilds WHERE id = $1"
